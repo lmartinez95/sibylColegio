@@ -24,10 +24,8 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th>Dirección</th>
-                        <th>Teléfono</th>
-						<th>País</th>
+						<th>Código</th>
+						<th>Tipo de empleado</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -37,12 +35,10 @@
 						foreach ($results as $result) {
 							?>
 							<tr>
-								<td><?php echo $result["edtNombre"]; ?></td>
-								<td><?php echo $result["edtDireccion"]; ?></td>
-                                <td><?php echo $result["edtTelefono"]; ?></td>
-								<td><?php echo $result["paiNombre"]; ?></td>
-								<td><a class="btn btn-outline-success" href=<?php echo "editorial/Update/" . $result["edtId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-								<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["edtId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+								<td><?php echo $result["tempCodigo"]; ?></td>
+								<td><?php echo $result["tempNombre"]; ?></td>
+                                <td><a class="btn btn-outline-success" href=<?php echo "tipoEmpleado/Update/" . $result["tempId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+								<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["tempId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 							</tr>
 							<?php
 						}
@@ -53,24 +49,24 @@
 		<?php
 			foreach ($results as $result) {	?>
 			<!-- The Modal -->
-			<div class="modal fade" id="Eliminar<?php echo $result["edtId"]; ?>">
+			<div class="modal fade" id="Eliminar<?php echo $result["tempId"]; ?>">
 			 	<div class="modal-dialog modal-lg">
 			    	<div class="modal-content">
 
 			     		<!-- Modal Header -->
 				    	<div class="modal-header">
-				        	<h4 class="modal-title">Eliminar <?php echo $result["edtNombre"]; ?></h4>
+				        	<h4 class="modal-title">Eliminar registro</h4>
 				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 				    	</div>
 
 					    <!-- Modal body -->
 					    <div class="modal-body">
-					    	¿Desea eliminar esta editorial permanentemente?
+					    	¿Desea eliminar esta el tipo <?php echo $result["tempNombre"]; ?> permanentemente?
 					    </div>
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo "editorial/delete/" . $result["edtId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo "tipoEmpleado/delete/" . $result["edtId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 
