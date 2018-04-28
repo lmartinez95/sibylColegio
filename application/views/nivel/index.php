@@ -12,7 +12,7 @@
 				</form>
 			</div>
 			<div>
-				<a class="btn btn-primary pull-right" href="nivel/add/"><i class="fas fa-plus"></i> Nuevo</a>
+				<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
 			</div>
 		</div>
 		<?php if (isset($mensaje)) { ?>
@@ -37,7 +37,7 @@
 							<tr>
 								<td><?php echo $result["nvlAbrev"]; ?></td>
 								<td><?php echo $result["nvlNivel"]; ?></td>
-                                <td><a class="btn btn-outline-success" href=<?php echo "nivel/Update/" . $result["nvlId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+                                <td><a class="btn btn-outline-success" href=<?php echo "update/" . $result["nvlId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
 								<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["nvlId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 							</tr>
 							<?php
@@ -61,12 +61,12 @@
 
 					    <!-- Modal body -->
 					    <div class="modal-body">
-					    	¿Desea eliminar esta el tipo <?php echo $result["nvlNivel"]; ?> permanentemente?
+					    	¿Desea eliminar esta el nivel <?php echo $result["nvlNivel"]; ?> permanentemente?
 					    </div>
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo "nivel/delete/" . $result["nvlId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo "delete/" . $result["nvlId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 
@@ -97,5 +97,41 @@
 			?>
 		</ul>
 	</div>
+		<!-- Modal de agregar -->
+		<div class="modal fade" id="agregar">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Agregar registro</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<?php echo validation_errors();
+							echo form_open('nivel/agregar'); ?>
+								<div class="form-group">
+									<label for="nvlAbrev">Abreviatura:</label>
+									<input type="text" class="form-control" name="nvlAbrev" id="nvlAbrev" placeholder="Abreviatura" autocomplete="off">
+								</div>
+								<div class="form-group">
+									<label for="nvlNivel">Nivel:</label>
+									<input type="text" class="form-control" name="nvlNivel" id="nvlNivel" placeholder="Nivel" autocomplete="off">
+								</div>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" value="agregar"><i class="fas fa-plus"></i> Agregar</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+						<?php echo form_close(); ?>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	
 </body>
 </html>

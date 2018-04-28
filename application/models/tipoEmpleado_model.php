@@ -1,5 +1,5 @@
 <?php
-    class TipoEmpleado extends CI_Model
+    class TipoEmpleado_model extends CI_Model
     {
         public function __construct(){
             $this->load->database();
@@ -11,5 +11,7 @@
             $this->db->close();
             return $query->result_array();
         }
+
+        
     }
 ?>
