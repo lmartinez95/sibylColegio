@@ -12,11 +12,12 @@
 				</form>
 			</div>
 			<div>
-				<a class="btn btn-primary pull-right" href="Editorial/Add/"><i class="fas fa-plus"></i> Nuevo</a>
+			<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
 			</div>
 		</div>
+		<br />
 		<?php if (isset($mensaje)) { ?>
-				<div <?php echo "class='" . $nivel . "'";?>>
+				<div <?php echo "class='alert alert-" . $nivel . "'";?>>
 				  	<?php echo $mensaje;?>.
 				</div>
 		<?php } ?>
@@ -37,7 +38,7 @@
 							<tr>
 								<td><?php echo $result["tempCodigo"]; ?></td>
 								<td><?php echo $result["tempNombre"]; ?></td>
-                                <td><a class="btn btn-outline-success" href=<?php echo "tipoEmpleado/Update/" . $result["tempId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+                                <td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/tipoEmpleado/update/" . $result["tempId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
 								<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["tempId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 							</tr>
 							<?php
@@ -66,7 +67,7 @@
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo "tipoEmpleado/delete/" . $result["edtId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/tipoEmpleado/eliminar" . $result["tempId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 
@@ -97,5 +98,40 @@
 			?>
 		</ul>
 	</div>
+	<!-- Modal de agregar -->
+	<div class="modal fade" id="agregar">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Agregar registro</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<?php echo validation_errors();
+							echo form_open('tipoEmpleado/agregar'); ?>
+								<div class="form-group">
+									<label for="txtTempCodigo">Código:</label>
+									<input type="text" class="form-control" name="txtTempCodigo" id="txtTempCodigo" placeholder="Código" autocomplete="off" require autofocus>
+								</div>
+								<div class="form-group">
+									<label for="txtTempNombre">Tipo de empleado:</label>
+									<input type="text" class="form-control" name="txtTempNombre" id="txtTempNombre" placeholder="Tipo de empleado" autocomplete="off" require>
+								</div>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" value="agregar"><i class="fas fa-plus"></i> Agregar</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+						<?php echo form_close(); ?>
+					</div>
+
+				</div>
+			</div>
+		</div>
 </body>
 </html>

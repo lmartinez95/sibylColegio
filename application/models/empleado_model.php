@@ -1,12 +1,12 @@
 <?php
-    class Nivel_model extends CI_Model
+    class Empleado_model extends CI_Model
     {
         public function __construct(){
             $this->load->database();
         }
 
         public function mostrar(){
-            $query = $this->db->get('Nivel');
+            $query = $this->db->get('Empleado');
             $this->db->close();
             return $query->result_array();
         }
@@ -14,20 +14,8 @@
         public function agregar($data)
         {
             try{
-                $this->db->select('COUNT(nvlId) AS cant');
-                $this->db->from('Nivel');
-                $this->db->where('nvlAbrev', $data['nvlAbrev']);
-                $this->db->or_where('nvlNivel', $data['nvlNivel']);
-                $query = $this->db->get();
-                $result = $query->result_array();
-                foreach ($result as $r) {
-                    if ($r['cant'] == 0) {
-                        $this->db->insert('Nivel', $data);
-                        return true;
-                    } else {
-                        return "La abreviatura o nivel ya existe";
-                    }
-                }
+                $this->db->insert('Empleado', $data);
+                return true;
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
             } finally{
@@ -35,18 +23,30 @@
             }
         }
 
+        public function cargaCombo()
+        {
+            try{
+                $this->db->select('tempId,tempNombre');
+                $this->db->from('TipoEmpleado');
+                $query = $this->db->get();
+                return $query->result_array();
+            } catch(Exception $e){
+                return false;
+            }
+        }
+
         public function eliminar(int $value)
         {
             try{
-                $this->db->select('COUNT(nvlId) AS cant');
-                $this->db->from('Nivel');
-                $this->db->where('nvlId', $value);
+                $this->db->select('COUNT(empId) AS cant');
+                $this->db->from('Empleado');
+                $this->db->where('empId', $value);
                 $query = $this->db->get();
                 $result = $query->result_array();
                 foreach ($result as $r) {
                     if ($r['cant'] == 1) {
-                        $this->db->where('nvlId', $value);
-                        $this->db->delete('Nivel');
+                        $this->db->where('empId', $value);
+                        $this->db->delete('Empleado');
                         return true;
                     } else {
                         return "El código no existe";
@@ -58,5 +58,7 @@
                 $this->db->close();
             }
         }
+
+        
     }
 ?>
