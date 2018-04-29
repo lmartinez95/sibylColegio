@@ -15,8 +15,9 @@
 				<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
 			</div>
 		</div>
+		<br />
 		<?php if (isset($mensaje)) { ?>
-				<div <?php echo "class='" . $nivel . "'";?>>
+				<div <?php echo "class='alert alert-" . $nivel . "'";?>>
 				  	<?php echo $mensaje;?>.
 				</div>
 		<?php } ?>
@@ -37,7 +38,7 @@
 							<tr>
 								<td><?php echo $result["nvlAbrev"]; ?></td>
 								<td><?php echo $result["nvlNivel"]; ?></td>
-                                <td><a class="btn btn-outline-success" href=<?php echo "update/" . $result["nvlId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+                                <td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/update/" . $result["nvlId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
 								<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["nvlId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 							</tr>
 							<?php
@@ -48,7 +49,7 @@
 		</div>
 		<?php
 			foreach ($results as $result) {	?>
-			<!-- The Modal -->
+			<!-- Modal para confirmación de eliminación-->
 			<div class="modal fade" id="Eliminar<?php echo $result["nvlId"]; ?>">
 			 	<div class="modal-dialog modal-lg">
 			    	<div class="modal-content">
@@ -66,7 +67,7 @@
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo "delete/" . $result["nvlId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/eliminar/" . $result["nvlId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 
@@ -114,11 +115,11 @@
 							echo form_open('nivel/agregar'); ?>
 								<div class="form-group">
 									<label for="nvlAbrev">Abreviatura:</label>
-									<input type="text" class="form-control" name="nvlAbrev" id="nvlAbrev" placeholder="Abreviatura" autocomplete="off">
+									<input type="text" class="form-control" name="nvlAbrev" id="nvlAbrev" placeholder="Abreviatura" autocomplete="off" require autofocus>
 								</div>
 								<div class="form-group">
 									<label for="nvlNivel">Nivel:</label>
-									<input type="text" class="form-control" name="nvlNivel" id="nvlNivel" placeholder="Nivel" autocomplete="off">
+									<input type="text" class="form-control" name="nvlNivel" id="nvlNivel" placeholder="Nivel" autocomplete="off" require>
 								</div>
 					</div>
 
