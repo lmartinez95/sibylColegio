@@ -22,20 +22,20 @@
         public function agregar()
         {
             $data = array(
-                'empNombre' => $_REQUEST['txtEmpNombre'],
-                'empApellidoP' => $_REQUEST['txtEmpApellidoP'],
-                'empApellidoM' => $_REQUEST['txtEmpApellidoM'],
-                'empSexo' => $_REQUEST['cboEmpSexo'],
-                'empDUI' => $_REQUEST['txtEmpDUI'],
-                'empNIT' => $_REQUEST['txtEmpNIT'],
-                'empISSS' => $_REQUEST['txtEmpISSS'],
-                'empNUP' => $_REQUEST['txtEmpNUP'],
-                'empDireccion' => $_REQUEST['txtEmpDireccion'],
-                'empEmail' => $_REQUEST['txtEmpEmail'],
+                'empNombre' => $_REQUEST['txtNombre'],
+                'empApellidoP' => $_REQUEST['txtApellidoP'],
+                'empApellidoM' => $_REQUEST['txtApellidoM'],
+                'empSexo' => $_REQUEST['cboSexo'],
+                'empDUI' => $_REQUEST['txtDUI'],
+                'empNIT' => $_REQUEST['txtNIT'],
+                'empISSS' => $_REQUEST['txtISSS'],
+                'empNUP' => $_REQUEST['txtNUP'],
+                'empDireccion' => $_REQUEST['txtDireccion'],
+                'empEmail' => $_REQUEST['txtEmail'],
                 'tempId' => $_REQUEST['cboTempId'] );
             $b = $this->empleado_model->agregar($data);
-            if ($b === TRUE) {
-                $mensaje = "Registro agregado exitosamente.";
+            if (substr($b,0,3) === TRUE) {
+                $mensaje = "Registro agregado exitosamente. El codigo es ".substr($b,4);
                 $nivel = 'success';
             } else {
                 $mensaje = $b;

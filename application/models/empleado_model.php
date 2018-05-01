@@ -6,7 +6,11 @@
         }
 
         public function mostrar(){
-            $query = $this->db->get('Empleado');
+            $this->db->select("e.empId,e.empCodigo,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) as Nombre,
+            CASE e.empSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,e.empDUI,te.tempNombre");
+            $this->db->from('Empleado e');
+            $this->db->join('TipoEmpleado te', 'e.tempId = te.tempId');
+            $query = $this->db->get();
             $this->db->close();
             return $query->result_array();
         }
@@ -14,8 +18,8 @@
         public function agregar($data)
         {
             try{
-                $this->db->insert('Empleado', $data);
-                return true;
+                $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?)', $data);
+                return 'true'.$query;
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
             } finally{

@@ -41,7 +41,7 @@
 							<td><?php echo $result["Nombre"]; ?></td>
 							<td><?php echo $result["Sexo"]; ?></td>
 							<td><?php echo $result["empDUI"]; ?></td>
-							<td><?php echo $result["tipoEmpleado"]; ?></td>
+							<td><?php echo $result["tempNombre"]; ?></td>
 							<td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/empleado/update/" . $result["empId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
 							<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["empId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 						</tr>
@@ -115,39 +115,39 @@
 						<?php echo validation_errors();
 							echo form_open('empleado/agregar'); ?>
 								<div class="form-group">
-									<label for="txtEmpNombre">Nombres:</label>
-									<input type="text" class="form-control" name="txtEmpNombre" id="txtEmpNombre" placeholder="Nombres" autocomplete="off" require autofocus>
+									<label for="txtNombre">Nombres:</label>
+									<input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombres" autocomplete="off" require autofocus>
 								</div>
 								<div class="form-group">
-									<label for="txtEmpApellidoP">Apellido Paterno:</label>
-									<input type="text" class="form-control" name="txtEmpApellidoP" id="txtEmpApellidoP" placeholder="Apellido Paterno" autocomplete="off" require autofocus>
+									<label for="txtApellidoP">Apellido Paterno:</label>
+									<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require autofocus>
 								</div>
 								<div class="form-group">
-									<label for="txtEmpApellidoM">Apellido Materno:</label>
-									<input type="text" class="form-control" name="txtEmpApellidoM" id="txtEmpApellidoM" placeholder="Apellido Materno" autocomplete="off" require autofocus>
+									<label for="txtApellidoM">Apellido Materno:</label>
+									<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require autofocus>
 								</div>
 								<div class="form-group">
-									<label for="cboEmpSexo">Sexo:</label>
-									<select class="form-control" name="cboEmpSexo" id="cboEmpSexo" require>
+									<label for="cboSexo">Sexo:</label>
+									<select class="form-control" name="cboSexo" id="cboSexo" require>
 										<option value="M" selected>Masculino</option>
 										<option value="F">Femenino</option>
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="txtEmpDUI">DUI:</label>
-									<input type="text" class="form-control" name="txtEmpDUI" id="txtEmpDUI" placeholder="00000000-0" autocomplete="off" require />
+									<label for="txtDUI">DUI:</label>
+									<input type="text" class="form-control" name="txtDUI" id="txtDUI" placeholder="00000000-0" autocomplete="off" require />
 								</div>
 								<div class="form-group">
-									<label for="txtEmpNIT">NIT:</label>
-									<input type="text" class="form-control" name="txtEmpNIT" id="txtEmpNIT" placeholder="0000-000000-000-0" autocomplete="off" require />
+									<label for="txtNIT">NIT:</label>
+									<input type="text" class="form-control" name="txtNIT" id="txtNIT" placeholder="0000-000000-000-0" autocomplete="off" require />
 								</div>
 								<div class="form-group">
-									<label for="txtEmpISSS">ISSS:</label>
-									<input type="text" class="form-control" name="txtEmpISSS" id="txtEmpISSS" placeholder="000000000" autocomplete="off" require />
+									<label for="txtISSS">ISSS:</label>
+									<input type="text" class="form-control" name="txtISSS" id="txtISSS" placeholder="000000000" autocomplete="off" require />
 								</div>
 								<div class="form-group">
-									<label for="txtEmpNUP">NUP:</label>
-									<input type="text" class="form-control" name="txtEmpNUP" id="txtEmpNUP" placeholder="0000000000" autocomplete="off" require />
+									<label for="txtNUP">NUP:</label>
+									<input type="text" class="form-control" name="txtNUP" id="txtNUP" placeholder="0000000000" autocomplete="off" require />
 								</div>
 								<div class="form-group">
 									<label for="cboTempId">Tipo de empleado:</label>
@@ -158,12 +158,12 @@
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="txtEmpDireccion">Dirección:</label>
-									<input type="text" class="form-control" name="txtEmpDireccion" id="txtEmpDireccion" placeholder="Dirección" autocomplete="off" require />
+									<label for="txtDireccion">Dirección:</label>
+									<input type="text" class="form-control" name="txtDireccion" id="txtDireccion" placeholder="Dirección" autocomplete="off" require />
 								</div>
 								<div class="form-group">
-									<label for="txtEmpEmail">Correo:</label>
-									<input type="email" class="form-control" name="txtEmpEmail" id="txtEmpEmail" placeholder="email@algo.com" autocomplete="off" require />
+									<label for="txtEmail">Correo:</label>
+									<input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="email@algo.com" autocomplete="off" require />
 								</div>
 					</div>
 
