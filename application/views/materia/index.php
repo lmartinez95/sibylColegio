@@ -1,4 +1,3 @@
-<body>
 <div class="container">
 		<div class="form-inline">
 			<div class="col-lg-8">
@@ -62,7 +61,7 @@
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/materia/eliminar" . $result["matId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/materia/eliminar/" . $result["matId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 

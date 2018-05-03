@@ -25,10 +25,11 @@
 				<thead>
 					<tr>
 						<th>Código</th>
-						<th>Empleado</th>
+						<th>Alumno</th>
 						<th>Sexo</th>
-						<th>DUI</th>
-						<th>Tipo de empleado</th>
+						<th>Tel. Fijo</th>
+                        <th>Correo</th>
+						<th>Responsable</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -36,13 +37,14 @@
 				<tbody>
 					<?php foreach ($results as $result) { ?>
 						<tr>
-							<td><?php echo $result["empCodigo"]; ?></td>
+							<td><?php echo $result["almCodigo"]; ?></td>
 							<td><?php echo $result["Nombre"]; ?></td>
 							<td><?php echo $result["Sexo"]; ?></td>
-							<td><?php echo $result["empDUI"]; ?></td>
-							<td><?php echo $result["tempNombre"]; ?></td>
-							<td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/empleado/update/" . $result["empId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-							<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["empId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+							<td><?php echo $result["almTelCasa"]; ?></td>
+							<td><?php echo $result["almCorreo"]; ?></td>
+                            <td><?php echo $result["almResponsable"]; ?></td>
+							<td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/alumno/update/" . $result["almId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+							<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["almId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -50,7 +52,7 @@
 		</div>
 		<?php foreach ($results as $result) { ?>
 			<!-- The Modal -->
-			<div class="modal fade" id="Eliminar<?php echo $result["empId"]; ?>">
+			<div class="modal fade" id="Eliminar<?php echo $result["almId"]; ?>">
 			 	<div class="modal-dialog modal-lg">
 			    	<div class="modal-content">
 
@@ -62,12 +64,12 @@
 
 					    <!-- Modal body -->
 					    <div class="modal-body">
-					    	¿Desea eliminar el empleado <?php echo $result["Nombre"]; ?> permanentemente?
+					    	¿Desea eliminar el alumno <?php echo $result["Nombre"]; ?> permanentemente?
 					    </div>
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/empleado/eliminar/" . $result["empId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/alumno/eliminar/" . $result["almId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 
@@ -112,18 +114,26 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<?php echo validation_errors();
-							echo form_open('empleado/agregar'); ?>
+							echo form_open('alumno/agregar'); ?>
 								<div class="form-group">
 									<label for="txtNombre">Nombres:</label>
 									<input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombres" autocomplete="off" require autofocus>
 								</div>
 								<div class="form-group">
 									<label for="txtApellidoP">Apellido Paterno:</label>
-									<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require autofocus>
+									<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require >
 								</div>
 								<div class="form-group">
 									<label for="txtApellidoM">Apellido Materno:</label>
-									<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require autofocus>
+									<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require >
+								</div>
+                                <div class="form-group">
+									<label for="dtpFechaNac">Fecha de Nacimiento:</label>
+									<input type="date" class="form-control" name="dtpFechaNac" id="dtpFechaNac" require >
+								</div>
+                                <div class="form-group">
+									<label for="txtLugarNac">Lugar de Nacimiento:</label>
+									<input type="text" class="form-control" name="txtLugarNac" id="txtLugarNac" placeholder="Lugar de nacimiento" autocomplete="off" require >
 								</div>
 								<div class="form-group">
 									<label for="cboSexo">Sexo:</label>
@@ -132,38 +142,39 @@
 										<option value="F">Femenino</option>
 									</select>
 								</div>
-								<div class="form-group">
-									<label for="txtDUI">DUI:</label>
-									<input type="text" class="form-control" name="txtDUI" id="txtDUI" placeholder="00000000-0" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="txtNIT">NIT:</label>
-									<input type="text" class="form-control" name="txtNIT" id="txtNIT" placeholder="0000-000000-000-0" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="txtISSS">ISSS:</label>
-									<input type="text" class="form-control" name="txtISSS" id="txtISSS" placeholder="000000000" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="txtNUP">NUP:</label>
-									<input type="text" class="form-control" name="txtNUP" id="txtNUP" placeholder="0000000000" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="cboTempId">Tipo de empleado:</label>
-									<select class="form-control" name="cboTempId" id="cboTempId">
-									<?php foreach ($combo as $item) { ?>
-										<option value="<?php echo $item["tempId"]; ?>"><?php echo $item["tempNombre"]; ?></option>
-									<?php } ?>
-									</select>
-								</div>
-								<div class="form-group">
+                                <div class="form-group">
 									<label for="txtDireccion">Dirección:</label>
-									<input type="text" class="form-control" name="txtDireccion" id="txtDireccion" placeholder="Dirección" autocomplete="off" require />
+									<input type="text" class="form-control" name="txtDireccion" id="txtDireccion" placeholder="Dirección" autocomplete="off" require >
 								</div>
 								<div class="form-group">
+									<label for="txtMadre">Nombre de la Madre:</label>
+									<input type="text" class="form-control" name="txtMadre" id="txtMadre" placeholder="Nombre de la madre" autocomplete="off" require />
+								</div>
+                                <div class="form-group">
+									<label for="txtPadre">Nombre del Padre:</label>
+									<input type="text" class="form-control" name="txtPadre" id="txtPadre" placeholder="Nombre del padre" autocomplete="off" require />
+								</div>
+								<div class="form-group">
+									<label for="txtTelCasa">Teléfono de casa:</label>
+									<input type="text" class="form-control" name="txtTelCasa" id="txtTelCasa" placeholder="0000-0000" autocomplete="off" require />
+								</div>
+                                <div class="form-group">
+									<label for="txtTelCel">Teléfono celular:</label>
+									<input type="text" class="form-control" name="txtTelCel" id="txtTelCel" placeholder="0000-0000" autocomplete="off" require />
+								</div>
+                                <div class="form-group">
 									<label for="txtEmail">Correo:</label>
 									<input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="email@algo.com" autocomplete="off" require />
 								</div>
+                                <div class="form-group">
+									<label for="txtResponsable">Nombre del Responsable:</label>
+									<input type="text" class="form-control" name="txtResponsable" id="txtResponsable" placeholder="Nombre del responsable" autocomplete="off" require />
+								</div>
+								<div class="form-group">
+									<label for="txtTelResponsable">Teléfono del Responsable:</label>
+									<input type="text" class="form-control" name="txtTelResponsable" id="txtTelResponsable" placeholder="0000-0000" autocomplete="off" require />
+								</div>
+								
 					</div>
 
 					<!-- Modal footer -->

@@ -1,12 +1,15 @@
 <?php
-    class Materia_model extends CI_Model
+    class Alumno_model extends CI_Model
     {
         public function __construct(){
             $this->load->database();
         }
 
         public function mostrar(){
-            $query = $this->db->get('Materia');
+            $this->db->select("almId,almCodigo,CONCAT(almNombre,' ',almApellidoP,' ',almApellidoM) as Nombre,
+            CASE almSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,almCorreo,almTelCasa,almResponsable");
+            $this->db->from('Alumno');
+            $query = $this->db->get();
             $this->db->close();
             return $query->result_array();
         }
@@ -14,20 +17,9 @@
         public function agregar($data)
         {
             try{
-                $this->db->select('COUNT(matId) AS cant');
-                $this->db->from('Materia');
-                $this->db->where('matCodigo', $data['matCodigo']);
-                $this->db->or_where('matNombre', $data['matNombre']);
-                $query = $this->db->get();
-                $result = $query->result_array();
-                foreach ($result as $r) {
-                    if ($r['cant'] == 0) {
-                        $this->db->insert('Materia', $data);
-                        return true;
-                    } else {
-                        return "El código o tipo ya existe";
-                    }
-                }
+                $query = $this->db->query('CALL spAddAlumno(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', $data);
+                $query->result_array();
+                return 'true'.$query;
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
             } finally{
@@ -38,15 +30,15 @@
         public function eliminar(int $value)
         {
             try{
-                $this->db->select('COUNT(matId) AS cant');
-                $this->db->from('Materia');
-                $this->db->where('matId', $value);
+                $this->db->select('COUNT(almId) AS cant');
+                $this->db->from('Alumno');
+                $this->db->where('almId', $value);
                 $query = $this->db->get();
                 $result = $query->result_array();
                 foreach ($result as $r) {
                     if ($r['cant'] == 1) {
-                        $this->db->where('matId', $value);
-                        $this->db->delete('Materia');
+                        $this->db->where('almId', $value);
+                        $this->db->delete('Alumno');
                         return true;
                     } else {
                         return "El código no existe";

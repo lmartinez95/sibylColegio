@@ -1,4 +1,3 @@
-<body>
 <div class="container">
 		<div class="form-inline">
 			<div class="col-lg-8">
