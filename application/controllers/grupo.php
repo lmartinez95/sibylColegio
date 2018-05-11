@@ -9,14 +9,16 @@
         }
         public function index($mensaje = NULL, $nivel = NULL){
             $data['results'] = $this->grupo_model->mostrar();
-            $data['combo'] = $this->grupo_model->cargaCombo();
-            $data['title'] = 'Empleados';
+            $data['empleado'] = $this->grupo_model->cargaCombo('empId',"CONCAT(empNombre,' ',empApellidoP,' ',empApellidoM) AS nombre",'Empleado');
+            $data['materia'] = $this->grupo_model->cargaCombo('matId','matNombre','Materia');
+            $data['nivel'] = $this->grupo_model->cargaCombo('nvlId','nvlNivel','Nivel');
+            $data['title'] = 'Grupos';
             if (isset($mensaje) && isset($nivel)) {
                 $data['mensaje'] = $mensaje;
                 $data['nivel'] = $nivel;
             }
             $this->load->view('shared/header', $data);
-            $this->load->view('empleado/index', $data);
+            $this->load->view('grupo/index', $data);
         }
 
         public function agregar()

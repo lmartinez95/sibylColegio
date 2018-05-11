@@ -73,6 +73,11 @@ matId INTEGER, CONSTRAINT FK_Materia_Grupo FOREIGN KEY(matId) REFERENCES Materia
 nvlId INTEGER, CONSTRAINT FK_Nivel_Grupo FOREIGN KEY(nvlId) REFERENCES Nivel(nvlID)
 );
 
+SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel FROM Grupo g
+INNER JOIN Empleado e ON g.empId = em.empId
+INNER JOIN Materia m ON g.matId = m.matId
+INNER JOIN Nivel n ON g.nvlId = n.nvlId;
+
 CREATE TABLE detGrupo(
 dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
 grpId INTEGER, CONSTRAINT FK_Grupo_DetalleGRupo FOREIGN KEY(grpId) REFERENCES Grupo(grpId),

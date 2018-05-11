@@ -24,11 +24,9 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Código</th>
 						<th>Empleado</th>
-						<th>Sexo</th>
-						<th>DUI</th>
-						<th>Tipo de empleado</th>
+						<th>Materia</th>
+						<th>Nivel</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -36,13 +34,11 @@
 				<tbody>
 					<?php foreach ($results as $result) { ?>
 						<tr>
-							<td><?php echo $result["empCodigo"]; ?></td>
-							<td><?php echo $result["Nombre"]; ?></td>
-							<td><?php echo $result["Sexo"]; ?></td>
-							<td><?php echo $result["empDUI"]; ?></td>
-							<td><?php echo $result["tempNombre"]; ?></td>
-							<td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/empleado/update/" . $result["empId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-							<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["empId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+							<td><?php echo $result["Empleado"]; ?></td>
+							<td><?php echo $result["matNombre"]; ?></td>
+							<td><?php echo $result["nvlNivel"]; ?></td>
+							<td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/grupo/update/" . $result["grpId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+							<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["grpId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -50,7 +46,7 @@
 		</div>
 		<?php foreach ($results as $result) { ?>
 			<!-- The Modal -->
-			<div class="modal fade" id="Eliminar<?php echo $result["empId"]; ?>">
+			<div class="modal fade" id="Eliminar<?php echo $result["grpId"]; ?>">
 			 	<div class="modal-dialog modal-lg">
 			    	<div class="modal-content">
 
@@ -62,12 +58,12 @@
 
 					    <!-- Modal body -->
 					    <div class="modal-body">
-					    	¿Desea eliminar el empleado <?php echo $result["Nombre"]; ?> permanentemente?
+					    	¿Desea eliminar el grupo permanentemente?
 					    </div>
 
 					    <!-- Modal footer -->
 					    <div class="modal-footer">
-					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/empleado/eliminar/" . $result["empId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					    	<a class="btn btn-danger" href=<?php echo base_url()."index.php/grupo/eliminar/" . $result["grpId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 					    </div>
 
@@ -112,58 +108,33 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<?php echo validation_errors();
-							echo form_open('empleado/agregar'); ?>
+							echo form_open('grupo/agregar'); ?>
+								
 								<div class="form-group">
-									<label for="txtNombre">Nombres:</label>
-									<input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombres" autocomplete="off" require autofocus>
-								</div>
-								<div class="form-group">
-									<label for="txtApellidoP">Apellido Paterno:</label>
-									<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require autofocus>
-								</div>
-								<div class="form-group">
-									<label for="txtApellidoM">Apellido Materno:</label>
-									<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require autofocus>
-								</div>
-								<div class="form-group">
-									<label for="cboSexo">Sexo:</label>
-									<select class="form-control" name="cboSexo" id="cboSexo" require>
-										<option value="M" selected>Masculino</option>
-										<option value="F">Femenino</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="txtDUI">DUI:</label>
-									<input type="text" class="form-control" name="txtDUI" id="txtDUI" placeholder="00000000-0" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="txtNIT">NIT:</label>
-									<input type="text" class="form-control" name="txtNIT" id="txtNIT" placeholder="0000-000000-000-0" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="txtISSS">ISSS:</label>
-									<input type="text" class="form-control" name="txtISSS" id="txtISSS" placeholder="000000000" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="txtNUP">NUP:</label>
-									<input type="text" class="form-control" name="txtNUP" id="txtNUP" placeholder="0000000000" autocomplete="off" require />
-								</div>
-								<div class="form-group">
-									<label for="cboTempId">Tipo de empleado:</label>
-									<select class="form-control" name="cboTempId" id="cboTempId">
-									<?php foreach ($combo as $item) { ?>
-										<option value="<?php echo $item["tempId"]; ?>"><?php echo $item["tempNombre"]; ?></option>
+									<label for="cboEmpId">Empleado:</label>
+									<select class="form-control" name="cboEmpId" id="cboEmpId">
+									<?php foreach ($empleado as $emp) { ?>
+										<option value="<?php echo $emp["empId"]; ?>"><?php echo $emp["nombre"]; ?></option>
 									<?php } ?>
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="txtDireccion">Dirección:</label>
-									<input type="text" class="form-control" name="txtDireccion" id="txtDireccion" placeholder="Dirección" autocomplete="off" require />
+									<label for="cboMatId">Materia:</label>
+									<select class="form-control" name="cboMatId" id="cboMatId">
+									<?php foreach ($materia as $item) { ?>
+										<option value="<?php echo $item["matId"]; ?>"><?php echo $item["matNombre"]; ?></option>
+									<?php } ?>
+									</select>
 								</div>
 								<div class="form-group">
-									<label for="txtEmail">Correo:</label>
-									<input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="email@algo.com" autocomplete="off" require />
+									<label for="cboNvlId">Nivel:</label>
+									<select class="form-control" name="cboNvlId" id="cboNvlId">
+									<?php foreach ($nivel as $item) { ?>
+										<option value="<?php echo $item["nvlId"]; ?>"><?php echo $item["nvlNivel"]; ?></option>
+									<?php } ?>
+									</select>
 								</div>
+								
 					</div>
 
 					<!-- Modal footer -->

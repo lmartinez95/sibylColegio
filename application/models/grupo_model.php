@@ -6,10 +6,11 @@
         }
 
         public function mostrar(){
-            $this->db->select("e.empId,e.empCodigo,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) as Nombre,
-            CASE e.empSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,e.empDUI,te.tempNombre");
-            $this->db->from('Empleado e');
-            $this->db->join('TipoEmpleado te', 'e.tempId = te.tempId');
+            $this->db->select("g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel");
+            $this->db->from('Grupo g');
+            $this->db->join('Empleado e', 'g.empId = e.empId');
+            $this->db->join('Materia m', 'g.matId = m.matId');
+            $this->db->join('Nivel n', 'g.nvlId = n.nvlId');
             $query = $this->db->get();
             $this->db->close();
             return $query->result_array();
@@ -27,13 +28,15 @@
             }
         }
 
-        public function cargaCombo()
+        public function cargaCombo($id,$value,$tabla)
         {
             try{
-                $this->db->select('tempId,tempNombre');
-                $this->db->from('TipoEmpleado');
+                $this->db->select($id, $value);
+                $this->db->from($tabla);
                 $query = $this->db->get();
-                return $query->result_array();
+                $result = $query->result_array();
+                $query->free_result();
+                return $result;
             } catch(Exception $e){
                 return false;
             }
