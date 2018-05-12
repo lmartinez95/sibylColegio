@@ -19,7 +19,7 @@
         {
             try{
                 $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?)', $data);
-                return 'true'.$query;
+                return true;
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
             } finally{

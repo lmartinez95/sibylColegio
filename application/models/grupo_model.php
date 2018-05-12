@@ -19,8 +19,8 @@
         public function agregar($data)
         {
             try{
-                $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?)', $data);
-                return 'true'.$query;
+                $this->db->insert('grupo', $data);
+                return true;
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
             } finally{
@@ -31,7 +31,7 @@
         public function cargaCombo($id,$value,$tabla)
         {
             try{
-                $this->db->select($id, $value);
+                $this->db->select("{$id}, {$value}");
                 $this->db->from($tabla);
                 $query = $this->db->get();
                 $result = $query->result_array();
@@ -42,18 +42,19 @@
             }
         }
 
-        public function eliminar(int $value)
+        public function eliminar($value)
         {
             try{
-                $this->db->select('COUNT(empId) AS cant');
-                $this->db->from('Empleado');
-                $this->db->where('empId', $value);
+                $this->db->select('COUNT(grpId) AS cant');
+                $this->db->from('Grupo');
+                $this->db->where('grpId', $value);
                 $query = $this->db->get();
                 $result = $query->result_array();
                 foreach ($result as $r) {
                     if ($r['cant'] == 1) {
-                        $this->db->where('empId', $value);
-                        $this->db->delete('Empleado');
+                $this->db->where('grpId', $value);
+                        $this->db->where('grpId', $value);
+                        $this->db->delete('Grupo');
                         return true;
                     } else {
                         return "El código no existe";

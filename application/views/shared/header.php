@@ -21,16 +21,16 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>index.php/empleado/"><i class="fas fa-users"></i> Profesores <!--<span class="sr-only">(current)</span>--></a>
+            <a class="nav-link" href="<?php echo base_url(); ?>empleado/"><i class="fas fa-users"></i> Profesores <!--<span class="sr-only">(current)</span>--></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>index.php/alumno/"><i class="fas fa-graduation-cap"></i> Alumnos</a>
+            <a class="nav-link" href="<?php echo base_url(); ?>alumno/"><i class="fas fa-graduation-cap"></i> Alumnos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>index.php/materia/"><i class="fas fa-book"></i> Materias</a>
+            <a class="nav-link" href="<?php echo base_url(); ?>materia/"><i class="fas fa-book"></i> Materias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>index.php/grupo/"><i class="fas fa-usersk"></i> Grupos</a>
+            <a class="nav-link" href="<?php echo base_url(); ?>grupo/"><i class="fas fa-usersk"></i> Grupos</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

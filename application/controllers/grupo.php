@@ -24,20 +24,12 @@
         public function agregar()
         {
             $data = array(
-                'empNombre' => $_REQUEST['txtNombre'],
-                'empApellidoP' => $_REQUEST['txtApellidoP'],
-                'empApellidoM' => $_REQUEST['txtApellidoM'],
-                'empSexo' => $_REQUEST['cboSexo'],
-                'empDUI' => $_REQUEST['txtDUI'],
-                'empNIT' => $_REQUEST['txtNIT'],
-                'empISSS' => $_REQUEST['txtISSS'],
-                'empNUP' => $_REQUEST['txtNUP'],
-                'empDireccion' => $_REQUEST['txtDireccion'],
-                'empEmail' => $_REQUEST['txtEmail'],
-                'tempId' => $_REQUEST['cboTempId'] );
+                'empId' => $_REQUEST['cboEmpId'],
+                'matId' => $_REQUEST['cboMatId'],
+                'nvlId' => $_REQUEST['cboNvlId']);
             $b = $this->grupo_model->agregar($data);
-            if (substr($b,0,3) === TRUE) {
-                $mensaje = "Registro agregado exitosamente. El codigo es ".substr($b,4);
+            if ($b === TRUE) {
+                $mensaje = "Registro agregado exitosamente.";
                 $nivel = 'success';
             } else {
                 $mensaje = $b;
