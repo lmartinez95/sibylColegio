@@ -1,19 +1,4 @@
 <div class="container">
-		<div class="form-inline">
-			<div class="col-lg-8">
-				<form name="frmBuscar" method="POST" action="Editorial" enctype="multipart/form-data">
-					<div class="input-group input-group-md">
-						<input type="text" class="form-control" name="txtbuscar" id="txtbuscar" autocomplete="off" placeholder="Búsqueda">
-						<span class="input-group-btn">
-							<button type="submit" class="btn" name="buscar"><span class="fa fa-search" aria-hidden="true" alt="Buscar"></span></button>
-						</span>
-					</div>
-				</form>
-			</div>
-			<div>
-			<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
-			</div>
-		</div>
 		<br />
 		<?php if (isset($mensaje)) { ?>
 				<div <?php echo "class='alert alert-" . $nivel . "'";?>>
@@ -24,9 +9,7 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Empleado</th>
-						<th>Materia</th>
-						<th>Nivel</th>
+						<th>Alumno</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -34,11 +17,7 @@
 				<tbody>
 					<?php foreach ($results as $result) { ?>
 						<tr>
-							<td><?php echo $result["Empleado"]; ?></td>
-							<td><?php echo $result["matNombre"]; ?></td>
-							<td><?php echo $result["nvlNivel"]; ?></td>
-							<td><a class="btn btn-outline-primary" href=<?php echo base_url()."grupo/addAlumno/" . $result["grpId"]; ?> data-toggle="tooltip" data-placement="top" title="Agregar alumno"><i class="fas fa-plus"></i></a> </td>
-							<td><a class="btn btn-outline-success" href=<?php echo base_url()."grupo/update/" . $result["grpId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+							<td><?php echo $result["alumno"]; ?></td>
 							<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["grpId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 						</tr>
 					<?php } ?>

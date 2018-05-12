@@ -28,17 +28,40 @@
             }
         }
 
-        public function cargaCombo($id,$value,$tabla)
+        public function cargaCombo($id,$value,$tabla,$where = '')
         {
             try{
                 $this->db->select("{$id}, {$value}");
                 $this->db->from($tabla);
+                if (isset($where) && $where <> '')
+                    $this->db->where($where);
                 $query = $this->db->get();
                 $result = $query->result_array();
                 $query->free_result();
                 return $result;
             } catch(Exception $e){
                 return false;
+            }
+        }
+
+        public function cargaAlumno($grupo)
+        {
+            $this->db->select("a.almId,CONCAT(a.almNombre,' ',a.almApellidoP,' ',a.almApellidoM) AS nombre");
+            $this->db->from('Alumno a');
+            $query = $this->db->get();
+            $this->db->close();
+            return $query->result_array();
+        }
+
+        public function inscribir($data)
+        {
+            try{
+                $this->db->insert_batch('detGrupo', $data);
+                return true;
+            } catch(Exception $e){
+                return "ERROR. No se pudo ingresar el registro";
+            } finally{
+                $this->db->close();
             }
         }
 

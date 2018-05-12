@@ -16,9 +16,9 @@
                 $pass = $this->input->post('pass');
                 $tipo = $this->input->post('tipo');
                 if ($this->Login_model->verificar($carne, $pass, $tipo)) {
-                    if ($tipo == "administrador"){
+                    if ($tipo == "Administrador"){
                         redirect('empleado');
-                    }else if($tipo == "profesor"){
+                    }else if($tipo == "Profesor"){
                         //redirect('');
                     }
                 }else{

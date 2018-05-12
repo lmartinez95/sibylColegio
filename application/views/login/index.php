@@ -22,7 +22,7 @@
 						Login
 					</span>
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "El Carné es requerido">
-						<input class="input100" type="text" name="carne" placeholder="Carné">
+						<input class="input100" type="text" name="carne" placeholder="Carné" autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "La contraseña es requerida">
@@ -33,13 +33,13 @@
 						<div class="contact100-form-checkbox">
 							<div class="row">
 								<div class="col-6">
-									<input class="input-checkbox100" id="ckb1" type="radio" name="tipo" value="administrador">
+									<input class="input-checkbox100" id="ckb1" type="radio" name="tipo" value="Administrador">
 									<label class="label-checkbox100" for="ckb1">
 										Administrador
 									</label>
 								</div>
 								<div class="col-6">
-									<input class="input-checkbox100" id="ckb2" type="radio" name="tipo" value="profesor">
+									<input class="input-checkbox100" id="ckb2" type="radio" name="tipo" value="Profesor">
 									<label class="label-checkbox100" for="ckb2">
 										Profesor
 									</label>

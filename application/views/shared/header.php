@@ -13,7 +13,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Sistema Notas</a>
+      <a class="navbar-brand" href="<?php echo base_url(); ?>">Sistema Notas</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>empleado/"><i class="fas fa-users"></i> Profesores <!--<span class="sr-only">(current)</span>--></a>
+            <a class="nav-link" href="<?php echo base_url(); ?>empleado/"><i class="fas fa-chalkboard-teacher"></i> Profesores <!--<span class="sr-only">(current)</span>--></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url(); ?>alumno/"><i class="fas fa-graduation-cap"></i> Alumnos</a>
@@ -30,7 +30,7 @@
             <a class="nav-link" href="<?php echo base_url(); ?>materia/"><i class="fas fa-book"></i> Materias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>grupo/"><i class="fas fa-usersk"></i> Grupos</a>
+            <a class="nav-link" href="<?php echo base_url(); ?>grupo/"><i class="fas fa-users"></i> Grupos</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

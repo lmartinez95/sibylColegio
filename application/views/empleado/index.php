@@ -119,11 +119,11 @@
 								</div>
 								<div class="form-group">
 									<label for="txtApellidoP">Apellido Paterno:</label>
-									<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require autofocus>
+									<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require>
 								</div>
 								<div class="form-group">
 									<label for="txtApellidoM">Apellido Materno:</label>
-									<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require autofocus>
+									<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require>
 								</div>
 								<div class="form-group">
 									<label for="cboSexo">Sexo:</label>

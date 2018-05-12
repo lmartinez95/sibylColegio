@@ -65,7 +65,7 @@ almTelResponsable VARCHAR(15),
 almFoto VARCHAR(100),
 almPassword VARCHAR(64)
 );
-
+SELECT COUNT(empId) AS cant FROM Empleado WHERE empCodigo = 'RM180001' AND empPassword = SHA2('RM180001',256);
 CREATE TABLE Grupo( #Para DocenteMateria
 grpId INTEGER AUTO_INCREMENT PRIMARY KEY,
 empId INTEGER, CONSTRAINT FK_Empleado_Grupo FOREIGN KEY(empId) REFERENCES Empleado(empId),
@@ -74,7 +74,7 @@ nvlId INTEGER, CONSTRAINT FK_Nivel_Grupo FOREIGN KEY(nvlId) REFERENCES Nivel(nvl
 );
 
 SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel FROM Grupo g
-INNER JOIN Empleado e ON g.empId = em.empId
+INNER JOIN Empleado e ON g.empId = e.empId
 INNER JOIN Materia m ON g.matId = m.matId
 INNER JOIN Nivel n ON g.nvlId = n.nvlId;
 
@@ -106,7 +106,6 @@ CASE e.empSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,e.empDUI,te
 FROM Empleado e INNER JOIN TipoEmpleado te ON e.tempId = te.tempId;
 
 
-
 DROP PROCEDURE IF EXISTS spAddEmpleado;
 
 DELIMITER $$
@@ -115,13 +114,13 @@ CREATE PROCEDURE spAddEmpleado (IN p_empNombre VARCHAR(50),IN p_empApellidoP VAR
 	IN p_empDireccion VARCHAR(400),IN p_empEmail VARCHAR(100),IN p_tempId INT)
 BEGIN
 	DECLARE codigo VARCHAR(8);
-	DECLARE i DECIMAL(4,0) DEFAULT 0;
+	DECLARE i INT;
     
     SET codigo = CONCAT(SUBSTRING(p_empApellidoP,1,1), SUBSTRING(p_empApellidoM,1,1), SUBSTRING(YEAR(NOW()),3,2));
-	SELECT CAST(SUBSTRING(MAX(empId),5,4) AS DECIMAL(4,0)) INTO i FROM Empleado WHERE SUBSTRING(empCodigo,3,2) = SUBSTRING(YEAR(NOW()),3,2);
+	SELECT CAST(SUBSTRING(MAX(empCodigo),5,4) AS UNSIGNED) INTO i FROM Empleado WHERE SUBSTRING(empCodigo,3,2) = SUBSTRING(YEAR(NOW()),3,2);
     
     CASE i
-		WHEN i > 0 THEN SET i =+ 1;
+		WHEN i > 0 THEN SET i = i + 1;
         ELSE SET i = 1;
 	END CASE;
     
@@ -134,13 +133,11 @@ BEGIN
 	ELSEIF (i < 10000) THEN
 		SET codigo = CONCAT(codigo, i);
 	END IF;
-    INSERT INTO Empleado(empCodigo,empNombre,empApellidoP,empApellidoM,empSexo,empDUI,empNIT,empISSS,empNUP,empDireccion,empEmail,tempId) 
-		VALUES(codigo,p_empNombre,p_empApellidoP,p_empApellidoM,p_empSexo,p_empDUI,p_empNIT,p_empISSS,p_empNUP,p_empDireccion,p_empEmail,p_tempId);
+    INSERT INTO Empleado(empCodigo,empNombre,empApellidoP,empApellidoM,empSexo,empDUI,empNIT,empISSS,empNUP,empDireccion,empEmail,tempId,empPassword) 
+		VALUES(codigo,p_empNombre,p_empApellidoP,p_empApellidoM,p_empSexo,p_empDUI,p_empNIT,p_empISSS,p_empNUP,p_empDireccion,p_empEmail,p_tempId,SHA2(codigo,256));
 	SELECT codigo;
 END $$
 DELIMITER ;
-
-CALL spAddEmpleado('Rivera','Martínez');
 
 
 #Alumno
@@ -152,13 +149,13 @@ IN p_almLugarNac VARCHAR(100),IN p_almSexo CHAR(1),IN p_almDireccion VARCHAR(400
 IN p_almTelCasa VARCHAR(15),IN p_almTelCel VARCHAR(15),IN p_almCorreo VARCHAR(50),IN p_almResponsable VARCHAR(50),IN p_almTelResponsable VARCHAR(15))
 BEGIN
 	DECLARE codigo VARCHAR(8);
-	DECLARE i DECIMAL(4,0) DEFAULT 0;
+	DECLARE i INTEGER DEFAULT 0;
     
     SET codigo = YEAR(NOW());
-	SELECT CAST(SUBSTRING(MAX(almId),5,4) AS DECIMAL(4,0)) INTO i FROM Alumno WHERE SUBSTRING(almCodigo,1,4) = YEAR(NOW());
+	SELECT CAST(SUBSTRING(MAX(almCodigo),5,4) AS UNSIGNED) INTO i FROM Alumno WHERE SUBSTRING(almCodigo,1,4) = YEAR(NOW());
     
     CASE i
-		WHEN i > 0 THEN SET i =+ 1;
+		WHEN i > 0 THEN SET i = i + 1;
         ELSE SET i = 1;
 	END CASE;
     
@@ -171,10 +168,11 @@ BEGIN
 	ELSEIF (i < 10000) THEN
 		SET codigo = CONCAT(codigo, i);
 	END IF;
-    INSERT INTO Alumno(almCodigo,almNombre,almApellidoP,almApellidoM,almFechaNac,almLugarNac,almSexo,almDireccion,almMadre,almPadre,almTelCasa,almTelCel,almCorreo,almResponsable,almTelResponsable) 
-		VALUES(codigo,p_almNombre,p_almApellidoP,p_almApellidoM,p_almFechaNac,p_almLugarNac,p_almSexo,p_almDireccion,p_almMadre,p_almPadre,p_almTelCasa,p_almTelCel,p_almCorreo,p_almResponsable,p_almTelResponsable);
+    INSERT INTO Alumno(almCodigo,almNombre,almApellidoP,almApellidoM,almFechaNac,almLugarNac,almSexo,almDireccion,almMadre,almPadre,almTelCasa,almTelCel,almCorreo,almResponsable,almTelResponsable,almPassword) 
+		VALUES(codigo,p_almNombre,p_almApellidoP,p_almApellidoM,p_almFechaNac,p_almLugarNac,p_almSexo,p_almDireccion,p_almMadre,p_almPadre,p_almTelCasa,p_almTelCel,p_almCorreo,p_almResponsable,p_almTelResponsable,SHA2(codigo,256));
 	SELECT codigo;
 END $$
 DELIMITER ;
 
 CALL spAddAlumno('Luis','Rivera','Martínez');
+
