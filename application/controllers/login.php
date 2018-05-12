@@ -16,10 +16,11 @@
                 $pass = $this->input->post('pass');
                 $tipo = $this->input->post('tipo');
                 if ($this->Login_model->verificar($carne, $pass, $tipo)) {
+                    $this->session->userdata(array('codigo' => $this->input->post('carne')));
                     if ($tipo == "Administrador"){
                         redirect('empleado');
                     }else if($tipo == "Profesor"){
-                        //redirect('');
+                        redirect('profesor');
                     }
                 }else{
                     $data['message'] = "El carné o contraseña son invalidos";

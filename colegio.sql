@@ -65,7 +65,8 @@ almTelResponsable VARCHAR(15),
 almFoto VARCHAR(100),
 almPassword VARCHAR(64)
 );
-SELECT COUNT(empId) AS cant FROM Empleado WHERE empCodigo = 'RM180001' AND empPassword = SHA2('RM180001',256);
+
+
 CREATE TABLE Grupo( #Para DocenteMateria
 grpId INTEGER AUTO_INCREMENT PRIMARY KEY,
 empId INTEGER, CONSTRAINT FK_Empleado_Grupo FOREIGN KEY(empId) REFERENCES Empleado(empId),
@@ -76,7 +77,8 @@ nvlId INTEGER, CONSTRAINT FK_Nivel_Grupo FOREIGN KEY(nvlId) REFERENCES Nivel(nvl
 SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel FROM Grupo g
 INNER JOIN Empleado e ON g.empId = e.empId
 INNER JOIN Materia m ON g.matId = m.matId
-INNER JOIN Nivel n ON g.nvlId = n.nvlId;
+INNER JOIN Nivel n ON g.nvlId = n.nvlId
+WHERE g.empId = 3;
 
 CREATE TABLE detGrupo(
 dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -105,6 +107,10 @@ SELECT e.empCodigo,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) as 
 CASE e.empSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,e.empDUI,te.tempNombre
 FROM Empleado e INNER JOIN TipoEmpleado te ON e.tempId = te.tempId;
 
+SELECT a.almId,CONCAT(a.almNombre,' ',a.almApellidoP,' ',a.almApellidoM) as nombre FROM Alumno a
+JOIN detGrupo dg ON dg.almId = a.almId
+WHERE dg.grpId <> 1
+HAVING COUNT(dg.almId) = 0;
 
 DROP PROCEDURE IF EXISTS spAddEmpleado;
 
