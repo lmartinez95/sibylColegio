@@ -1,41 +1,31 @@
 <?php
-    class Empleado extends CI_Controller
+    class TipoEmpleado extends CI_Controller
     {
         public function __construct()
         {
             parent::__construct();
-            $this->load->model('empleado_model');
+            $this->load->model('TipoEmpleado_model');
             $this->load->helper('url_helper');
         }
         public function index($mensaje = NULL, $nivel = NULL){
-            $data['results'] = $this->empleado_model->mostrar();
-            $data['combo'] = $this->empleado_model->cargaCombo();
-            $data['title'] = 'Empleados';
+            $data['results'] = $this->TipoEmpleado_model->mostrar();
+            $data['title'] = 'Tipos de empleados';
             if (isset($mensaje) && isset($nivel)) {
                 $data['mensaje'] = $mensaje;
                 $data['nivel'] = $nivel;
             }
             $this->load->view('shared/header', $data);
-            $this->load->view('empleado/index', $data);
+            $this->load->view('tipoEmpleado/index', $data);
         }
 
         public function agregar()
         {
             $data = array(
-                'empNombre' => $_REQUEST['txtNombre'],
-                'empApellidoP' => $_REQUEST['txtApellidoP'],
-                'empApellidoM' => $_REQUEST['txtApellidoM'],
-                'empSexo' => $_REQUEST['cboSexo'],
-                'empDUI' => $_REQUEST['txtDUI'],
-                'empNIT' => $_REQUEST['txtNIT'],
-                'empISSS' => $_REQUEST['txtISSS'],
-                'empNUP' => $_REQUEST['txtNUP'],
-                'empDireccion' => $_REQUEST['txtDireccion'],
-                'empEmail' => $_REQUEST['txtEmail'],
-                'tempId' => $_REQUEST['cboTempId'] );
-            $b = $this->empleado_model->agregar($data);
-            if (substr($b,0,3) === TRUE) {
-                $mensaje = "Registro agregado exitosamente. El codigo es ".substr($b,4);
+                'tempCodigo' => $_REQUEST['txtTempCodigo'],
+                'tempNombre' => $_REQUEST['txtTempNombre'] );
+            $b = $this->TipoEmpleado_model->agregar($data);
+            if ($b === TRUE) {
+                $mensaje = "Registro agregado exitosamente.";
                 $nivel = 'success';
             } else {
                 $mensaje = $b;
@@ -47,7 +37,7 @@
         public function eliminar($value = null)
         {
             if (isset($value)) {
-                $b = $this->empleado_model->eliminar($value);
+                $b = $this->TipoEmpleado_model->eliminar($value);
                 if ($b === TRUE) {
                     $mensaje = "Registro eliminado exitosamente.";
                     $nivel = 'success';

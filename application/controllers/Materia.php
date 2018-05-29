@@ -1,29 +1,29 @@
 <?php
-    class Nivel extends CI_Controller
+    class Materia extends CI_Controller
     {
         public function __construct()
         {
             parent::__construct();
-            $this->load->model('nivel_model');
+            $this->load->model('Materia_model');
             $this->load->helper('url_helper');
         }
         public function index($mensaje = NULL, $nivel = NULL){
-            $data['results'] = $this->nivel_model->mostrar();
-            $data['title'] = 'Niveles de estudio';
+            $data['results'] = $this->Materia_model->mostrar();
+            $data['title'] = 'Materias';
             if (isset($mensaje) && isset($nivel)) {
                 $data['mensaje'] = $mensaje;
                 $data['nivel'] = $nivel;
             }
             $this->load->view('shared/header', $data);
-            $this->load->view('nivel/index', $data);
+            $this->load->view('materia/index', $data);
         }
 
         public function agregar()
         {
             $data = array(
-                'nvlAbrev' => $_REQUEST['nvlAbrev'],
-                'nvlNivel' => $_REQUEST['nvlNivel'] );
-            $b = $this->nivel_model->agregar($data);
+                'matCodigo' => $_REQUEST['txtCodigo'],
+                'matNombre' => $_REQUEST['txtNombre'] );
+            $b = $this->Materia_model->agregar($data);
             if ($b === TRUE) {
                 $mensaje = "Registro agregado exitosamente.";
                 $nivel = 'success';
@@ -37,7 +37,7 @@
         public function eliminar($value = null)
         {
             if (isset($value)) {
-                $b = $this->nivel_model->eliminar($value);
+                $b = $this->Materia_model->eliminar($value);
                 if ($b === TRUE) {
                     $mensaje = "Registro eliminado exitosamente.";
                     $nivel = 'success';

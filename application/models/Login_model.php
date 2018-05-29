@@ -6,8 +6,8 @@
         }
         public function verificar($carne, $pass, $tipo){
             $this->db->select('COUNT(e.empId) AS cant');
-            $this->db->from('empleado e');
-            $this->db->join('tipoempleado TP', 'e.tempId = TP.tempId');
+            $this->db->from('Empleado e');
+            $this->db->join('TipoEmpleado TP', 'e.tempId = TP.tempId');
             $this->db->where('e.empCodigo', $carne);
             $this->db->where('e.empPassword', hash('sha256',$pass));
             $this->db->where('TP.tempNombre', $tipo);

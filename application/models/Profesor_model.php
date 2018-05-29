@@ -1,16 +1,25 @@
 <?php
-    class Grupo_model extends CI_Model
+    class Profesor_model extends CI_Model
     {
         public function __construct(){
             $this->load->database();
         }
 
-        public function mostrar(){
+        public function mostrar($codigo){
+            $this->db->select('empId');
+            $this->db->from('Empleado');
+            $this->db->where('empCodigo' , $codigo);
+            $query = $this->db->get()->row_array();
+
+            
             $this->db->select("g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel");
             $this->db->from('Grupo g');
             $this->db->join('Empleado e', 'g.empId = e.empId');
             $this->db->join('Materia m', 'g.matId = m.matId');
             $this->db->join('Nivel n', 'g.nvlId = n.nvlId');
+            $this->db->where('g.empId', $query['empId']);
+            
+
             $query = $this->db->get();
             $this->db->close();
             return $query->result_array();
@@ -63,16 +72,6 @@
             } finally{
                 $this->db->close();
             }
-        }
-
-        public function listado($grupo){
-            $this->db->select("a.almId,CONCAT(a.almNombre,' ',a.almApellidoP,' ',a.almApellidoM) as nombre");
-            $this->db->from('detGrupo dg');
-            $this->db->join('Alumno a', 'dg.almId = a.almId');
-            $this->db->where('dg.grpId', $grupo);
-            $query = $this->db->get();
-            $this->db->close();
-            return $query->result_array();
         }
 
         public function eliminar($value)

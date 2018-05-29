@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sibyl System - <?php echo $title; ?></title>
+    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/images/favicon.png" />
+    <title><?php echo $title; ?> - Sibyl System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/fontawesome-all.css" />
@@ -21,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>empleado/"><i class="fas fa-chalkboard-teacher"></i> Profesores <!--<span class="sr-only">(current)</span>--></a>
+            <a class="nav-link" href="<?php echo base_url(); ?>empleado/"><i class="fas fa-user-tie"></i> Profesores <!--<span class="sr-only">(current)</span>--></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url(); ?>alumno/"><i class="fas fa-graduation-cap"></i> Alumnos</a>

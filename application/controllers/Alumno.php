@@ -4,11 +4,11 @@
         public function __construct()
         {
             parent::__construct();
-            $this->load->model('alumno_model');
+            $this->load->model('Alumno_model');
             $this->load->helper('url_helper');
         }
         public function index($mensaje = NULL, $nivel = NULL){
-            $data['results'] = $this->alumno_model->mostrar();
+            $data['results'] = $this->Alumno_model->mostrar();
             $data['title'] = 'Alumnos';
             if (isset($mensaje) && isset($nivel)) {
                 $data['mensaje'] = $mensaje;
@@ -35,7 +35,7 @@
                 'almCorreo' => $_REQUEST['txtEmail'],
                 'almResponsable' => $_REQUEST['txtResponsable'],
                 'almTelResponsable' => $_REQUEST['txtTelResponsable'] );
-            $b = $this->alumno_model->agregar($data);
+            $b = $this->Alumno_model->agregar($data);
             if (substr($b['codigo'],0,3) === TRUE) {
                 $mensaje = "Registro agregado exitosamente. El codigo es ".substr($b['codigo'],4);
                 $nivel = 'success';
@@ -49,7 +49,7 @@
         public function eliminar($value = null)
         {
             if (isset($value)) {
-                $b = $this->alumno_model->eliminar($value);
+                $b = $this->Alumno_model->eliminar($value);
                 if ($b === TRUE) {
                     $mensaje = "Registro eliminado exitosamente.";
                     $nivel = 'success';
