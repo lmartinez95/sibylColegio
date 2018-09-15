@@ -29,8 +29,7 @@ empISSS VARCHAR(20),
 empNUP VARCHAR(20),
 empDireccion VARCHAR(400),
 empEmail VARCHAR(100),
-tempId INTEGER, CONSTRAINT FK_TipoEmpleado_Empleado FOREIGN KEY(tempId) REFERENCES TipoEmpleado(tempId),
-empPassword VARCHAR(64)
+tempId INTEGER, CONSTRAINT FK_TipoEmpleado_Empleado FOREIGN KEY(tempId) REFERENCES TipoEmpleado(tempId)
 );
 
 CREATE TABLE Nivel(
@@ -48,6 +47,7 @@ matNombre VARCHAR(50)
 CREATE TABLE Alumno(
 almId INTEGER AUTO_INCREMENT PRIMARY KEY,
 almCodigo VARCHAR(8), CONSTRAINT UC_almCodigo UNIQUE (almCodigo),
+almNie VARCHAR(8), CONSTRAINT UC_almNie UNIQUE (almNie),
 almNombre VARCHAR(50) NOT NULL,
 almApellidoP VARCHAR(25) NOT NULL,
 almApellidoM VARCHAR(25),
@@ -62,8 +62,7 @@ almTelCel VARCHAR(15),
 almCorreo VARCHAR(50),
 almResponsable VARCHAR(50),
 almTelResponsable VARCHAR(15),
-almFoto VARCHAR(100),
-almPassword VARCHAR(64)
+almFoto VARCHAR(100)
 );
 
 
@@ -86,7 +85,39 @@ grpId INTEGER, CONSTRAINT FK_Grupo_DetalleGRupo FOREIGN KEY(grpId) REFERENCES Gr
 almId INTEGER, CONSTRAINT FK_Alumno_DetalleGrupo FOREIGN KEY(almId) REFERENCES Alumno(almId)
 );
 
+CREATE TABLE Evaluaciones(
+evaId INTEGER AUTO_INCREMENT PRIMARY KEY,
+evaNombre VARCHAR(50),
+evaPorcentaje FLOAT, CONSTRAINT CHK_evaPorcentaje CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
+grpId INTEGER, CONSTRAINT FK_Grupo_Evaluaciones FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
+matId INTEGER, CONSTRAINT FK_Materia_Evaluaciones FOREIGN KEY(matId) REFERENCES Materia(matId)
+);
+
 CREATE TABLE Notas(
+notId INTEGER AUTO_INCREMENT PRIMARY KEY,
+notNota FLOAT, CONSTRAINT CHK_notNota CHECK (notNota >= 0.0 AND notNota <= 10.0),
+notPorcentaje FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
+almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
+grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
+matId INTEGER, CONSTRAINT FK_Materia_Notas FOREIGN KEY(matId) REFERENCES Materia(matId)
+);
+
+CREATE TABLE TipoUsuario(
+tusrId INTEGER AUTO_INCREMENT PRIMARY KEY,
+tusrNombre VARCHAR(50),
+tusrRedirect VARCHAR(15)
+);
+
+
+CREATE TABLE Usuario(
+usrId INTEGER AUTO_INCREMENT PRIMARY KEY,
+usrUsuario VARCHAR(8), CONSTRAINT UC_usrUsuario UNIQUE (usrUsuario),
+usrPassword VARCHAR(64),
+tusrId INTEGER, CONSTRAINT FK_TipoUsuario_Usuario FOREIGN KEY(tusrId) REFERENCES TipoUsuario(tusrId)
+);
+
+
+/*CREATE TABLE Notas(
 notId INTEGER AUTO_INCREMENT PRIMARY KEY,
 notNota1 FLOAT, CONSTRAINT CHK_notNota1 CHECK (notNota1 >= 0.0 AND notNota1 <= 10.0),
 notPorcentaje1 FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
@@ -101,7 +132,7 @@ notPorcentaje5 FLOAT, CONSTRAINT CHK_notPorcentaje5 CHECK (notPorcentaje5 >= 0.0
 notPromedio FLOAT AS ((notNota1*notPorcentaje1)+(notNota2*notPorcentaje2)+(notNota3*notPorcentaje3)+(notNota4*notPorcentaje4)+(notNota5*notPorcentaje5)),
 almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
 grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
-);
+);*/
 
 SELECT e.empCodigo,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) as Nombre,
 CASE e.empSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,e.empDUI,te.tempNombre
