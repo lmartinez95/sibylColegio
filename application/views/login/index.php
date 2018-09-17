@@ -13,57 +13,30 @@
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 </head>
-<body>
-    <div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-t-50 p-b-90">
-                <?php echo form_open('login/validar','class="login100-form validate-form flex-sb flex-w"'); ?>    
-					<span class="login100-form-title p-b-51">
-						Login
-					</span>
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "El Carné es requerido">
-						<input class="input100" type="text" name="carne" placeholder="Carné" autocomplete="off">
-						<span class="focus-input100"></span>
-					</div>
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "La contraseña es requerida">
-						<input class="input100" type="password" name="pass" placeholder="Contraseña">
-						<span class="focus-input100"></span>
-					</div>
-					<div class="flex-sb-m w-full p-t-3 p-b-24">
-						<div class="contact100-form-checkbox">
-							<div class="row">
-								<div class="col-6">
-									<input class="input-checkbox100" id="ckb1" type="radio" name="tipo" value="Administrador">
-									<label class="label-checkbox100" for="ckb1">
-										Administrador
-									</label>
-								</div>
-								<div class="col-6">
-									<input class="input-checkbox100" id="ckb2" type="radio" name="tipo" value="Profesor">
-									<label class="label-checkbox100" for="ckb2">
-										Profesor
-									</label>
-								</div>
-							</div>
-						</div>
-                    </div>
-                    <div>
-						<p class="message">
-                            <?php 
-                                if (isset($message)){
-                                    echo $message;
-                                }
-                            ?>
-                        </p>
-                    </div>
-					<div class="container-login100-form-btn m-t-17">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
-                <?php echo form_close(); ?>
-			</div>
-		</div>
+<body class="text-center">
+    <form class="form-signin">
+      <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" data-validate = "La contraseña es requerida" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+	  <div>
+		<p class="message">
+			<?php 
+				if (isset($message)){
+					echo $message;
+				}
+			?>
+		</p>
 	</div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    </form>
 </body>
 </html>

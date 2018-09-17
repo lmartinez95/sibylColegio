@@ -4,8 +4,3 @@
 <IfModule !authz_core_module>
 	Deny from all
 </IfModule>
-<FilesMatch "\.(ttf|otf|eot|woff|woff2)$">
-    <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Origin "http://skin.cdn.com"
-    </IfModule>
-</FilesMatch>
