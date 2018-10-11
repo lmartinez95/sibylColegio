@@ -95,23 +95,23 @@
             url:$(this).attr("action"),
             type:$(this).attr("method"),
             data:$(this).serialize(),
+            dataType: 'json',
             beforeSend: function(){
               $("#loading").show();
             },
-            complete: function(data){
+            complete: function(response){
               $("#loading").hide();
             },
-            success: function(result) {
-              if (result == 1) {
-                
-              } else if(result == 0){
+            success: function(response) {
+              if (response.status) {
+                document.location.href = response.redirect;
+              } else if(response.status == false){
                 document.getElementById("message").innerHTML = "<div class='alert alert-danger'><strong>¡Error!</strong> Datos inválidos</div>";
               }else{
                 document.getElementById("message").innerHTML = "<div class='alert alert-warning'><strong>¡Error!</strong>Ingrese los datos requeridos</div>";
               }
-
-            }
-          });
+            } //success
+          }); //ajax
         });
       });
     </script>

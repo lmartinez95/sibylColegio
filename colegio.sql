@@ -12,13 +12,13 @@ clgEmail VARCHAR(75)
 
 CREATE TABLE TipoEmpleado(
 tempId INTEGER AUTO_INCREMENT PRIMARY KEY,
-tempCodigo VARCHAR(8),
+tempCodigo VARCHAR(8), CONSTRAINT UQ_tempCodigo UNIQUE (tempCodigo),
 tempNombre VARCHAR(50)
 );
 
 CREATE TABLE Empleado(
 empId INTEGER AUTO_INCREMENT PRIMARY KEY,
-empCodigo VARCHAR(8), CONSTRAINT UC_empCodigo UNIQUE (empCodigo),
+empCodigo VARCHAR(8), CONSTRAINT UQ_empCodigo UNIQUE (empCodigo),
 empNombre VARCHAR(50) NOT NULL,
 empApellidoP VARCHAR(25) NOT NULL,
 empApellidoM VARCHAR(25),
@@ -46,8 +46,8 @@ matNombre VARCHAR(50)
 
 CREATE TABLE Alumno(
 almId INTEGER AUTO_INCREMENT PRIMARY KEY,
-almCodigo VARCHAR(8), CONSTRAINT UC_almCodigo UNIQUE (almCodigo),
-almNie VARCHAR(8), CONSTRAINT UC_almNie UNIQUE (almNie),
+almCodigo VARCHAR(8), CONSTRAINT UQ_almCodigo UNIQUE (almCodigo),
+almNie VARCHAR(8), CONSTRAINT UQ_almNie UNIQUE (almNie),
 almNombre VARCHAR(50) NOT NULL,
 almApellidoP VARCHAR(25) NOT NULL,
 almApellidoM VARCHAR(25),
@@ -73,11 +73,6 @@ matId INTEGER, CONSTRAINT FK_Materia_Grupo FOREIGN KEY(matId) REFERENCES Materia
 nvlId INTEGER, CONSTRAINT FK_Nivel_Grupo FOREIGN KEY(nvlId) REFERENCES Nivel(nvlID)
 );
 
-SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel FROM Grupo g
-INNER JOIN Empleado e ON g.empId = e.empId
-INNER JOIN Materia m ON g.matId = m.matId
-INNER JOIN Nivel n ON g.nvlId = n.nvlId
-WHERE g.empId = 3;
 
 CREATE TABLE detGrupo(
 dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -102,20 +97,62 @@ grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grp
 matId INTEGER, CONSTRAINT FK_Materia_Notas FOREIGN KEY(matId) REFERENCES Materia(matId)
 );
 
+CREATE TABLE HNotas(
+hnotId INTEGER AUTO_INCREMENT PRIMARY KEY,
+nvlNombre VARCHAR(25),
+matNombre VARCHAR(50)
+
+);
+
 CREATE TABLE Rol(
 rolId INTEGER AUTO_INCREMENT PRIMARY KEY,
 rolNombre VARCHAR(50),
 rolRedirect VARCHAR(15)
 );
 
+CREATE TABLE Acceso(
+accId INTEGER AUTO_INCREMENT PRIMARY KEY,
+accVista VARCHAR(25),
+accDescripcion VARCHAR(50)
+);
+
+CREATE TABLE RolAcceso(
+raccId INTEGER AUTO_INCREMENT PRIMARY KEY,
+rolId INTEGER, CONSTRAINT FK_Rol_RolAcceso FOREIGN KEY(rolId) REFERENCES Rol(rolId),
+accId INTEGER, CONSTRAINT FK_Acceso_RolAcceso FOREIGN KEY(accId) REFERENCES Acceso(accId)
+);
 
 CREATE TABLE Usuario(
 usrId INTEGER AUTO_INCREMENT PRIMARY KEY,
-usrUsuario VARCHAR(8), CONSTRAINT UC_usrUsuario UNIQUE (usrUsuario),
+usrUsuario VARCHAR(8), CONSTRAINT UQ_usrUsuario UNIQUE (usrUsuario),
+usrNombre VARCHAR(50),
 usrPassword VARCHAR(64),
+empId INTEGER,
 rolId INTEGER, CONSTRAINT FK_Rol_Usuario FOREIGN KEY(rolId) REFERENCES Rol(rolId)
 );
 
+INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','/admin');
+INSERT INTO Acceso(accVista) VALUES('Panel de administración');
+INSERT INTO RolAcceso(rolId,accId) VALUES(1,1);
+INSERT INTO Usuario VALUES(null,'admin','5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5',null,1);
+
+
+#-------------------------------------Consultas---------------------------------------------------
+SELECT u.rolId,u.empId,r.rolRedirect FROM Usuario u
+INNER JOIN Rol r ON u.rolId = r.rolId
+WHERE u.usrUsuario = 'admin' AND u.usrPassword = '5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5';
+
+SELECT a.accVista FROM RolAcceso ra
+INNER JOIN Rol r ON ra.rolId = r.rolId
+INNER JOIN Acceso a ON ra.accId = a.accId
+INNER JOIN Usuario u ON u.rolId = r.rolId
+WHERE ra.rolId = 1;
+
+SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel FROM Grupo g
+INNER JOIN Empleado e ON g.empId = e.empId
+INNER JOIN Materia m ON g.matId = m.matId
+INNER JOIN Nivel n ON g.nvlId = n.nvlId
+WHERE g.empId = 3;
 
 /*CREATE TABLE Notas(
 notId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -154,7 +191,7 @@ BEGIN
 	DECLARE i INT;
     
     SET codigo = CONCAT(SUBSTRING(p_empApellidoP,1,1), SUBSTRING(p_empApellidoM,1,1), SUBSTRING(YEAR(NOW()),3,2));
-	SELECT CAST(SUBSTRING(MAX(empCodigo),5,4) AS UNSIGNED) INTO i FROM Empleado WHERE SUBSTRING(empCodigo,3,2) = SUBSTRING(YEAR(NOW()),3,2);
+	SELECT CAST(SUBSTRING(MAX(empCodigo),5,4) AS SIGNED) INTO i FROM Empleado WHERE SUBSTRING(empCodigo,3,2) = SUBSTRING(YEAR(NOW()),3,2);
     
     CASE i
 		WHEN i > 0 THEN SET i = i + 1;

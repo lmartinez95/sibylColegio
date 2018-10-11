@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    <link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon.ico" type="image/x-icon">
+    <title><?php echo $title; ?> - Sibyl System</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" id="main-stylesheet" data-version="1.0.1" href="<?php echo base_url(); ?>assets/css/shards-dashboards.1.0.1.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/extras.1.0.1.min.css">
+    <script rel="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js" integrity=""></script>
   </head>
   <body class="h-100">
     
@@ -25,8 +27,8 @@
             <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
               <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
                 <div class="d-table m-auto">
-                  <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="images/shards-dashboards-logo.svg" alt="Shards Dashboard">
-                  <span class="d-none d-md-inline ml-1">Shards Dashboard</span>
+                  <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="<?php echo base_url(); ?>assets/images/logo.png" alt="Shards Dashboard">
+                  <span class="d-none d-md-inline ml-1">Sibyl System</span>
                 </div>
               </a>
               <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
@@ -51,35 +53,45 @@
                   <span>Blog Dashboard</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link " href="components-blog-posts.html">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">vertical_split</i>
-                  <span>Blog Posts</span>
+                  <span>Personal</span>
                 </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/tipoEmpleado"><i class="fa fa-circle-o"></i> Tipo de empleados</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/empleado"><i class="fa fa-circle-o"></i> Empleados</a>
+                  <div class="dropdown-divider"></div>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="add-new-post.html">
+                <a class="nav-link " href="<?php echo base_url(); ?>admin/materia">
                   <i class="material-icons">note_add</i>
-                  <span>Add New Post</span>
+                  <span>Materias</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="form-components.html">
+                <a class="nav-link " href="<?php echo base_url(); ?>admin/nivel">
                   <i class="material-icons">view_module</i>
-                  <span>Forms &amp; Components</span>
+                  <span>Niveles</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="tables.html">
+                <a class="nav-link " href="<?php echo base_url(); ?>admin/grupo">
                   <i class="material-icons">table_chart</i>
-                  <span>Tables</span>
+                  <span>Grupos</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link " href="user-profile-lite.html">
-                  <i class="material-icons">person</i>
-                  <span>User Profile</span>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">vertical_split</i>
+                  <span>Alumnos</span>
                 </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno/matricula"><i class="fas fa-user-plus"></i> Matrícula</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno"><i class="fas fa-user-graduate"></i> Alumnos</a>
+                  <div class="dropdown-divider"></div>
+                </div>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="errors.html">
@@ -142,7 +154,7 @@
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
+                    <img class="user-avatar rounded-circle mr-2" src="<?php echo base_url(); ?>assets/images/logo.png" alt="User Avatar">
                     <span class="d-none d-md-inline-block">Sierra Brooks</span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
@@ -176,7 +188,9 @@
             </div>
             <!-- End Page Header -->
             <!-- Content -->
-            
+            <div class="container">
+              <?php $this->load->view($content_view); ?>
+            </div>
             <!-- End Content -->
             
           </div>
@@ -205,7 +219,6 @@
         </main>
       </div>
     </div>
-    <script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js" integrity=""></script>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js" integrity=""></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" integrity=""></script>
     <script src="<?php echo base_url(); ?>assets/js/Chart.min.js"></script>

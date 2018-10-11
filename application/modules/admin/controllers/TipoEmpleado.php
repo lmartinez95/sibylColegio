@@ -1,57 +1,45 @@
 <?php
-    class TipoEmpleado extends CI_Controller
+    class TipoEmpleado extends MY_Controller
     {
         public function __construct()
         {
             parent::__construct();
             $this->load->model('TipoEmpleado_model');
-            $this->load->helper('url_helper');
         }
-        public function index($mensaje = NULL, $nivel = NULL){
-            $data['results'] = $this->TipoEmpleado_model->mostrar();
+        public function index(){
             $data['title'] = 'Tipos de empleados';
-            if (isset($mensaje) && isset($nivel)) {
-                $data['mensaje'] = $mensaje;
-                $data['nivel'] = $nivel;
-            }
-            $this->load->view('shared/header', $data);
-            $this->load->view('tipoEmpleado/index', $data);
+            $data['content_view'] = 'admin/tipoEmpleado/index';
+            $data['results'] = $this->TipoEmpleado_model->mostrar();
+            $this->template->admin_dash($data);
         }
 
         public function agregar()
         {
             $data = array(
-                'tempCodigo' => $_REQUEST['txtTempCodigo'],
-                'tempNombre' => $_REQUEST['txtTempNombre'] );
+                'tempCodigo' => $this->input->post('txtTempCodigo'),
+                'tempNombre' => $this->input->post('txtTempNombre') );
             $b = $this->TipoEmpleado_model->agregar($data);
             if ($b === TRUE) {
-                $mensaje = "Registro agregado exitosamente.";
-                $nivel = 'success';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
             } else {
-                $mensaje = $b;
-                $nivel = 'warning';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
             }
-            $this->index($mensaje,$nivel);
+            redirect('admin/tipoEmpleado/');
         }
 
         public function eliminar($value = null)
         {
-            if (isset($value)) {
+            if (isset($value) && !empty($value)) {
                 $b = $this->TipoEmpleado_model->eliminar($value);
                 if ($b === TRUE) {
-                    $mensaje = "Registro eliminado exitosamente.";
-                    $nivel = 'success';
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro eliminado exitosamente</div>');
                 } else {
-                    $mensaje = $b;
-                    $nivel = 'warning';
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-warning"><strong>¡Error!</strong> ' . $b . '</div>');
                 }
-                
             } else {
-                $mensaje = "Operación no válida";
-                    $nivel = 'danger';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Operación no válida</div>');
             }
-            $this->index($mensaje,$nivel);
-            
+            redirect('admin/tipoEmpleado/');
         }
     }
     

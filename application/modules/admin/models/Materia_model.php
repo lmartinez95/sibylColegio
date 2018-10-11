@@ -18,15 +18,12 @@
                 $this->db->from('Materia');
                 $this->db->where('matCodigo', $data['matCodigo']);
                 $this->db->or_where('matNombre', $data['matNombre']);
-                $query = $this->db->get();
-                $result = $query->result_array();
-                foreach ($result as $r) {
-                    if ($r['cant'] == 0) {
-                        $this->db->insert('Materia', $data);
-                        return true;
-                    } else {
-                        return "El código o tipo ya existe";
-                    }
+                $query = $this->db->get()->row_array();
+                if ($query['cant'] == 0) {
+                    $this->db->insert('Materia', $data);
+                    return true;
+                } else {
+                    return "El código o materia ya existe";
                 }
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
@@ -43,14 +40,12 @@
                 $this->db->where('matId', $value);
                 $query = $this->db->get();
                 $result = $query->result_array();
-                foreach ($result as $r) {
-                    if ($r['cant'] == 1) {
-                        $this->db->where('matId', $value);
-                        $this->db->delete('Materia');
-                        return true;
-                    } else {
-                        return "El código no existe";
-                    }
+                if ($result['cant'] == 1) {
+                    $this->db->where('matId', $value);
+                    $this->db->delete('Materia');
+                    return true;
+                } else {
+                    return "El código no existe";
                 }
             } catch(Exception $e){
                 return "ERROR. No se pudo eliminar";
@@ -58,7 +53,5 @@
                 $this->db->close();
             }
         }
-
-        
     }
 ?>

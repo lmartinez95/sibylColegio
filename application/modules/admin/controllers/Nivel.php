@@ -1,21 +1,16 @@
 <?php
-    class Nivel extends CI_Controller
+    class Nivel extends MY_Controller
     {
         public function __construct()
         {
             parent::__construct();
             $this->load->model('Nivel_model');
-            $this->load->helper('url_helper');
         }
-        public function index($mensaje = NULL, $nivel = NULL){
+        public function index(){
+            $data['title'] = 'Niveles';
+            $data['content_view'] = 'admin/nivel/index';
             $data['results'] = $this->Nivel_model->mostrar();
-            $data['title'] = 'Niveles de estudio';
-            if (isset($mensaje) && isset($nivel)) {
-                $data['mensaje'] = $mensaje;
-                $data['nivel'] = $nivel;
-            }
-            $this->load->view('shared/header', $data);
-            $this->load->view('nivel/index', $data);
+            $this->template->admin_dash($data);
         }
 
         public function agregar()
@@ -25,33 +20,26 @@
                 'nvlNivel' => $_REQUEST['nvlNivel'] );
             $b = $this->Nivel_model->agregar($data);
             if ($b === TRUE) {
-                $mensaje = "Registro agregado exitosamente.";
-                $nivel = 'success';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
             } else {
-                $mensaje = $b;
-                $nivel = 'warning';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
             }
-            $this->index($mensaje,$nivel);
+            redirect('admin/nivel/');
         }
 
         public function eliminar($value = null)
         {
-            if (isset($value)) {
+            if (isset($value) && !empty($value)) {
                 $b = $this->Nivel_model->eliminar($value);
                 if ($b === TRUE) {
-                    $mensaje = "Registro eliminado exitosamente.";
-                    $nivel = 'success';
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro eliminado exitosamente</div>');
                 } else {
-                    $mensaje = $b;
-                    $nivel = 'warning';
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-warning"><strong>¡Error!</strong> ' . $b . '</div>');
                 }
-                
             } else {
-                $mensaje = "Operación no válida";
-                    $nivel = 'danger';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Operación no válida</div>');
             }
-            $this->index($mensaje,$nivel);
-            
+            redirect('admin/nivel/');
         }
     }
     

@@ -2,7 +2,7 @@
     class Empleado_model extends CI_Model
     {
         public function __construct(){
-            $this->load->database();
+            parent::__construct();
         }
 
         public function mostrar(){
@@ -18,24 +18,20 @@
         public function agregar($data)
         {
             try{
-                $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?)', $data);
-                return true;
+                $this->db->select('COUNT(empId) AS cant');
+                $this->db->from('Empleado');
+                $this->db->where('empDui', $data['empDUI']);
+                $result = $this->db->get()->row_array();
+                if ($result['cant'] == 0) {
+                    $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?)', $data)->row_array();
+                    return array('status' => TRUE, 'value' => $query['codigo']);
+                } else {
+                    return array('status' => FALSE, 'value' => $query['El empleado ya existe']);
+                }     
             } catch(Exception $e){
-                return "ERROR. No se pudo ingresar el registro";
+                return array('status' => FALSE, 'value' => $query['No se pudo ingresar el empleado']);
             } finally{
                 $this->db->close();
-            }
-        }
-
-        public function cargaCombo()
-        {
-            try{
-                $this->db->select('tempId,tempNombre');
-                $this->db->from('TipoEmpleado');
-                $query = $this->db->get();
-                return $query->result_array();
-            } catch(Exception $e){
-                return false;
             }
         }
 
@@ -47,14 +43,12 @@
                 $this->db->where('empId', $value);
                 $query = $this->db->get();
                 $result = $query->result_array();
-                foreach ($result as $r) {
-                    if ($r['cant'] == 1) {
-                        $this->db->where('empId', $value);
-                        $this->db->delete('Empleado');
-                        return true;
-                    } else {
-                        return "El código no existe";
-                    }
+                if ($r['cant'] == 1) {
+                    $this->db->where('empId', $value);
+                    $this->db->delete('Empleado');
+                    return true;
+                } else {
+                    return "El código no existe";
                 }
             } catch(Exception $e){
                 return "ERROR. No se pudo eliminar";

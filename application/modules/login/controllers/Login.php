@@ -5,11 +5,11 @@
         {
             parent::__construct();
             $this->load->library('session');
-            //$this->load->module('login');
         }
         public function index(){
             if ($this->session->userdata('codigo')) {
-                # code...
+                $ruta = base_url() . $this->session->userdata('redirect');
+                redirect($ruta);
             } else {
                 $this->load->view('login/index');
             }
@@ -21,19 +21,35 @@
                 $pass = $this->input->post('pass');
                 $this->load->database();
                 $this->load->model('Login_model');
-                if ($this->Login_model->verificar($carne, $pass)) {
-                    //$this->session->set_userdata(array('codigo' => $carne, 'login' => TRUE));
-                    echo 1;
+                $validator = array();
+                $query = $this->Login_model->verificar($carne, $pass);
+                if ($query) {
+                    $results = $this->Login_model->getPermisos($query['rolId']);
+                    $validator['status'] = true;
+                    $validator['redirect'] = base_url() . $query['rolRedirect'];
+                    $permisos = array();
+                    foreach ($results as $result) {
+                        array_push($permisos, $result['accVista']);
+                    }
+                    $data = array(
+                        "codigo" => $carne,
+                        "empId" => $query['empId'],
+                        "redirect" => $query['rolRedirect'],
+                        "permisos" => $permisos
+                    );
+                    $this->session->set_userdata($data);
                 }else{
                     //$this->session->set_flashdata('incorrecto','Usurio o contraseña errorneos');
                     //redirect('login/');
-                    echo 0;
+                    $validator['status'] = false;
                 }
             }else{
                 //$this->session->set_flashdata('incorrecto','Complete todos los campos');
                 //redirect('login/');
-                echo 2;
+                $validator['status'] = false;
             }
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($validator, JSON_FORCE_OBJECT);
         }
     }
 ?>

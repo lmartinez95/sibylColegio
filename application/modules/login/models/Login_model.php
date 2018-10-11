@@ -6,21 +6,37 @@
         }
         
         public function verificar($carne, $pass){
-            $this->db->select('COUNT(e.empId) AS cant');
-            $this->db->from('Empleado e');
-            $this->db->join('TipoEmpleado TP', 'e.tempId = TP.tempId');
-            $this->db->where('e.empCodigo', $carne);
-            $this->db->where('e.empPassword', hash('sha256',$pass));
+            $this->db->select('u.rolId,u.empId,r.rolRedirect');
+            $this->db->from('Usuario u');
+            $this->db->join('Rol r', 'u.rolId = r.rolId');
+            $this->db->where('u.usrUsuario', $carne);
+            $this->db->where('u.usrPassword', hash('sha256',$pass));
             $query = $this->db->get()->row_array();
             if(isset($query) && $query != null){
-                if($query['cant'] == 1){
-                    return true;
+                if($query['rolId'] !== NULL){
+                    return $query;
                 }else{
                     return false;
                 }
             }else{
                 return false;
             }	
+        }
+
+        public function getPermisos($rolId){
+            $this->db->select('a.accVista');
+            $this->db->from('RolAcceso ra');
+            $this->db->join('Rol r', 'ra.rolId = r.rolId');
+            $this->db->join('Acceso a', 'ra.accId = a.accId');
+            $this->db->join('Usuario u', 'u.rolId = r.rolId');
+            $this->db->where('ra.rolId', $rolId);
+            $query = $this->db->get();
+            if(isset($query) && $query != null){
+                $this->db->close();
+                return $query->result_array();
+            }else{
+                return false;
+            }
         }
     }
 ?>

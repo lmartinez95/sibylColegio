@@ -2,7 +2,6 @@
     class TipoEmpleado_model extends CI_Model
     {
         public function __construct(){
-            $this->load->database();
         }
 
         public function mostrar(){
@@ -18,15 +17,12 @@
                 $this->db->from('TipoEmpleado');
                 $this->db->where('tempCodigo', $data['tempCodigo']);
                 $this->db->or_where('tempNombre', $data['tempNombre']);
-                $query = $this->db->get();
-                $result = $query->result_array();
-                foreach ($result as $r) {
-                    if ($r['cant'] == 0) {
-                        $this->db->insert('TipoEmpleado', $data);
-                        return true;
-                    } else {
-                        return "El código o tipo ya existe";
-                    }
+                $result = $this->db->get()->row_array();
+                if ($result['cant'] == 0) {
+                    $this->db->insert('TipoEmpleado', $data);
+                    return true;
+                } else {
+                    return "El código o tipo ya existe";
                 }
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";

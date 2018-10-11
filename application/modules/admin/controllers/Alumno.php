@@ -1,21 +1,32 @@
 <?php
-    class Alumno extends CI_Controller
+    class Alumno extends MY_Controller
     {
         public function __construct()
         {
             parent::__construct();
             $this->load->model('Alumno_model');
-            $this->load->helper('url_helper');
         }
-        public function index($mensaje = NULL, $nivel = NULL){
-            $data['results'] = $this->Alumno_model->mostrar();
+
+        public function index(){
             $data['title'] = 'Alumnos';
-            if (isset($mensaje) && isset($nivel)) {
-                $data['mensaje'] = $mensaje;
-                $data['nivel'] = $nivel;
+            $data['content_view'] = 'admin/alumno/index';
+            $data['results'] = $this->Alumno_model->mostrar();
+            $this->template->admin_dash($data);
+        }
+
+        public function matricula(){
+            $data['title'] = 'Matricula Alumnos';
+            $data['content_view'] = 'admin/alumno/matricula';
+            $this->template->admin_dash($data);
+        }
+
+        function buscaAlumno(){
+            if(!empty($this->input->post('txtBuscar'))){
+                $result = $this->Alumno_model->buscaAlumno($this->input->post('txtBuscar'));
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($result, JSON_FORCE_OBJECT);
             }
-            $this->load->view('shared/header', $data);
-            $this->load->view('alumno/index', $data);
+            
         }
 
         public function agregar()
@@ -36,14 +47,12 @@
                 'almResponsable' => $_REQUEST['txtResponsable'],
                 'almTelResponsable' => $_REQUEST['txtTelResponsable'] );
             $b = $this->Alumno_model->agregar($data);
-            if (substr($b['codigo'],0,3) === TRUE) {
-                $mensaje = "Registro agregado exitosamente. El codigo es ".substr($b['codigo'],4);
-                $nivel = 'success';
+            if ($b['status'] == TRUE) {
+                $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');
             } else {
-                $mensaje = $b;
-                $nivel = 'warning';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b['value'] . '</div>');
             }
-            $this->index($mensaje,$nivel);
+            redirect('admin/alumno/');
         }
 
         public function eliminar($value = null)

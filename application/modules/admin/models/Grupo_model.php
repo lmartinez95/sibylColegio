@@ -2,7 +2,7 @@
     class Grupo_model extends CI_Model
     {
         public function __construct(){
-            $this->load->database();
+            parent::__construct();
         }
 
         public function mostrar(){
@@ -25,22 +25,6 @@
                 return "ERROR. No se pudo ingresar el registro";
             } finally{
                 $this->db->close();
-            }
-        }
-
-        public function cargaCombo($id,$value,$tabla,$where = '')
-        {
-            try{
-                $this->db->select("{$id}, {$value}");
-                $this->db->from($tabla);
-                if (isset($where) && $where <> '')
-                    $this->db->where($where);
-                $query = $this->db->get();
-                $result = $query->result_array();
-                $query->free_result();
-                return $result;
-            } catch(Exception $e){
-                return false;
             }
         }
 
