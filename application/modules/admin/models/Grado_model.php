@@ -1,16 +1,16 @@
 <?php
-    class Grupo_model extends CI_Model
+    class Grado_model extends CI_Model
     {
         public function __construct(){
             parent::__construct();
         }
 
         public function mostrar(){
-            $this->db->select("g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,gr.grdNombre");
-            $this->db->from('Grupo g');
+            $this->db->select("g.grdId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,t.turNombre,n.nvlNivel");
+            $this->db->from('Grado g');
             $this->db->join('Empleado e', 'g.empId = e.empId');
-            $this->db->join('Materia m', 'g.matId = m.matId');
-            $this->db->join('Grado gr', 'g.grdId = gr.grdId');
+            $this->db->join('Turno t', 'g.turId = t.turId');
+            $this->db->join('Nivel n', 'g.nvlId = n.nvlId');
             $query = $this->db->get();
             $this->db->close();
             return $query->result_array();
@@ -19,7 +19,7 @@
         public function agregar($data)
         {
             try{
-                $this->db->insert('Grupo', $data);
+                $this->db->insert('Grado', $data);
                 return true;
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";

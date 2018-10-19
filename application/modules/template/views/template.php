@@ -7,7 +7,7 @@
     <title><?php echo $title; ?> - Sibyl System</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" id="main-stylesheet" data-version="1.0.1" href="<?php echo base_url(); ?>assets/css/shards-dashboards.1.0.1.min.css">
@@ -59,28 +59,23 @@
                   <span>Personal</span>
                 </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/tipoEmpleado"><i class="fa fa-circle-o"></i> Tipo de empleados</a>
-                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/empleado"><i class="fa fa-circle-o"></i> Empleados</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/tipoEmpleado"><i class="fas fa-circle"></i>&emsp;Tipo de empleados</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/empleado"><i class="fas fa-id-card"></i>&emsp;Empleados</a>
                   <div class="dropdown-divider"></div>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link " href="<?php echo base_url(); ?>admin/materia">
-                  <i class="material-icons">note_add</i>
-                  <span>Materias</span>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">vertical_split</i>
+                  <span>Pedagógico</span>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="<?php echo base_url(); ?>admin/nivel">
-                  <i class="material-icons">view_module</i>
-                  <span>Niveles</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="<?php echo base_url(); ?>admin/grupo">
-                  <i class="material-icons">table_chart</i>
-                  <span>Grupos</span>
-                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/materia">&emsp;<i class="fas fa-file"></i></i> &emsp; Materias</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/nivel">&emsp;<i class="fas fa-layer-group"></i></i> &emsp;Niveles</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/grado">&emsp;<i class="fas fa-chalkboard-teacher"></i> &emsp;Grados</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/grupo">&emsp;<i class="fas fa-users"></i></i> &emsp;Grupos</a>
+                  <div class="dropdown-divider"></div>
+                </div>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -88,8 +83,8 @@
                   <span>Alumnos</span>
                 </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno/matricula"><i class="fas fa-user-plus"></i> Matrícula</a>
-                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno"><i class="fas fa-user-graduate"></i> Alumnos</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno/matricula"><i class="fas fa-user-plus"></i>&emsp;Matrícula</a>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno"><i class="fas fa-user-graduate"></i>&emsp;Alumnos</a>
                   <div class="dropdown-divider"></div>
                 </div>
               </li>

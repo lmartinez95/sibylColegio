@@ -112,10 +112,10 @@
                     </div> <!-- Fin card 2 -->
                     <br>
                     <div class="form-group">
-                        <label for="cboNvlId">Nivel:</label>
-                        <select class="form-control" name="cboNvlId" id="cboNvlId">
-                        <?php foreach ($nivel as $item) { ?>
-                            <option value="<?php echo $item["nvlId"]; ?>"><?php echo $item["nvlNivel"]; ?></option>
+                        <label for="cboGrdId">Nivel:</label>
+                        <select class="form-control" name="cboGrdId" id="cboGrdId">
+                        <?php foreach ($grado as $item) { ?>
+                            <option value="<?php echo $item["grdId"]; ?>"><?php echo $item["grdNombre"]; ?></option>
                         <?php } ?>
                         </select>
                     </div>

@@ -18,10 +18,16 @@
         public function agregar()
         {
             if ($this->input->post('btnAgregar')) {
-                $data = array(
-                    'nvlAbrev' => $_REQUEST['nvlAbrev'],
-                    'nvlNivel' => $_REQUEST['nvlNivel'],
-                    'nvlIdPadre' => $this->input->post('cboNvlIdPadre') );
+                if (empty($this->input->post('cboNvlIdPadre'))) {
+                    $data = array(
+                        'nvlAbrev' => $_REQUEST['nvlAbrev'],
+                        'nvlNivel' => $_REQUEST['nvlNivel']);
+                } else {
+                    $data = array(
+                        'nvlAbrev' => $_REQUEST['nvlAbrev'],
+                        'nvlNivel' => $_REQUEST['nvlNivel'],
+                        'nvlIdPadre' => $this->input->post('cboNvlIdPadre') );
+                }
                 $b = $this->Nivel_model->agregar($data);
                 if ($b === TRUE) {
                     $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');

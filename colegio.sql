@@ -40,10 +40,11 @@ nvlIdPadre INTEGER, CONSTRAINT FK_Nivel_Nivel FOREIGN KEY(nvlIdPadre) REFERENCES
 );
 
 CREATE TABLE Turno(
-turId INTEGER PRIMARY KEY,
+turId INTEGER AUTO_INCREMENT PRIMARY KEY,
 turNombre VARCHAR(25),
 turActivo BIT DEFAULT 0
 );
+
 
 CREATE TABLE Materia(
 matId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -52,9 +53,11 @@ matNombre VARCHAR(50)
 );
 
 CREATE TABLE Grado(
-grdId INTEGER PRIMARY KEY,
+grdId INTEGER AUTO_INCREMENT PRIMARY KEY,
 grdNombre VARCHAR(50),
-turId INTEGER, CONSTRAINT FK_Turno_Grado FOREIGN KEY(turId) REFERENCES Turno(turId)
+turId INTEGER, CONSTRAINT FK_Turno_Grado FOREIGN KEY(turId) REFERENCES Turno(turId),
+empId INTEGER, CONSTRAINT FK_Empleado_Grado FOREIGN KEY(empId) REFERENCES Empleado(empId),
+nvlId INTEGER, CONSTRAINT FK_Nivel_Grado FOREIGN KEY(nvlId) REFERENCES Nivel(nvlId)
 );
 
 CREATE TABLE Alumno(
@@ -78,12 +81,15 @@ almTelResponsable VARCHAR(15),
 almFoto VARCHAR(100)
 );
 
+
 CREATE TABLE Grupo( #Para DocenteMateria
 grpId INTEGER AUTO_INCREMENT PRIMARY KEY,
 empId INTEGER, CONSTRAINT FK_Empleado_Grupo FOREIGN KEY(empId) REFERENCES Empleado(empId),
 matId INTEGER, CONSTRAINT FK_Materia_Grupo FOREIGN KEY(matId) REFERENCES Materia(matId),
 grdId INTEGER, CONSTRAINT FK_Grado_Grupo FOREIGN KEY(grdId) REFERENCES Grado(grdId)
 );
+
+
 
 CREATE TABLE detGrupo(
 dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -95,7 +101,7 @@ CREATE TABLE Evaluacion(
 evaId INTEGER AUTO_INCREMENT PRIMARY KEY,
 evaNombre VARCHAR(50),
 evaPorcentaje FLOAT, CONSTRAINT CHK_evaPorcentaje CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
-grpId INTEGER, CONSTRAINT FK_Grupo_Evaluaciones FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
+grpId INTEGER, CONSTRAINT FK_Grupo_Evaluacion FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
 );
 
 CREATE TABLE Nota(
@@ -112,7 +118,14 @@ hnotId INTEGER AUTO_INCREMENT PRIMARY KEY,
 nvlNombre VARCHAR(25),
 matNombre VARCHAR(50)
 
+
 );
+
+drop table Nota;
+drop table Evaluacion;
+drop table detGrupo;
+drop table Grupo;
+DROP TABLE Grado;
 
 CREATE TABLE Rol(
 rolId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -140,6 +153,10 @@ usrPassword VARCHAR(64),
 rolId INTEGER, CONSTRAINT FK_Rol_Usuario FOREIGN KEY(rolId) REFERENCES Rol(rolId),
 empId INTEGER
 );
+
+-- ----------------------------------------------Llenando tablas iniciales -- ----------------------------------------------
+
+INSERT INTO Turno(turNombre,turActivo) VALUES('Matutino',1),('Vespertino',1),('Nocturno',1);
 
 INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','admin'),('Alumno','alumno'),('Docente','docente');
 INSERT INTO Acceso(accVista) VALUES('Panel de administración');
@@ -256,10 +273,10 @@ BEGIN
     SET codigo = YEAR(NOW());
 	SELECT CAST(SUBSTRING(MAX(almCodigo),5,4) AS UNSIGNED) INTO i FROM Alumno WHERE SUBSTRING(almCodigo,1,4) = YEAR(NOW());
     
-    IF (i > 0) THEN 
+    IF (i > 1) THEN 
 		SET i = i + 1;
      ELSE
-		SET i = 0;
+		SET i = 1;
 	END IF;
     
     IF (i < 10) THEN
@@ -273,8 +290,8 @@ BEGIN
 	END IF;
     
     -- Insertando los datos personales
-    INSERT INTO Alumno(almCodigo,almNombre,almApellidoP,almApellidoM,almFechaNac,almLugarNac,almSexo,almDireccion,almMadre,almPadre,almTelCasa,almTelCel,almCorreo,almResponsable,almTelResponsable,almPassword) 
-		VALUES(codigo,p_almNombre,p_almApellidoP,p_almApellidoM,p_almFechaNac,p_almLugarNac,p_almSexo,p_almDireccion,p_almMadre,p_almPadre,p_almTelCasa,p_almTelCel,p_almCorreo,p_almResponsable,p_almTelResponsable,SHA2(codigo,256));
+    INSERT INTO Alumno(almCodigo,almNombre,almApellidoP,almApellidoM,almFechaNac,almLugarNac,almSexo,almDireccion,almMadre,almPadre,almTelCasa,almTelCel,almCorreo,almResponsable,almTelResponsable) 
+		VALUES(codigo,p_almNombre,p_almApellidoP,p_almApellidoM,p_almFechaNac,p_almLugarNac,p_almSexo,p_almDireccion,p_almMadre,p_almPadre,p_almTelCasa,p_almTelCel,p_almCorreo,p_almResponsable,p_almTelResponsable);
 	
     SET almId = LAST_INSERT_ID();
     
@@ -294,7 +311,7 @@ BEGIN
     
     -- Agregandolo a la plataforma para que pueda ver sus notas
     
-    INSERT INTO Usuario VALUES(null, codigo,'5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5',(SELECT rolId FROM Rol WHERE rolNombre = 'Alumno'),null);
+    INSERT INTO Usuario(usrUsuario,usrNombre,usrPassword,rolId,empId) VALUES(codigo,CONCAT(p_almNombre,' ',p_almApellidoP,' ',p_almApellidoM),SHA2(codigo,256),(SELECT rolId FROM Rol WHERE rolNombre = 'Alumno'),null);
     
     -- Retornando el código generado
     

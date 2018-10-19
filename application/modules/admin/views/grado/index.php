@@ -26,8 +26,8 @@
 		<thead>
 			<tr>
 				<th>Empleado</th>
-				<th>Materia</th>
-				<th>Grado</th>
+				<th>Nivel</th>
+				<th>Turno</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -36,11 +36,11 @@
 			<?php foreach ($results as $result) { ?>
 				<tr>
 					<td><?php echo $result["Empleado"]; ?></td>
-					<td><?php echo $result["matNombre"]; ?></td>
-					<td><?php echo $result["grdNombre"]; ?></td>
-					<td><a class="btn btn-outline-primary" href=<?php echo base_url()."admin/grupo/addAlumno/" . $result["grpId"]; ?> data-toggle="tooltip" data-placement="top" title="Agregar alumno"><i class="fas fa-plus"></i></a> </td>
-					<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/grupo/update/" . $result["grpId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["grpId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+					<td><?php echo $result["nvlNivel"]; ?></td>
+					<td><?php echo $result["turNombre"]; ?></td>
+					<td><a class="btn btn-outline-primary" href=<?php echo base_url()."admin/grado/addAlumno/" . $result["grdId"]; ?> data-toggle="tooltip" data-placement="top" title="Agregar alumno"><i class="fas fa-plus"></i></a> </td>
+					<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/grado/update/" . $result["grdId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["grdId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 				</tr>
 			<?php } ?>
 		</tbody>
@@ -48,7 +48,7 @@
 </div>
 <?php foreach ($results as $result) { ?>
 	<!-- The Modal -->
-	<div class="modal fade" id="Eliminar<?php echo $result["grpId"]; ?>">
+	<div class="modal fade" id="Eliminar<?php echo $result["grdId"]; ?>">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 
@@ -65,7 +65,7 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<a class="btn btn-danger" href=<?php echo base_url()."admin/grupo/eliminar/" . $result["grpId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+					<a class="btn btn-danger" href=<?php echo base_url()."admin/grado/eliminar/" . $result["grpId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 				</div>
 
@@ -109,10 +109,21 @@
 			<!-- Modal body -->
 			<div class="modal-body">
 				<?php echo validation_errors();
-					echo form_open('admin/grupo/agregar'); ?>
-						
+					echo form_open('admin/grado/agregar'); ?>
 						<div class="form-group">
-							<label for="cboEmpId">Empleado:</label>
+							<label for="txtgrdNombre">Nombres:</label>
+							<input type="text" class="form-control" name="txtgrdNombre" id="txtgrdNombre" placeholder="Nombre de grado" autocomplete="off" require autofocus>
+						</div>
+						<div class="form-group">
+							<label for="cboNvlId">Nivel:</label>
+							<select class="form-control" name="cboNvlId" id="cboNvlId">
+							<?php foreach ($nivel as $item) { ?>
+								<option value="<?php echo $item["nvlId"]; ?>"><?php echo $item["nvlNivel"]; ?></option>
+							<?php } ?>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="cboEmpId">Maestro guía:</label>
 							<select class="form-control" name="cboEmpId" id="cboEmpId">
 							<?php foreach ($empleado as $emp) { ?>
 								<option value="<?php echo $emp["empId"]; ?>"><?php echo $emp["nombre"]; ?></option>
@@ -120,21 +131,14 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="cboMatId">Materia:</label>
-							<select class="form-control" name="cboMatId" id="cboMatId">
-							<?php foreach ($materia as $item) { ?>
-								<option value="<?php echo $item["matId"]; ?>"><?php echo $item["matNombre"]; ?></option>
+							<label for="cboTurId">Turno:</label>
+							<select class="form-control" name="cboTurId" id="cboTurId">
+							<?php foreach ($turno as $tur) { ?>
+								<option value="<?php echo $tur["turId"]; ?>"><?php echo $tur["turNombre"]; ?></option>
 							<?php } ?>
 							</select>
 						</div>
-						<div class="form-group">
-							<label for="cboGrdId">Grado:</label>
-							<select class="form-control" name="cboGrdId" id="cboGrdId">
-							<?php foreach ($grado as $item) { ?>
-								<option value="<?php echo $item["grdId"]; ?>"><?php echo $item["grdNombre"]; ?></option>
-							<?php } ?>
-							</select>
-						</div>
+						
 						
 			</div>
 

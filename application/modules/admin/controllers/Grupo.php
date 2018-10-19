@@ -11,7 +11,7 @@
             $data['results'] = $this->Grupo_model->mostrar();
             $data['empleado'] = $this->complements->cargaCombo('empId',"CONCAT(empNombre,' ',empApellidoP,' ',empApellidoM) AS nombre",'Empleado','tempId = 2');
             $data['materia'] = $this->complements->cargaCombo('matId','matNombre','Materia');
-            $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
+            $data['grado'] = $this->complements->cargaCombo('grdId','grdNombre','Grado');
             $data['title'] = 'Grupos';
             $data['content_view'] = 'admin/grupo/index';
             $this->template->admin_dash($data);
@@ -19,18 +19,22 @@
 
         public function agregar()
         {
-            if(!empty($this->input->post('cboEmpId')) && !empty($this->input->post('cboMatId')) && !empty($this->input->post('cboNvlId'))){
-                $data = array(
-                    'empId' => $this->input->post('cboEmpId'),
-                    'matId' => $this->input->post('cboMatId'),
-                    'nvlId' => $this->input->post('cboNvlId'));
-                $b = $this->Grupo_model->agregar($data);
-                if ($b === TRUE) {
-                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Grupo creado exitosamente</div>');
-                } else {
-                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
+            if ($this->input->post('btnAgregar') !== NULL) {
+                if(!empty($this->input->post('cboEmpId')) && !empty($this->input->post('cboMatId')) && !empty($this->input->post('cboGrdId'))){
+                    $data = array(
+                        'empId' => $this->input->post('cboEmpId'),
+                        'matId' => $this->input->post('cboMatId'),
+                        'grdId' => $this->input->post('cboGrdId'));
+                    $b = $this->Grupo_model->agregar($data);
+                    if ($b === TRUE) {
+                        $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Grupo creado exitosamente</div>');
+                    } else {
+                        $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
+                    }
+                }else{
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Debe ingresar todos los datos solicitados</div>');
                 }
-            }else{
+            } else {
                 $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Debe ingresar todos los datos solicitados</div>');
             }
             

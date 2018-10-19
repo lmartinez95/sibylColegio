@@ -18,7 +18,7 @@
             $data['title'] = 'Matricula Alumnos';
             $data['content_view'] = 'admin/alumno/matricula';
             $this->load->library('complements');
-            $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
+            $data['grado'] = $this->complements->cargaCombo('grdId','grdNombre','Grado');
             $this->template->admin_dash($data);
         }
 
@@ -49,7 +49,7 @@
                     'almCorreo' => $_REQUEST['txtEmail'],
                     'almResponsable' => $_REQUEST['txtResponsable'],
                     'almTelResponsable' => $_REQUEST['txtTelResponsable'],
-                    'nvlId' => $this->input->post('cboNvlId')
+                    'grdId' => $this->input->post('cboGrdId')
                  );
                 $b = $this->Alumno_model->agregar($data);
                 if ($b['status'] == TRUE) {
