@@ -17,6 +17,8 @@
         public function matricula(){
             $data['title'] = 'Matricula Alumnos';
             $data['content_view'] = 'admin/alumno/matricula';
+            $this->load->library('complements');
+            $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
             $this->template->admin_dash($data);
         }
 
@@ -25,32 +27,55 @@
                 $result = $this->Alumno_model->buscaAlumno($this->input->post('txtBuscar'));
                 header('Content-type: application/json; charset=utf-8');
                 echo json_encode($result, JSON_FORCE_OBJECT);
-            }
-            
+            }  
         }
+
 
         public function agregar()
         {
-            $data = array(
-                'almNombre' => $_REQUEST['txtNombre'],
-                'almApellidoP' => $_REQUEST['txtApellidoP'],
-                'almApellidoM' => $_REQUEST['txtApellidoM'],
-                'almFechaNac' => $_REQUEST['dtpFechaNac'],
-                'almLugarNac' => $_REQUEST['txtLugarNac'],
-                'almSexo' => $_REQUEST['cboSexo'],
-                'almDireccion' => $_REQUEST['txtDireccion'],
-                'almMadre' => $_REQUEST['txtMadre'],
-                'almPadre' => $_REQUEST['txtPadre'],
-                'almTelCasa' => $_REQUEST['txtTelCasa'],
-                'almTelCel' => $_REQUEST['txtTelCel'],
-                'almCorreo' => $_REQUEST['txtEmail'],
-                'almResponsable' => $_REQUEST['txtResponsable'],
-                'almTelResponsable' => $_REQUEST['txtTelResponsable'] );
-            $b = $this->Alumno_model->agregar($data);
-            if ($b['status'] == TRUE) {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');
+            if ($this->input->post('btnAgregarN')) {
+                $data = array(
+                    'almNombre' => $_REQUEST['txtNombre'],
+                    'almApellidoP' => $_REQUEST['txtApellidoP'],
+                    'almApellidoM' => $_REQUEST['txtApellidoM'],
+                    'almFechaNac' => $_REQUEST['dtpFechaNac'],
+                    'almLugarNac' => $_REQUEST['txtLugarNac'],
+                    'almSexo' => $_REQUEST['cboSexo'],
+                    'almDireccion' => $_REQUEST['txtDireccion'],
+                    'almMadre' => $_REQUEST['txtMadre'],
+                    'almPadre' => $_REQUEST['txtPadre'],
+                    'almTelCasa' => $_REQUEST['txtTelCasa'],
+                    'almTelCel' => $_REQUEST['txtTelCel'],
+                    'almCorreo' => $_REQUEST['txtEmail'],
+                    'almResponsable' => $_REQUEST['txtResponsable'],
+                    'almTelResponsable' => $_REQUEST['txtTelResponsable'],
+                    'nvlId' => $this->input->post('cboNvlId')
+                 );
+                $b = $this->Alumno_model->agregar($data);
+                if ($b['status'] == TRUE) {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');
+                } else {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b['value'] . '</div>');
+                }
             } else {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b['value'] . '</div>');
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Debe ingresar datos correctos</div>');
+            }
+            redirect('admin/alumno/');
+        }
+
+        function antiguo(){
+            if ($this->input->post('btnAgregarA') && $this->input->post('cboAlumno')) {
+                $data = array(
+                    'almId' => $this->input->post('cboAlumno')
+                 );
+                $b = $this->Alumno_model->agregar($data);
+                if ($b['status'] == TRUE) {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');
+                } else {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b['value'] . '</div>');
+                }
+            } else {
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Debe ingresar datos correctos</div>');
             }
             redirect('admin/alumno/');
         }

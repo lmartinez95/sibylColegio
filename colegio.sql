@@ -35,13 +35,26 @@ tempId INTEGER, CONSTRAINT FK_TipoEmpleado_Empleado FOREIGN KEY(tempId) REFERENC
 CREATE TABLE Nivel(
 nvlId INTEGER AUTO_INCREMENT PRIMARY KEY,
 nvlAbrev VARCHAR(10),
-nvlNivel VARCHAR(25)
+nvlNivel VARCHAR(25),
+nvlIdPadre INTEGER, CONSTRAINT FK_Nivel_Nivel FOREIGN KEY(nvlIdPadre) REFERENCES Nivel(nvlId)
+);
+
+CREATE TABLE Turno(
+turId INTEGER PRIMARY KEY,
+turNombre VARCHAR(25),
+turActivo BIT DEFAULT 0
 );
 
 CREATE TABLE Materia(
 matId INTEGER AUTO_INCREMENT PRIMARY KEY,
 matCodigo VARCHAR(15),
 matNombre VARCHAR(50)
+);
+
+CREATE TABLE Grado(
+grdId INTEGER PRIMARY KEY,
+grdNombre VARCHAR(50),
+turId INTEGER, CONSTRAINT FK_Turno_Grado FOREIGN KEY(turId) REFERENCES Turno(turId)
 );
 
 CREATE TABLE Alumno(
@@ -65,14 +78,12 @@ almTelResponsable VARCHAR(15),
 almFoto VARCHAR(100)
 );
 
-
 CREATE TABLE Grupo( #Para DocenteMateria
 grpId INTEGER AUTO_INCREMENT PRIMARY KEY,
 empId INTEGER, CONSTRAINT FK_Empleado_Grupo FOREIGN KEY(empId) REFERENCES Empleado(empId),
 matId INTEGER, CONSTRAINT FK_Materia_Grupo FOREIGN KEY(matId) REFERENCES Materia(matId),
-nvlId INTEGER, CONSTRAINT FK_Nivel_Grupo FOREIGN KEY(nvlId) REFERENCES Nivel(nvlID)
+grdId INTEGER, CONSTRAINT FK_Grado_Grupo FOREIGN KEY(grdId) REFERENCES Grado(grdId)
 );
-
 
 CREATE TABLE detGrupo(
 dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -80,21 +91,20 @@ grpId INTEGER, CONSTRAINT FK_Grupo_DetalleGRupo FOREIGN KEY(grpId) REFERENCES Gr
 almId INTEGER, CONSTRAINT FK_Alumno_DetalleGrupo FOREIGN KEY(almId) REFERENCES Alumno(almId)
 );
 
-CREATE TABLE Evaluaciones(
+CREATE TABLE Evaluacion(
 evaId INTEGER AUTO_INCREMENT PRIMARY KEY,
 evaNombre VARCHAR(50),
 evaPorcentaje FLOAT, CONSTRAINT CHK_evaPorcentaje CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
-grpId INTEGER, CONSTRAINT FK_Grupo_Evaluaciones FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
-matId INTEGER, CONSTRAINT FK_Materia_Evaluaciones FOREIGN KEY(matId) REFERENCES Materia(matId)
+grpId INTEGER, CONSTRAINT FK_Grupo_Evaluaciones FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
 );
 
-CREATE TABLE Notas(
+CREATE TABLE Nota(
 notId INTEGER AUTO_INCREMENT PRIMARY KEY,
 notNota FLOAT, CONSTRAINT CHK_notNota CHECK (notNota >= 0.0 AND notNota <= 10.0),
 notPorcentaje FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
+evaId INTEGER, CONSTRAINT FK_Evaluacion_Notas FOREIGN KEY(evaId) REFERENCES Evaluacion(evaId),
 almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
-grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
-matId INTEGER, CONSTRAINT FK_Materia_Notas FOREIGN KEY(matId) REFERENCES Materia(matId)
+grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
 );
 
 CREATE TABLE HNotas(
@@ -127,14 +137,14 @@ usrId INTEGER AUTO_INCREMENT PRIMARY KEY,
 usrUsuario VARCHAR(8), CONSTRAINT UQ_usrUsuario UNIQUE (usrUsuario),
 usrNombre VARCHAR(50),
 usrPassword VARCHAR(64),
-empId INTEGER,
-rolId INTEGER, CONSTRAINT FK_Rol_Usuario FOREIGN KEY(rolId) REFERENCES Rol(rolId)
+rolId INTEGER, CONSTRAINT FK_Rol_Usuario FOREIGN KEY(rolId) REFERENCES Rol(rolId),
+empId INTEGER
 );
 
-INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','/admin');
+INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','admin'),('Alumno','alumno'),('Docente','docente');
 INSERT INTO Acceso(accVista) VALUES('Panel de administración');
 INSERT INTO RolAcceso(rolId,accId) VALUES(1,1);
-INSERT INTO Usuario VALUES(null,'admin','5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5',null,1);
+INSERT INTO Usuario VALUES(null,'admin','Administrador','5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5',1,null);
 
 
 #-------------------------------------Consultas---------------------------------------------------
@@ -188,15 +198,16 @@ CREATE PROCEDURE spAddEmpleado (IN p_empNombre VARCHAR(50),IN p_empApellidoP VAR
 	IN p_empDireccion VARCHAR(400),IN p_empEmail VARCHAR(100),IN p_tempId INT)
 BEGIN
 	DECLARE codigo VARCHAR(8);
-	DECLARE i INT;
+	DECLARE i, empId INT;
     
     SET codigo = CONCAT(SUBSTRING(p_empApellidoP,1,1), SUBSTRING(p_empApellidoM,1,1), SUBSTRING(YEAR(NOW()),3,2));
 	SELECT CAST(SUBSTRING(MAX(empCodigo),5,4) AS SIGNED) INTO i FROM Empleado WHERE SUBSTRING(empCodigo,3,2) = SUBSTRING(YEAR(NOW()),3,2);
     
-    CASE i
-		WHEN i > 0 THEN SET i = i + 1;
-        ELSE SET i = 1;
-	END CASE;
+    IF (i > 0) THEN 
+		SET i = i + 1;
+     ELSE
+		SET i = 1;
+	END IF;
     
     IF (i < 10) THEN
 		SET codigo = CONCAT(codigo, "000", i);
@@ -207,8 +218,17 @@ BEGIN
 	ELSEIF (i < 10000) THEN
 		SET codigo = CONCAT(codigo, i);
 	END IF;
-    INSERT INTO Empleado(empCodigo,empNombre,empApellidoP,empApellidoM,empSexo,empDUI,empNIT,empISSS,empNUP,empDireccion,empEmail,tempId,empPassword) 
-		VALUES(codigo,p_empNombre,p_empApellidoP,p_empApellidoM,p_empSexo,p_empDUI,p_empNIT,p_empISSS,p_empNUP,p_empDireccion,p_empEmail,p_tempId,SHA2(codigo,256));
+    INSERT INTO Empleado(empCodigo,empNombre,empApellidoP,empApellidoM,empSexo,empDUI,empNIT,empISSS,empNUP,empDireccion,empEmail,tempId) 
+		VALUES(codigo,p_empNombre,p_empApellidoP,p_empApellidoM,p_empSexo,p_empDUI,p_empNIT,p_empISSS,p_empNUP,p_empDireccion,p_empEmail,p_tempId);
+	
+    SET empId = LAST_INSERT_ID();
+        
+	-- Agregandolo a la plataforma para que pueda adminstrar a los grados asignados
+    
+    INSERT INTO Usuario(usrUsuario,usrNombre,usrPassword,rolId,empId) VALUES(codigo,CONCAT(p_empNombre,' ',p_empApellidoP,' ',p_empApellidoM),SHA2(codigo,256),(SELECT rolId FROM Rol WHERE rolNombre = 'Docente'),empId);
+    
+    -- Retornando el código generado
+    
 	SELECT codigo;
 END $$
 DELIMITER ;
@@ -220,18 +240,27 @@ DROP PROCEDURE IF EXISTS spAddAlumno;
 DELIMITER $$
 CREATE PROCEDURE spAddAlumno (IN p_almNombre VARCHAR(50),IN p_almApellidoP VARCHAR(50), IN p_almApellidoM VARCHAR(50),IN p_almFechaNac DATE,
 IN p_almLugarNac VARCHAR(100),IN p_almSexo CHAR(1),IN p_almDireccion VARCHAR(400),IN p_almMadre VARCHAR(100),IN p_almPadre VARCHAR(100),
-IN p_almTelCasa VARCHAR(15),IN p_almTelCel VARCHAR(15),IN p_almCorreo VARCHAR(50),IN p_almResponsable VARCHAR(50),IN p_almTelResponsable VARCHAR(15))
+IN p_almTelCasa VARCHAR(15),IN p_almTelCel VARCHAR(15),IN p_almCorreo VARCHAR(50),IN p_almResponsable VARCHAR(50),IN p_almTelResponsable VARCHAR(15),
+IN p_grdId INTEGER)
 BEGIN
 	DECLARE codigo VARCHAR(8);
-	DECLARE i INTEGER DEFAULT 0;
+	DECLARE i INTEGER;
+    DECLARE almId INTEGER;
+    DECLARE b BIT DEFAULT 0;
+    DECLARE curGrupo CURSOR FOR SELECT grpId FROM Grupo WHERE grdId = p_grdId;
     
+    -- Condición de salida
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET b = 1;
+  
+    -- Creación de código para el alumno
     SET codigo = YEAR(NOW());
 	SELECT CAST(SUBSTRING(MAX(almCodigo),5,4) AS UNSIGNED) INTO i FROM Alumno WHERE SUBSTRING(almCodigo,1,4) = YEAR(NOW());
     
-    CASE i
-		WHEN i > 0 THEN SET i = i + 1;
-        ELSE SET i = 1;
-	END CASE;
+    IF (i > 0) THEN 
+		SET i = i + 1;
+     ELSE
+		SET i = 0;
+	END IF;
     
     IF (i < 10) THEN
 		SET codigo = CONCAT(codigo, "000", i);
@@ -242,11 +271,39 @@ BEGIN
 	ELSEIF (i < 10000) THEN
 		SET codigo = CONCAT(codigo, i);
 	END IF;
+    
+    -- Insertando los datos personales
     INSERT INTO Alumno(almCodigo,almNombre,almApellidoP,almApellidoM,almFechaNac,almLugarNac,almSexo,almDireccion,almMadre,almPadre,almTelCasa,almTelCel,almCorreo,almResponsable,almTelResponsable,almPassword) 
 		VALUES(codigo,p_almNombre,p_almApellidoP,p_almApellidoM,p_almFechaNac,p_almLugarNac,p_almSexo,p_almDireccion,p_almMadre,p_almPadre,p_almTelCasa,p_almTelCel,p_almCorreo,p_almResponsable,p_almTelResponsable,SHA2(codigo,256));
-	SELECT codigo;
+	
+    SET almId = LAST_INSERT_ID();
+    
+    -- Enrolandolo en todas las materias que posee el nivel
+    
+    OPEN curGrupo;
+    getGrupos: LOOP
+		FETCH curGrupo INTO i;
+		IF b = 1 THEN
+			LEAVE getGrupos;
+		ELSE
+			INSERT INTO detGrupo(grpId,almId) VALUES(i, almId);
+		END IF;
+		
+	END LOOP getGrupos;
+    CLOSE curGrupo;
+    
+    -- Agregandolo a la plataforma para que pueda ver sus notas
+    
+    INSERT INTO Usuario VALUES(null, codigo,'5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5',(SELECT rolId FROM Rol WHERE rolNombre = 'Alumno'),null);
+    
+    -- Retornando el código generado
+    
+    SELECT codigo;
 END $$
 DELIMITER ;
 
-CALL spAddAlumno('Luis','Rivera','Martínez');
-
+CALL spAddAlumno('Fabiola Cecilia','Rivera','Martínez','2011-06-07','Soyapango','F','Urb. Abalam Pje. Cuscatlan Pol E #5E','Alicia Beatriz Rvera Martínez','','2299-1780','7968-4744','beamartinez@gmail.com','Marta Alcia Martínez','7954-9740',4);
+select * from Alumno;
+select * from detGrupo;
+select * from Usuario;
+delete from Alumno where almId = 5;

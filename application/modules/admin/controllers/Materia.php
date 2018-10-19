@@ -15,15 +15,21 @@
 
         public function agregar()
         {
-            $data = array(
-                'matCodigo' => $_REQUEST['txtCodigo'],
-                'matNombre' => $_REQUEST['txtNombre'] );
-            $b = $this->Materia_model->agregar($data);
-            if ($b === TRUE) {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
+            if ($this->input->post('btnAgregar')) {
+                $data = array(
+                    'matCodigo' => $_REQUEST['txtCodigo'],
+                    'matNombre' => $_REQUEST['txtNombre'] );
+                $b = $this->Materia_model->agregar($data);
+                if ($b === TRUE) {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
+                } else {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
+                }
             } else {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Ingrese los datos correctos</div>');
             }
+            
+            
             redirect('admin/materia/');
         }
 

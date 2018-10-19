@@ -111,7 +111,16 @@
                         </div>
                     </div> <!-- Fin card 2 -->
                     <br>
-                    <button type="submit" class="btn btn-success" value="agregar"><i class="fas fa-plus"></i> Agregar</button>
+                    <div class="form-group">
+                        <label for="cboNvlId">Nivel:</label>
+                        <select class="form-control" name="cboNvlId" id="cboNvlId">
+                        <?php foreach ($nivel as $item) { ?>
+                            <option value="<?php echo $item["nvlId"]; ?>"><?php echo $item["nvlNivel"]; ?></option>
+                        <?php } ?>
+                        </select>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success" value="agregar" name="btnAgregarN"><i class="fas fa-plus"></i> Matricular</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
                 </div>            
             </div>
@@ -141,6 +150,8 @@
                         
                     </select>
                 </div>
+                <br>
+                <button type="submit" class="btn btn-success" value="agregar" name="btnAgregarA"><i class="fas fa-plus"></i> Matricular</button>
             </div>
         </div>
     </div>	

@@ -120,11 +120,20 @@
 							<label for="nvlNivel">Nivel:</label>
 							<input type="text" class="form-control" name="nvlNivel" id="nvlNivel" placeholder="Nivel" autocomplete="off" require>
 						</div>
+						<div class="form-group">
+							<label for="cboNvlIdPadre">Nivel:</label>
+							<select class="form-control" name="cboNvlIdPadre" id="cboNvlIdPadre">
+								<option value="">Ninguno</option>
+							<?php foreach ($nivel as $item) { ?>
+								<option value="<?php echo $item["nvlId"]; ?>"><?php echo $item["nvlNivel"]; ?></option>
+							<?php } ?>
+							</select>
+						</div>
 			</div>
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-success" value="agregar"><i class="fas fa-plus"></i> Agregar</button>
+				<button type="submit" class="btn btn-success" value="agregar" name="btnAgregar"><i class="fas fa-plus"></i> Agregar</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
 				<?php echo form_close(); ?>
 			</div>
