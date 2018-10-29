@@ -73,7 +73,6 @@
         </p>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
       
       <div id="loading" class="align-middle" style="display: none;position: fixed; z-index:100; top:45%;">
         <div class="align-middle progress">
@@ -81,6 +80,7 @@
           <h4> <span id="LbProceso">Cargando Perfil</span></h4>
         </div>
       </div>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </form>
     
 
@@ -89,6 +89,8 @@
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" integrity=""></script>
     <script type="text/javascript">
       $(document).ready(function() {
+        $("#loading").width($("form").width());
+        $("#loading").height($("form").height());
         $("#login").submit(function(event){
           event.preventDefault();
           $.ajax({

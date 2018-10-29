@@ -19,4 +19,16 @@ class Complements {
             $CI->db->close();
         }
     }
+
+    function veriAcceso($vista){
+        $CI =& get_instance();
+        for ($i=0; $i < count($CI->session->userdata('permisos')); $i++) { 
+            if ($CI->session->userdata('permisos') == $vista) {
+                return true;
+            } else {
+                return false;
+            }
+            
+        }
+    }
 }

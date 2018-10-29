@@ -33,6 +33,7 @@
                     }
                     $data = array(
                         "codigo" => $carne,
+                        "usuario" => $query['usrNombre'],
                         "empId" => $query['empId'],
                         "redirect" => $query['rolRedirect'],
                         "permisos" => $permisos
@@ -48,6 +49,14 @@
                 //redirect('login/');
                 $validator['status'] = false;
             }
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($validator, JSON_FORCE_OBJECT);
+        }
+
+        function logout(){
+            $this->session->sess_destroy();
+            $validator['status'] = true;
+            $validator['redirect'] = base_url();
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($validator, JSON_FORCE_OBJECT);
         }

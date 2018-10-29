@@ -50,7 +50,7 @@
                     'almResponsable' => $_REQUEST['txtResponsable'],
                     'almTelResponsable' => $_REQUEST['txtTelResponsable'],
                     'grdId' => $this->input->post('cboGrdId')
-                 );
+                );
                 $b = $this->Alumno_model->agregar($data);
                 if ($b['status'] == TRUE) {
                     $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');

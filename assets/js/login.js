@@ -1,37 +1,13 @@
-/*$(document).on("ready",main);
 
-function main(){
-    $("#login").submit(function(event){
-        event.preventDefault();
+$(document).ready(function(){
+    $("#btnLogout").click(function() {
         $.ajax({
-            url:$(this).attr("action"),
-            type:$(this).attr("method"),
-            data:$(this).serialize(),
-            success:function(respuesta) {
-                if (respuesta == false) {
-                    alert('mal');
-                } else {
-                    alert('bien');
+            url: 'http://127.0.0.1/sibylColegio/login/logout',
+            success: function(response){
+                if (response.status) {
+                    document.location.href = response.redirect;
                 }
             }
         });
     });
-}*/
-
-$(document).ready(function() {
-    $("#login").submit(function(event){
-        event.preventDefault();
-        $.ajax({
-            url:$(this).attr("action"),
-            type:$(this).attr("method"),
-            data:$(this).serialize(),
-            success:function(respuesta) {
-                if (respuesta == false) {
-                    alert('mal');
-                } else {
-                    alert('bien');
-                }
-            }
-        });
-    });
-})
+});

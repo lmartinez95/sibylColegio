@@ -8,6 +8,11 @@
         function admin_dash($data = NULL){
             $this->load->view('template',$data);
         }
+
+        function docente_dash($data = NULL){
+            $data['usuario'] = $this->session->userdata('usuario');
+            $this->load->view('tempDocente',$data);
+        }
     }
     
 ?>

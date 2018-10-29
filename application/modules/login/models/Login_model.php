@@ -6,7 +6,7 @@
         }
         
         public function verificar($carne, $pass){
-            $this->db->select('u.rolId,u.empId,r.rolRedirect');
+            $this->db->select('u.rolId,u.usrNombre,u.empId,r.rolRedirect');
             $this->db->from('Usuario u');
             $this->db->join('Rol r', 'u.rolId = r.rolId');
             $this->db->where('u.usrUsuario', $carne);

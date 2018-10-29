@@ -159,13 +159,14 @@ empId INTEGER
 INSERT INTO Turno(turNombre,turActivo) VALUES('Matutino',1),('Vespertino',1),('Nocturno',1);
 
 INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','admin'),('Alumno','alumno'),('Docente','docente');
-INSERT INTO Acceso(accVista) VALUES('Panel de administración');
-INSERT INTO RolAcceso(rolId,accId) VALUES(1,1);
+INSERT INTO Acceso(accVista) VALUES('Panel de administración'),('Panel docente'),('Panel alumno'),('Tipo empleados'),('Empleados'),('Materias'),('Niveles'),
+	('Grados'),('Grupos'),('Alumnos'),('Matricula');
+INSERT INTO RolAcceso(rolId,accId) VALUES(1,1),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(2,2),(3,3);
 INSERT INTO Usuario VALUES(null,'admin','Administrador','5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5',1,null);
 
 
 #-------------------------------------Consultas---------------------------------------------------
-SELECT u.rolId,u.empId,r.rolRedirect FROM Usuario u
+SELECT u.rolId,u.usrNombre,u.empId,r.rolRedirect FROM Usuario u
 INNER JOIN Rol r ON u.rolId = r.rolId
 WHERE u.usrUsuario = 'admin' AND u.usrPassword = '5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5';
 
@@ -173,13 +174,21 @@ SELECT a.accVista FROM RolAcceso ra
 INNER JOIN Rol r ON ra.rolId = r.rolId
 INNER JOIN Acceso a ON ra.accId = a.accId
 INNER JOIN Usuario u ON u.rolId = r.rolId
-WHERE ra.rolId = 1;
+WHERE ra.rolId = 2;
 
-SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,n.nvlNivel FROM Grupo g
+SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,gr.grdNombre,t.turNombre FROM Grupo g
 INNER JOIN Empleado e ON g.empId = e.empId
 INNER JOIN Materia m ON g.matId = m.matId
-INNER JOIN Nivel n ON g.nvlId = n.nvlId
-WHERE g.empId = 3;
+INNER JOIN Grado gr ON g.grdId = gr.grdId
+INNER JOIN Turno t ON gr.turId = t.turId
+WHERE g.empId = 2;
+
+SELECT g.grpId,m.matNombre,gr.grdNombre,t.turNombre FROM Grupo g
+INNER JOIN Empleado e ON g.empId = e.empId
+INNER JOIN Materia m ON g.matId = m.matId
+INNER JOIN Grado gr ON g.grdId = gr.grdId
+INNER JOIN Turno t ON gr.turId = t.turId
+WHERE g.empId = 2;
 
 /*CREATE TABLE Notas(
 notId INTEGER AUTO_INCREMENT PRIMARY KEY,
