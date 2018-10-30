@@ -8,13 +8,18 @@
           <p class="card-text"></p>
         </div>
         <div class="card-footer bg-transparent border-dark">
-          <a href="docente/listado/<?php echo $result["grpId"]; ?>">
-            <div class="panel-footer">
-                <span class="pull-left">Ver Listado</span>
-                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="panel-footer">
+            <a href="docente/listado/<?php echo $result["grpId"]; ?>">
+              <span class="pull-left">Ver Listado</span>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            </a>
+                <div class="clearfix"></div>
+            <a href="docente/evaluacion/<?php echo $result["grpId"]; ?>">
+              <span class="pull-left">Evaluaciones</span>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            </a>
                 <div class="clearfix"></div>
             </div>
-          </a>
         </div>
       </div>
     </div>

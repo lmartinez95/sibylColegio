@@ -8,88 +8,56 @@
             $this->load->library('complements');
         }
         public function index(){
-            $this->load->library('session');
-            if ($this->session->userdata('permisos')) {
-                # code...
-            } else {
-                # code...
-            }
-            
             $data['title'] = 'Docente';
             $data['content_view'] = 'docente/index';
             $data['results'] = $this->Docente_model->mostrar($this->session->userdata('empId'));
             $this->template->docente_dash($data);
         }
 
-        public function agregar()
-        {
-            $data = array(
-                'empId' => $_REQUEST['cboEmpId'],
-                'matId' => $_REQUEST['cboMatId'],
-                'nvlId' => $_REQUEST['cboNvlId']);
-            $b = $this->Grupo_model->agregar($data);
-            if ($b === TRUE) {
-                $mensaje = "Registro agregado exitosamente.";
-                $nivel = 'success';
+        function listado($grupo = NULL){
+            if (!empty($grupo)) {
+                $data['title'] = 'Listado';
+                $data['content_view'] = 'docente/listado';
+                $data['results'] = $this->Docente_model->listado($grupo);
+                $this->template->docente_dash($data);
             } else {
-                $mensaje = $b;
-                $nivel = 'warning';
+                echo 'error';
             }
-            $this->index($mensaje,$nivel);
         }
 
-        public function addAlumno($grupo)
-        {
-            $data['alumno'] = $this->Grupo_model->cargaAlumno($grupo);
-            $data['grupo'] = $grupo;
-            $data['title'] = 'Agregar alumnos';
-            $this->load->view('shared/header', $data);
-            $this->load->view('grupo/addAlumno', $data);
-        }
-
-        public function inscribir()
-        {
-            $grupo = $_REQUEST['grupo'];
-            $opciones = explode(',',$_REQUEST['alumno']);
-            $data = array();
-            for ($i=0; $i < count($opciones); $i++) { 
-                array_push($data,
-                    array(
-                        'grpId' => $grupo,
-                        'almId' => $opciones[$i]
-                    )
-                );
-            }
-            
-            $b = $this->Grupo_model->inscribir($data);
-            if ($b === TRUE) {
-                $mensaje = "Registros agregado exitosamente.";
-                $nivel = 'success';
+        function evaluacion($grupo = NULL){
+            if (!empty($grupo)) {
+                $data['title'] = 'Evaluaciones';
+                $data['content_view'] = 'docente/evaluacion';
+                $data['grupo'] = $grupo;
+                $data['results'] = $this->Docente_model->evaluacion($grupo);
+                $this->template->docente_dash($data);
             } else {
-                $mensaje = $b;
-                $nivel = 'warning';
+                echo 'error';
             }
-            $this->index($mensaje,$nivel);
         }
 
-        public function eliminar($value = null)
-        {
-            if (isset($value)) {
-                $b = $this->Grupo_model->eliminar($value);
-                if ($b === TRUE) {
-                    $mensaje = "Registro eliminado exitosamente.";
-                    $nivel = 'success';
+        function agregarEva($grupo){
+            if (NULL !== $this->input->post('btnAgregar')) {
+                if (!empty($this->input->post('txtEvaluacion')) && !empty($this->input->post('nudPorcentaje'))) {
+                    $datos =  array(
+                        'evaNombre' => $this->input->post('txtEvaluacion'),
+                        'evaPorcentaje' => ($this->input->post('nudPorcentaje') / 100),
+                        'grpId' => $grupo//$this->input->post('grpId')
+                    );
+                    $b = $this->Docente_model->agregarEva($datos);
+                    if ($b === TRUE) {
+                        $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
+                    } else {
+                        $this->session->set_flashdata('mensaje','<div class="alert alert-warning"><strong>¡Error!</strong> ' . $b . '</div>');
+                    }
                 } else {
-                    $mensaje = $b;
-                    $nivel = 'warning';
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-warning"><strong>¡Error!</strong> Debe ingresar los datos completos</div>');
                 }
-                
             } else {
-                $mensaje = "Operación no válida";
-                    $nivel = 'danger';
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Operación no válida</div>');
             }
-            $this->index($mensaje,$nivel);
-            
+            redirect('docente/evaluacion/'.$grupo);
         }
     }
     

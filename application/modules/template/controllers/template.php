@@ -6,6 +6,7 @@
         }
 
         function admin_dash($data = NULL){
+            $data['usuario'] = $this->session->userdata('usuario');
             $this->load->view('template',$data);
         }
 

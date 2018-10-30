@@ -48,7 +48,7 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="<?php echo base_url(); ?>docente">
                   <i class="material-icons">edit</i>
                   <span>Blog Dashboard</span>
                 </a>

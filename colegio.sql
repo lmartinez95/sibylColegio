@@ -90,7 +90,6 @@ grdId INTEGER, CONSTRAINT FK_Grado_Grupo FOREIGN KEY(grdId) REFERENCES Grado(grd
 );
 
 
-
 CREATE TABLE detGrupo(
 dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
 grpId INTEGER, CONSTRAINT FK_Grupo_DetalleGRupo FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
@@ -166,15 +165,19 @@ INSERT INTO Usuario VALUES(null,'admin','Administrador','5994471ABB01112AFCC1815
 
 
 #-------------------------------------Consultas---------------------------------------------------
+-- Login
 SELECT u.rolId,u.usrNombre,u.empId,r.rolRedirect FROM Usuario u
 INNER JOIN Rol r ON u.rolId = r.rolId
 WHERE u.usrUsuario = 'admin' AND u.usrPassword = '5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5';
 
+-- Accesos
 SELECT a.accVista FROM RolAcceso ra
 INNER JOIN Rol r ON ra.rolId = r.rolId
 INNER JOIN Acceso a ON ra.accId = a.accId
 INNER JOIN Usuario u ON u.rolId = r.rolId
 WHERE ra.rolId = 2;
+
+-- Grupos (Dashboard de docentes)
 
 SELECT g.grpId,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) AS Empleado,m.matNombre,gr.grdNombre,t.turNombre FROM Grupo g
 INNER JOIN Empleado e ON g.empId = e.empId
@@ -190,31 +193,21 @@ INNER JOIN Grado gr ON g.grdId = gr.grdId
 INNER JOIN Turno t ON gr.turId = t.turId
 WHERE g.empId = 2;
 
-/*CREATE TABLE Notas(
-notId INTEGER AUTO_INCREMENT PRIMARY KEY,
-notNota1 FLOAT, CONSTRAINT CHK_notNota1 CHECK (notNota1 >= 0.0 AND notNota1 <= 10.0),
-notPorcentaje1 FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
-notNota2 FLOAT, CONSTRAINT CHK_notNota2 CHECK (notNota2 >= 0.0 AND notNota2 <= 10.0),
-notPorcentaje2 FLOAT, CONSTRAINT CHK_notPorcentaje2 CHECK (notPorcentaje2 >= 0.0 AND notPorcentaje2 <= 1.0),
-notNota3 FLOAT, CONSTRAINT CHK_notNota3 CHECK (notNota3 >= 0.0 AND notNota3 <= 10.0),
-notPorcentaje3 FLOAT, CONSTRAINT CHK_notPorcentaje3 CHECK (notPorcentaje3 >= 0.0 AND notPorcentaje3 <= 1.0),
-notNota4 FLOAT, CONSTRAINT CHK_notNota4 CHECK (notNota4 >= 0.0 AND notNota4 <= 10.0),
-notPorcentaje4 FLOAT, CONSTRAINT CHK_notPorcentaje4 CHECK (notPorcentaje4 >= 0.0 AND notPorcentaje4 <= 1.0),
-notNota5 FLOAT, CONSTRAINT CHK_notNota5 CHECK (notNota5 >= 0.0 AND notNota5 <= 10.0),
-notPorcentaje5 FLOAT, CONSTRAINT CHK_notPorcentaje5 CHECK (notPorcentaje5 >= 0.0 AND notPorcentaje5 <= 1.0),
-notPromedio FLOAT AS ((notNota1*notPorcentaje1)+(notNota2*notPorcentaje2)+(notNota3*notPorcentaje3)+(notNota4*notPorcentaje4)+(notNota5*notPorcentaje5)),
-almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
-grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
-);*/
-
+-- Empleados
 SELECT e.empCodigo,CONCAT(e.empNombre,' ',e.empApellidoP,' ',e.empApellidoM) as Nombre,
 CASE e.empSexo WHEN 'M' THEN 'Masculino' ELSE 'Femenino' END AS Sexo,e.empDUI,te.tempNombre
 FROM Empleado e INNER JOIN TipoEmpleado te ON e.tempId = te.tempId;
 
-SELECT a.almId,CONCAT(a.almNombre,' ',a.almApellidoP,' ',a.almApellidoM) as nombre FROM Alumno a
+-- Listado de grupos
+SELECT a.almId,a.almCodigo,CONCAT(a.almNombre,' ',a.almApellidoP,' ',a.almApellidoM) as Nombre FROM Alumno a
 JOIN detGrupo dg ON dg.almId = a.almId
-WHERE dg.grpId <> 1
-HAVING COUNT(dg.almId) = 0;
+WHERE dg.grpId = 1;
+
+-- Listado de evaluaciones por grupo
+SELECT evaId,evaNombre,evaPorcentaje FROM Evaluacion
+WHERE grpId = 1;
+
+-- ------------------------------------------ Procedimientos almacenados ------------------------------------------ --
 
 DROP PROCEDURE IF EXISTS spAddEmpleado;
 
