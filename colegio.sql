@@ -207,6 +207,17 @@ WHERE dg.grpId = 1;
 SELECT evaId,evaNombre,evaPorcentaje FROM Evaluacion
 WHERE grpId = 1;
 
+-- Total de evaluaciones
+SELECT ROUND(SUM(evaPorcentaje),2) AS suma FROM Evaluacion
+WHERE grpId = 1;
+
+SELECT CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, CASE(WHEN n.notNota) as nota FROM Nota n
+INNER JOIN Evaluacion e ON n.evaId = e.evaId
+INNER JOIN Alumno a ON n.almId = a.almId
+INNER JOIN Grupo g ON n.grpId = g.grpId
+WHERE g.grpId = 1 OR e.evaId= 1
+;
+
 -- ------------------------------------------ Procedimientos almacenados ------------------------------------------ --
 
 DROP PROCEDURE IF EXISTS spAddEmpleado;
@@ -275,7 +286,7 @@ BEGIN
     SET codigo = YEAR(NOW());
 	SELECT CAST(SUBSTRING(MAX(almCodigo),5,4) AS UNSIGNED) INTO i FROM Alumno WHERE SUBSTRING(almCodigo,1,4) = YEAR(NOW());
     
-    IF (i > 1) THEN 
+    IF (i >= 1) THEN 
 		SET i = i + 1;
      ELSE
 		SET i = 1;

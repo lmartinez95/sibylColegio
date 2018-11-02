@@ -45,8 +45,17 @@
         public function agregarEva($data)
         {
             try{
-                $this->db->insert('Evaluacion', $data);
-                return true;
+                $this->db->select("ROUND(SUM(evaPorcentaje),2) AS suma");
+                $this->db->from('Evaluacion');
+                $this->db->where('grpId', $data['grpId']);
+                $query = $this->db->get()->row_array();
+                $suma = $data['evaPorcentaje'] + $query['suma'];
+                if ($suma > 1.00) {
+                    return 'La sumatoria de porcentaje es igual o superior al 100%';
+                } else {
+                    $this->db->insert('Evaluacion', $data);
+                    return $suma;                    
+                }
             } catch(Exception $e){
                 return "ERROR. No se pudo ingresar el registro";
             } finally{
@@ -54,6 +63,25 @@
             }
         }
 
+        function addNota(){
+            try{
+                $this->db->select("ROUND(SUM(evaPorcentaje),2) AS suma");
+                $this->db->from('Evaluacion');
+                $this->db->where('grpId', $data['grpId']);
+                $query = $this->db->get()->row_array();
+                $suma = $data['evaPorcentaje'] + $query['suma'];
+                if ($suma > 1.00) {
+                    return 'La sumatoria de porcentaje es igual o superior al 100%';
+                } else {
+                    $this->db->insert('Evaluacion', $data);
+                    return $suma;                    
+                }
+            } catch(Exception $e){
+                return "ERROR. No se pudo ingresar el registro";
+            } finally{
+                $this->db->close();
+            }
+        }
         
     }
 ?>

@@ -14,15 +14,20 @@
 			<tr>
 				<th>Evaluación</th>
 				<th>Porcentaje</th>
+				<th><th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($results as $result) { ?>
+			<?php $suma = 0; foreach ($results as $result) { $suma += $result["evaPorcentaje"];?>
 				<tr>
 					<td><?php echo $result["evaNombre"]; ?></td>
 					<td><?php echo ($result["evaPorcentaje"] * 100) . '%'; ?></td>
+					<td><a href='<?php echo base_url() . 'docente/addNota/' . $grupo; ?>' class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i> Agregar nota</a></td>
 				</tr>
 			<?php } ?>
+			<tr>
+				<th>Total</th><th><?php echo ($suma * 100) . '%'; ?></th>
+			</tr>
 		</tbody>
 	</table>
 </div>

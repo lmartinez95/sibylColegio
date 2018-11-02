@@ -59,6 +59,17 @@
             }
             redirect('docente/evaluacion/'.$grupo);
         }
+
+        function addNota($grupo){
+            if (!empty($grupo)) {
+                $data['title'] = 'Listado';
+                $data['content_view'] = 'docente/addNota';
+                $data['results'] = $this->Docente_model->addNota($grupo);
+                $this->template->docente_dash($data);
+            } else {
+                echo 'error';
+            }
+        }
     }
     
 ?>
