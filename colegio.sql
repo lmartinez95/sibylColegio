@@ -211,12 +211,15 @@ WHERE grpId = 1;
 SELECT ROUND(SUM(evaPorcentaje),2) AS suma FROM Evaluacion
 WHERE grpId = 1;
 
-SELECT CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, CASE(WHEN n.notNota) as nota FROM Nota n
-INNER JOIN Evaluacion e ON n.evaId = e.evaId
-INNER JOIN Alumno a ON n.almId = a.almId
-INNER JOIN Grupo g ON n.grpId = g.grpId
-WHERE g.grpId = 1 OR e.evaId= 1
-;
+SELECT g.grpId,e.evaNombre, CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota FROM Nota n
+LEFT JOIN Grupo g ON n.grpId = g.grpId
+RIGHT OUTER JOIN Evaluacion e ON n.evaId = e.evaId
+RIGHT OUTER JOIN Alumno a ON n.almId = a.almId
+
+WHERE g.grpId <> 1 AND e.evaId = 1
+ORDER BY Nombre;
+
+
 
 -- ------------------------------------------ Procedimientos almacenados ------------------------------------------ --
 
