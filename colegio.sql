@@ -211,16 +211,23 @@ WHERE grpId = 1;
 SELECT ROUND(SUM(evaPorcentaje),2) AS suma FROM Evaluacion
 WHERE grpId = 1;
 
-SELECT g.grpId,e.evaNombre, CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota FROM Nota n
-LEFT JOIN Grupo g ON n.grpId = g.grpId
-RIGHT OUTER JOIN Evaluacion e ON n.evaId = e.evaId
-RIGHT OUTER JOIN Alumno a ON n.almId = a.almId
 
-WHERE g.grpId <> 1 AND e.evaId = 1
-ORDER BY Nombre;
+-- insert into Nota (notNota, notPorcentaje, evaId, almId, grpId)
+select 3, 0.25, 1, 4, 1;
 
+SELECT G.grpId, D.dgrpId, A.almCodigo,A.almId, CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, E.evaId, e.evaNombre,
+	CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
+	CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota
+FROM Grupo G
+	JOIN detGrupo D on (G.grdId=D.grpId)
+	JOIN Alumno A on (D.almId=A.almId)
+	JOIN Evaluacion E on (G.grpId=E.grpId)
+    LEFT JOIN Nota N on (N.evaId=E.evaId and N.almId=A.almId and N.grpId=G.grpId)
+WHERE G.grpId=1 AND E.evaId=1;
 
-
+select * from nota;
+select * from evaluacion;
+insert into detGrupo(grpId,almId) values(2,1),(2,4);
 -- ------------------------------------------ Procedimientos almacenados ------------------------------------------ --
 
 DROP PROCEDURE IF EXISTS spAddEmpleado;
