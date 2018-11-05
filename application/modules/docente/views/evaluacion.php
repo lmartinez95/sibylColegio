@@ -22,7 +22,7 @@
 				<tr>
 					<td><?php echo $result["evaNombre"]; ?></td>
 					<td><?php echo ($result["evaPorcentaje"] * 100) . '%'; ?></td>
-					<td><a href='<?php echo base_url() . 'docente/addNota/' . $grupo; ?>' class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i> Agregar nota</a></td>
+					<td><a href='<?php echo base_url() . 'docente/addNota/' . $grupo . '/' . $result["evaId"]; ?>' class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i> Agregar nota</a></td>
 				</tr>
 			<?php } ?>
 			<tr>

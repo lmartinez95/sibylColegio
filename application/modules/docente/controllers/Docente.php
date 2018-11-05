@@ -21,7 +21,7 @@
                 $data['results'] = $this->Docente_model->listado($grupo);
                 $this->template->docente_dash($data);
             } else {
-                echo 'error';
+                redirect(base_url() . 'docente');
             }
         }
 
@@ -33,7 +33,7 @@
                 $data['results'] = $this->Docente_model->evaluacion($grupo);
                 $this->template->docente_dash($data);
             } else {
-                echo 'error';
+                redirect(base_url() . 'docente');
             }
         }
 
@@ -43,7 +43,7 @@
                     $datos =  array(
                         'evaNombre' => $this->input->post('txtEvaluacion'),
                         'evaPorcentaje' => ($this->input->post('nudPorcentaje') / 100),
-                        'grpId' => $grupo//$this->input->post('grpId')
+                        'grpId' => $grupo
                     );
                     $b = $this->Docente_model->agregarEva($datos);
                     if ($b === TRUE) {
@@ -60,15 +60,40 @@
             redirect('docente/evaluacion/'.$grupo);
         }
 
-        function addNota($grupo){
+        function addNota($grupo,$evaluacion){
             if (!empty($grupo)) {
-                $data['title'] = 'Listado';
+                $data['title'] = 'Agregar nota';
                 $data['content_view'] = 'docente/addNota';
-                $data['results'] = $this->Docente_model->addNota($grupo);
+                $data['grupo'] = $grupo;
+                $data['evaluacion'] = $evaluacion;
+                $data['results'] = $this->Docente_model->addNota($grupo,$evaluacion);
                 $this->template->docente_dash($data);
             } else {
-                echo 'error';
+                redirect(base_url() . 'docente');
             }
+        }
+
+        function cuNota($grupo,$evaluacion){
+            if (NULL !== $this->input->post('btnAgregar')) {
+                if (!empty($this->input->post('txtEvaluacion')) && !empty($this->input->post('nudPorcentaje'))) {
+                    $datos =  array(
+                        'evaNombre' => $this->input->post('txtEvaluacion'),
+                        'evaPorcentaje' => ($this->input->post('nudPorcentaje') / 100),
+                        'grpId' => $grupo
+                    );
+                    $b = $this->Docente_model->agregarEva($datos);
+                    if ($b === TRUE) {
+                        $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
+                    } else {
+                        $this->session->set_flashdata('mensaje','<div class="alert alert-warning"><strong>¡Error!</strong> ' . $b . '</div>');
+                    }
+                } else {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-warning"><strong>¡Error!</strong> Debe ingresar los datos completos</div>');
+                }
+            } else {
+                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Operación no válida</div>');
+            }
+            redirect('docente/evaluacion/'.$grupo);
         }
     }
     
