@@ -74,14 +74,33 @@
         }
 
         function cuNota($grupo,$evaluacion){
-            if (NULL !== $this->input->post('btnAgregar')) {
-                if (!empty($this->input->post('txtEvaluacion')) && !empty($this->input->post('nudPorcentaje'))) {
-                    $datos =  array(
-                        'evaNombre' => $this->input->post('txtEvaluacion'),
-                        'evaPorcentaje' => ($this->input->post('nudPorcentaje') / 100),
-                        'grpId' => $grupo
-                    );
-                    $b = $this->Docente_model->agregarEva($datos);
+            if (NULL !== $this->input->post('btnGuardar')) {
+                if (!empty($this->input->post('notas'))) {
+                    $notas = $this->input->post('notas');
+                    $arrInsert = array(); $arrUpdate = array(); $u = 0;
+                    foreach ($notas as $key => $value) {
+                        foreach ($value as $k => $v) {
+                            //echo 'notId = ' . $key .', almId = ' . $k . ', nota = ' . $v . '<br>' ;
+                            $data =  array(
+                                'notNota' => $v,
+                                'evaId' => $evaluacion,
+                                'almId' => $k,
+                                'grpId' => $grupo
+                            );
+                            if ($key == 0) { //insert
+                                //$b = $this->Docente_model->cuNota($datos, true);
+                                array_push($arrInsert, $data);
+                            } else { //update
+                                $datos['notId'] = $key;
+                                //$b = $this->Docente_model->cuNota($datos, false);
+                                $u++;
+                                array_push($arrUpdate, $data);
+                            }
+                            
+                        }
+                    }
+                    $b = $this->Docente_model->cuNota($arrInsert,$arrUpdate, $u);
+                    
                     if ($b === TRUE) {
                         $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro ingresado exitosamente</div>');
                     } else {

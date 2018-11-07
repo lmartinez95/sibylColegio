@@ -84,6 +84,21 @@
                 $this->db->close();
             }
         }
+
+        function cuNota($arrInsert, $arrUpdate, $u){
+            try{
+                if (!empty($arrInsert)) {
+                    $this->db->insert_batch('Nota', $arrInsert);
+                } if(!empty($arrUpdate)) {
+                    $this->db->update_batch('Nota', $arrUpdate, 'notId', $u);
+                }
+                return true;
+            } catch(Exception $e){
+                return "ERROR. No se pudo ingresar el registro";
+            } finally{
+                $this->db->close();
+            }
+        }
         
     }
 ?>

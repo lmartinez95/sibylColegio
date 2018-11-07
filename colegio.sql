@@ -213,7 +213,7 @@ WHERE grpId = 1;
 
 
 -- insert into Nota (notNota, notPorcentaje, evaId, almId, grpId)
-select 3, 0.25, 1, 4, 1;
+select 3, 0.25, 1, 3, 1;
 
 SELECT G.grpId, D.dgrpId, A.almCodigo,A.almId, CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, E.evaId, e.evaNombre,
 	CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
@@ -223,7 +223,7 @@ FROM Grupo G
 	JOIN Alumno A on (D.almId=A.almId)
 	JOIN Evaluacion E on (G.grpId=E.grpId)
     LEFT JOIN Nota N on (N.evaId=E.evaId and N.almId=A.almId and N.grpId=G.grpId)
-WHERE G.grpId=1 AND E.evaId=1;
+WHERE G.grpId=1 AND E.evaId=2;
 
 select * from nota;
 select * from evaluacion;

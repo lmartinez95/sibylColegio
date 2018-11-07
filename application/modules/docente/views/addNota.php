@@ -22,7 +22,7 @@
 					<td><?php echo $result["almCodigo"]; ?></td>
 					<td><?php echo $result["Nombre"]; ?></td>
 					<td>
-                        <input type="number" class="form-control" name="<?php echo $result["notId"]; ?>" id="<?php echo $result["notId"]; ?>" min="0.00" max = "10" step="0.01" value="<?php echo number_format($result["nota"], 2); ?>" required />
+                        <input type="number" class="form-control" name="notas[<?php echo $result["notId"]; ?>][<?php echo $result["almId"]; ?>]" id="<?php echo $result["notId"]; ?>" min="0.00" max = "10" step="0.01" value="<?php echo number_format($result["nota"], 2); ?>" required />
                     </td>
 				</tr>
 			<?php } ?>
@@ -50,7 +50,7 @@
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-success" value="agregar" name="btnAgregar"><i class="fas fa-check"></i></i> Agregar</button>
+				<button type="submit" class="btn btn-success" value="agregar" name="btnGuardar"><i class="fas fa-check"></i></i> Aceptar</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
 				
 			</div>
