@@ -55,13 +55,13 @@
     </style>
 </head>
 <body class="text-center">
-    <form class="form-signin" id='login' action='login/validar' method='POST'>
+    <form class="form-signin" id='frmLogin' action='login/validar' method='POST'>
       <img class="mb-4" src="<?php echo base_url(); ?>assets/images/logo.png" alt="" width="72" height="72">
       <!--<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>-->
       <label for="carne" class="sr-only">Usuario</label>
-      <input type="text" name='carne' id="carne" class="form-control" placeholder="Usuario" required autofocus>
+      <input type="text" name='carne' id="carne" class="form-control" value="" placeholder="Usuario" required autofocus>
       <label for="pass" class="sr-only">Password</label>
-      <input type="password" name='pass' id="pass" class="form-control" placeholder="Password" data-validate = "La contraseña es requerida" required>
+      <input type="password" name='pass' id="pass" class="form-control" value="" placeholder="Password" data-validate = "La contraseña es requerida" required>
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
@@ -89,9 +89,8 @@
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" integrity=""></script>
     <script type="text/javascript">
       $(document).ready(function() {
-        $("#loading").width($("form").width());
-        $("#loading").height($("form").height());
-        $("#login").submit(function(event){
+        var dimension = document.getElementById('frmLogin');
+        $("#frmLogin").submit(function(event){
           event.preventDefault();
           $.ajax({
             url:$(this).attr("action"),
@@ -99,10 +98,14 @@
             data:$(this).serialize(),
             dataType: 'json',
             beforeSend: function(){
+              $('#frmLogin').find('input, textarea, button, select').attr('disabled',true);
+              $( "#loading" ).width( dimension.clientWidth );
+              $( "#loading" ).height( dimension.clientHeight );
               $("#loading").show();
             },
             complete: function(response){
               $("#loading").hide();
+              $('#frmLogin').find('input, textarea, button, select').attr('disabled',false);
             },
             success: function(response) {
               if (response.status) {

@@ -14,6 +14,10 @@
             $data['usuario'] = $this->session->userdata('usuario');
             $this->load->view('tempDocente',$data);
         }
+        function alumno_dash($data = NULL){
+            $data['usuario'] = $this->session->userdata('usuario');
+            $this->load->view('tempAlumno',$data);
+        }
     }
     
 ?>

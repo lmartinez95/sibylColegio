@@ -150,7 +150,8 @@ usrUsuario VARCHAR(8), CONSTRAINT UQ_usrUsuario UNIQUE (usrUsuario),
 usrNombre VARCHAR(50),
 usrPassword VARCHAR(64),
 rolId INTEGER, CONSTRAINT FK_Rol_Usuario FOREIGN KEY(rolId) REFERENCES Rol(rolId),
-empId INTEGER
+empId INTEGER DEFAULT NULL,
+almId INTEGER DEFAULT NULL
 );
 
 -- ----------------------------------------------Llenando tablas iniciales -- ----------------------------------------------
@@ -166,7 +167,7 @@ INSERT INTO Usuario VALUES(null,'admin','Administrador','5994471ABB01112AFCC1815
 
 #-------------------------------------Consultas---------------------------------------------------
 -- Login
-SELECT u.rolId,u.usrNombre,u.empId,r.rolRedirect FROM Usuario u
+SELECT u.rolId,u.usrNombre,u.empId,r.rolRedirect,u.almId FROM Usuario u
 INNER JOIN Rol r ON u.rolId = r.rolId
 WHERE u.usrUsuario = 'admin' AND u.usrPassword = '5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5';
 
@@ -334,7 +335,7 @@ BEGIN
     
     -- Agregandolo a la plataforma para que pueda ver sus notas
     
-    INSERT INTO Usuario(usrUsuario,usrNombre,usrPassword,rolId,empId) VALUES(codigo,CONCAT(p_almNombre,' ',p_almApellidoP,' ',p_almApellidoM),SHA2(codigo,256),(SELECT rolId FROM Rol WHERE rolNombre = 'Alumno'),null);
+    INSERT INTO Usuario(usrUsuario,usrNombre,usrPassword,rolId,almId) VALUES(codigo,CONCAT(p_almNombre,' ',p_almApellidoP,' ',p_almApellidoM),SHA2(codigo,256),(SELECT rolId FROM Rol WHERE rolNombre = 'Alumno'),almId);
     
     -- Retornando el código generado
     
@@ -343,7 +344,3 @@ END $$
 DELIMITER ;
 
 CALL spAddAlumno('Fabiola Cecilia','Rivera','Martínez','2011-06-07','Soyapango','F','Urb. Abalam Pje. Cuscatlan Pol E #5E','Alicia Beatriz Rvera Martínez','','2299-1780','7968-4744','beamartinez@gmail.com','Marta Alcia Martínez','7954-9740',4);
-select * from Alumno;
-select * from detGrupo;
-select * from Usuario;
-delete from Alumno where almId = 5;

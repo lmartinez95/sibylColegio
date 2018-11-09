@@ -35,8 +35,9 @@
                         "codigo" => $carne,
                         "usuario" => $query['usrNombre'],
                         "empId" => $query['empId'],
+                        "almId" => $query['almId'],
                         "redirect" => $query['rolRedirect'],
-                        "permisos" => $permisos
+                        "permisos" => $permisos,
                     );
                     $this->session->set_userdata($data);
                 }else{

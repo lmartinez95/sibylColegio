@@ -1,17 +1,17 @@
 <?php
-    class Docente extends MY_Controller
+    class Alumno extends MY_Controller
     {
         public function __construct()
         {
             parent::__construct();
-            $this->load->model('Docente_model');
+            $this->load->model('Alumno_model');
             $this->load->library('complements');
         }
         public function index(){
-            $data['title'] = 'Docente';
-            $data['content_view'] = 'docente/index';
-            $data['results'] = $this->Docente_model->mostrar($this->session->userdata('empId'));
-            $this->template->docente_dash($data);
+            $data['title'] = 'Alumno';
+            $data['content_view'] = 'alumno/index';
+            $data['results'] = $this->Alumno_model->mostrar($this->session->userdata('almId'));
+            $this->template->alumno_dash($data);
         }
 
         function listado($grupo = NULL){
