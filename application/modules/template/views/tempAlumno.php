@@ -48,13 +48,13 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="<?php echo base_url(); ?>alumno/notas">
+                <a class="nav-link active" href="<?php echo base_url(); ?>alumno/nota">
                   <i class="material-icons">edit</i>
                   <span>Notas</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="<?php echo base_url(); ?>alumno">
+                <a class="nav-link" href="<?php echo base_url(); ?>alumno">
                   <i class="material-icons">edit</i>
                   <span>Asistencia</span>
                 </a>

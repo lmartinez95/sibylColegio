@@ -7,30 +7,32 @@
 
         public function mostrar($codigo){
             
-            $this->db->select("g.grpId,m.matNombre,gr.grdNombre,t.turNombre");
-            $this->db->from('Grupo g');
-            $this->db->join('Empleado e', 'g.empId = e.empId');
-            $this->db->join('Materia m', 'g.matId = m.matId');
+            $this->db->select("gr.grdNombre,t.turNombre, a.almNie");
+            $this->db->from('detGrupo dg');
+            $this->db->join('Alumno a', 'dg.almId = a.almId');
+            $this->db->join('Grupo g', 'dg.grpId = g.grpId');
             $this->db->join('Grado gr', 'g.grdId = gr.grdId');
             $this->db->join('Turno t', 'gr.turId = t.turId');
-            $this->db->where('g.empId', $codigo);
+            $this->db->where('a.almId', $codigo);
+            $this->db->limit(1);
             
 
-            $query = $this->db->get();
+            $query = $this->db->get()->row_Array();
             $this->db->close();
-            return $query->result_array();
+            return $query;
         }
 
-        function listado($grupo){
-            $this->db->select("a.almId,a.almCodigo,CONCAT(a.almApellidoP,' ',a.almApellidoM,' ', a.almNombre) as Nombre");
-            $this->db->from('Alumno a');
-            $this->db->join('detGrupo dg', 'dg.almId = a.almId');
-            $this->db->where('dg.grpId', $grupo);  
-            $this->db->order_by('Nombre');         
+        function nota($codigo){
+            $this->db->select("m.matId,m.matCodigo,m.matNombre");
+            $this->db->from('detGrupo dg');
+            $this->db->join('Grupo g', 'dg.grpId = g.grpId');
+            $this->db->join('Materia m', 'g.matId = m.matId');
+            $this->db->join('Alumno a', 'dg.almId = a.almId');
+            $this->db->where('dg.almId', $codigo);  
 
-            $query = $this->db->get();
+            $query = $this->db->get()->result_array();
             $this->db->close();
-            return $query->result_array();
+            return $query;
         }
 
         function evaluacion($grupo){

@@ -216,6 +216,7 @@ WHERE grpId = 1;
 -- insert into Nota (notNota, notPorcentaje, evaId, almId, grpId)
 select 3, 0.25, 1, 3, 1;
 
+-- Listado de notas por grupo y evaluacion
 SELECT G.grpId, D.dgrpId, A.almCodigo,A.almId, CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, E.evaId, e.evaNombre,
 	CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
 	CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota
@@ -225,6 +226,19 @@ FROM Grupo G
 	JOIN Evaluacion E on (G.grpId=E.grpId)
     LEFT JOIN Nota N on (N.evaId=E.evaId and N.almId=A.almId and N.grpId=G.grpId)
 WHERE G.grpId=1 AND E.evaId=2;
+
+-- Datos generales del alumno
+SELECT * FROM detGrupo dg
+INNER JOIN Alumno a ON dg.almId = a.almId
+INNER JOIN Grupo g ON dg.grpId = g.grpId
+INNER JOIN Grado gra ON g.grdId = gra.grdId
+
+-- Listdo de materias a las que pertenece el alumno
+SELECT m.matId,m.matCodigo,m.matNombre FROM detGrupo dg
+INNER JOIN Grupo g ON dg.grpId = g.grpId
+INNER JOIN Materia m ON g.matId = m.matId
+INNER JOIN Alumno a ON dg.almId = a.almId
+WHERE dg.almId = 1;
 
 select * from nota;
 select * from evaluacion;

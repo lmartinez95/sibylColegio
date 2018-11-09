@@ -5,24 +5,23 @@
         {
             parent::__construct();
             $this->load->model('Alumno_model');
-            $this->load->library('complements');
+            $this->load->library('session');
         }
         public function index(){
+            $datos = $this->Alumno_model->mostrar($this->session->userdata('almId'));
+            $datos['codigo'] = $this->session->userdata('codigo');
+            $datos['nombre'] = $this->session->userdata('usuario');
             $data['title'] = 'Alumno';
             $data['content_view'] = 'alumno/index';
-            $data['results'] = $this->Alumno_model->mostrar($this->session->userdata('almId'));
+            $data['results'] = $datos;
             $this->template->alumno_dash($data);
         }
 
-        function listado($grupo = NULL){
-            if (!empty($grupo)) {
-                $data['title'] = 'Listado';
-                $data['content_view'] = 'docente/listado';
-                $data['results'] = $this->Docente_model->listado($grupo);
-                $this->template->docente_dash($data);
-            } else {
-                redirect(base_url() . 'docente');
-            }
+        function nota(){
+            $data['title'] = 'Notas';
+            $data['content_view'] = 'alumno/nota';
+            $data['results'] = $this->Alumno_model->nota($this->session->userdata('almId'));
+            $this->template->alumno_dash($data);
         }
 
         function evaluacion($grupo = NULL){
