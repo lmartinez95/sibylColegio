@@ -9,8 +9,8 @@
         </div>
         <div class="card-footer bg-transparent border-dark">
           <div class="panel-footer">
-            <a href="alumno/nota/">
-              <span class="pull-left">Ver notas</span>
+            <a href="alumno/perfil/">
+              <span class="pull-left">Mi perfil</span>
               <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
             </a>
             <div class="clearfix"></div>

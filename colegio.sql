@@ -107,6 +107,7 @@ CREATE TABLE Nota(
 notId INTEGER AUTO_INCREMENT PRIMARY KEY,
 notNota FLOAT, CONSTRAINT CHK_notNota CHECK (notNota >= 0.0 AND notNota <= 10.0),
 notPorcentaje FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
+notTot FLOAT AS (notNota * notPorcentaje),
 evaId INTEGER, CONSTRAINT FK_Evaluacion_Notas FOREIGN KEY(evaId) REFERENCES Evaluacion(evaId),
 almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
 grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
@@ -231,7 +232,7 @@ WHERE G.grpId=1 AND E.evaId=2;
 SELECT * FROM detGrupo dg
 INNER JOIN Alumno a ON dg.almId = a.almId
 INNER JOIN Grupo g ON dg.grpId = g.grpId
-INNER JOIN Grado gra ON g.grdId = gra.grdId
+INNER JOIN Grado gra ON g.grdId = gra.grdId;
 
 -- Listdo de materias a las que pertenece el alumno
 SELECT m.matId,m.matCodigo,m.matNombre FROM detGrupo dg
@@ -239,6 +240,17 @@ INNER JOIN Grupo g ON dg.grpId = g.grpId
 INNER JOIN Materia m ON g.matId = m.matId
 INNER JOIN Alumno a ON dg.almId = a.almId
 WHERE dg.almId = 1;
+
+-- Listado de notas por alumno y evaluacion
+SELECT G.grpId, D.dgrpId, E.evaId, e.evaNombre, N.notPorcentaje,
+	CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
+	CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota
+FROM Grupo G
+	JOIN detGrupo D on (G.grdId=D.grpId)
+	JOIN Alumno A on (D.almId=A.almId)
+	JOIN Evaluacion E on (G.grpId=E.grpId)
+    LEFT JOIN Nota N on (N.evaId=E.evaId and N.almId=A.almId and N.grpId=G.grpId)
+WHERE N.almId = 1 AND N.grpId=1;
 
 select * from nota;
 select * from evaluacion;
@@ -358,3 +370,27 @@ END $$
 DELIMITER ;
 
 CALL spAddAlumno('Fabiola Cecilia','Rivera','Martínez','2011-06-07','Soyapango','F','Urb. Abalam Pje. Cuscatlan Pol E #5E','Alicia Beatriz Rvera Martínez','','2299-1780','7968-4744','beamartinez@gmail.com','Marta Alcia Martínez','7954-9740',4);
+
+
+-- ------------------------------------------ Triggers ------------------------------------------ --
+DROP TRIGGER IF EXISTS trNotaAfterInsert;
+
+DELIMITER $$
+CREATE TRIGGER trNotaAfterInsert
+BEFORE INSERT ON Nota
+FOR EACH ROW
+BEGIN
+	SET NEW.notPorcentaje = (SELECT evaPorcentaje FROM Evaluacion WHERE evaId = NEW.evaId);
+END $$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS trNotaAfterUpdate;
+
+DELIMITER $$
+CREATE TRIGGER trNotaAfterUpdate
+BEFORE UPDATE ON Nota
+FOR EACH ROW
+BEGIN
+	SET NEW.notPorcentaje = (SELECT evaPorcentaje FROM Evaluacion WHERE evaId = NEW.evaId);
+END $$
+DELIMITER ;

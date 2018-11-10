@@ -23,7 +23,7 @@
         }
 
         function nota($codigo){
-            $this->db->select("m.matId,m.matCodigo,m.matNombre");
+            $this->db->select("g.grpId,m.matCodigo,m.matNombre");
             $this->db->from('detGrupo dg');
             $this->db->join('Grupo g', 'dg.grpId = g.grpId');
             $this->db->join('Materia m', 'g.matId = m.matId');
@@ -35,15 +35,27 @@
             return $query;
         }
 
-        function evaluacion($grupo){
-            $this->db->select("evaId,evaNombre,evaPorcentaje");
-            $this->db->from('Evaluacion');
-            $this->db->where('grpId', $grupo);
-            
-            $query = $this->db->get();
-            $this->db->close();
-            return $query->result_array();
+        function detNota($grupo, $alumno){
+            try{
+                $this->db->select('G.grpId, D.dgrpId, E.evaId, e.evaNombre, N.notPorcentaje, N.notTot,
+                CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
+                CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota', FALSE);
+                $this->db->from('Grupo G');
+                $this->db->join('detGrupo D', 'G.grdId = D.grpId');
+                $this->db->join('Alumno A', 'D.almId = A.almId');
+                $this->db->join('Evaluacion E', 'G.grpId=E.grpId');
+                $this->db->join('Nota N', 'N.evaId=E.evaId and N.almId=A.almId and N.grpId=G.grpId', 'left');
+                $this->db->where('N.almId', $alumno);
+                $this->db->where('N.grpId', $grupo);
+                $query = $this->db->get()->result_array();
+                return $query;
+            }catch(Exception $e){
+
+            } finally{
+                $this->db->close();
+            }
         }
+        
 
         public function agregarEva($data)
         {
@@ -86,21 +98,5 @@
                 $this->db->close();
             }
         }
-
-        function cuNota($arrInsert, $arrUpdate){
-            try{
-                if (!empty($arrInsert)) {
-                    $this->db->insert_batch('Nota', $arrInsert);
-                } if(!empty($arrUpdate)) {
-                    $this->db->update_batch('Nota', $arrUpdate, 'notId');
-                }
-                return true;
-            } catch(Exception $e){
-                return "ERROR. No se pudo ingresar el registro";
-            } finally{
-                $this->db->close();
-            }
-        }
-        
     }
 ?>

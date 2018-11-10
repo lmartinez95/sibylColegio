@@ -20,20 +20,28 @@
         function nota(){
             $data['title'] = 'Notas';
             $data['content_view'] = 'alumno/nota';
+            $data['alm'] = $this->session->userdata('almId');
             $data['results'] = $this->Alumno_model->nota($this->session->userdata('almId'));
             $this->template->alumno_dash($data);
         }
 
-        function evaluacion($grupo = NULL){
-            if (!empty($grupo)) {
-                $data['title'] = 'Evaluaciones';
-                $data['content_view'] = 'docente/evaluacion';
-                $data['grupo'] = $grupo;
-                $data['results'] = $this->Docente_model->evaluacion($grupo);
-                $this->template->docente_dash($data);
+        function detNota(){
+            if (!empty($this->input->post('grp')) && !empty($this->input->post('alm'))) {
+                $grp = $this->input->post('grp');
+                $alm = $this->input->post('alm');
+                $query = $this->Alumno_model->detNota($grp, $alm);
+                $data = array();
+                if (!empty($query)) {
+                    $data['status'] = true;
+                    $data['data'] = $query;
+                } else {
+                    $data['status'] = false;
+                }
             } else {
-                redirect(base_url() . 'docente');
+                $data['status'] = false;
             }
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($data, JSON_FORCE_OBJECT);
         }
 
         function agregarEva($grupo){

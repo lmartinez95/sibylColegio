@@ -85,7 +85,8 @@
                                 'notNota' => $v,
                                 'evaId' => $evaluacion,
                                 'almId' => $k,
-                                'grpId' => $grupo
+                                'grpId' => $grupo,
+                                'notPorcentaje' => ''
                             );
                             if ($key == 0) { //insert
                                 //$b = $this->Docente_model->cuNota($datos, true);
