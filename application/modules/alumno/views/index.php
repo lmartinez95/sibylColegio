@@ -5,7 +5,13 @@
         <div class="card-header bg-transparent border-dark"><h4></h4></div>
         <div class="card-body text-dark">
           <h5 class="card-title"><?php echo $results["nombre"]; ?></h5>
-          <p class="card-text"></p>
+          <p class="card-text">
+            <div class="clearfix"></div>
+            <?php
+              echo $results["codigo"] . '<br>Grado: ' . $results['grdNombre'] . '<br>Turno: ' . $results['turNombre'];
+            ?>
+
+          </p>
         </div>
         <div class="card-footer bg-transparent border-dark">
           <div class="panel-footer">
