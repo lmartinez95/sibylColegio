@@ -37,6 +37,7 @@
 
         function detNota($grupo, $alumno){
             try{
+                $this->db->reset_query();
                 $this->db->select('G.grpId, D.dgrpId, E.evaId, e.evaNombre, N.notPorcentaje, N.notTot,
                 CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
                 CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota', FALSE);

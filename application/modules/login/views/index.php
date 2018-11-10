@@ -99,9 +99,10 @@
             data:$(this).serialize(),
             dataType: 'json',
             beforeSend: function(){
+              var dimension = document.getElementById("frmLogin");
               $('#frmLogin').find('input, textarea, button, select').attr('disabled',true);
               $( "#loading" ).width( dimension.clientWidth );
-              $( "#loading" ).height( '416' );
+						  $( "#loading" ).height( dimension.clientHeight );
               $("#loading").show();
             },
             complete: function(response){
