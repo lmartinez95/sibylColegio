@@ -235,14 +235,14 @@ INNER JOIN Grupo g ON dg.grpId = g.grpId
 INNER JOIN Grado gra ON g.grdId = gra.grdId;
 
 -- Listdo de materias a las que pertenece el alumno
-SELECT m.matId,m.matCodigo,m.matNombre FROM detGrupo dg
+SELECT g.grpId,m.matCodigo,m.matNombre FROM detGrupo dg
 INNER JOIN Grupo g ON dg.grpId = g.grpId
 INNER JOIN Materia m ON g.matId = m.matId
 INNER JOIN Alumno a ON dg.almId = a.almId
 WHERE dg.almId = 1;
 
 -- Listado de notas por alumno y evaluacion
-SELECT G.grpId, D.dgrpId, E.evaId, e.evaNombre, N.notPorcentaje,
+SELECT G.grpId, D.dgrpId, E.evaId, e.evaNombre, N.notPorcentaje, N.notTot,
 	CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
 	CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota
 FROM Grupo G
