@@ -109,11 +109,11 @@
 					echo form_open('admin/materia/agregar'); ?>
 				<div class="form-group">
 					<label for="txtCodigo">Codigo:</label>
-					<input type="text" class="form-control" name="txtCodigo" id="txtCodigo" placeholder="Código de materia" autocomplete="off" require autofocus>
+					<input type="text" class="form-control" name="txtCodigo" id="txtCodigo" value="<?php echo set_value('txtCodigo'); ?>" placeholder="Código de materia" autocomplete="off" require autofocus>
 				</div>
 				<div class="form-group">
 					<label for="txtNombre">Nombre:</label>
-					<input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre de la materia" autocomplete="off" require>
+					<input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo set_value('txtNombre'); ?>" placeholder="Nombre de la materia" autocomplete="off" require>
 				</div>
 			</div>
 

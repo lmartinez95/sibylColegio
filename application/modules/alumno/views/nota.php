@@ -7,7 +7,7 @@
 <?php }
  ?>
 <div class="table-responsive">
-	<form name="frmNota" id="frmNota" action='alumno/detNota' method="POST" enctype="multipart/form-data">
+	<form name="frmNota" id="frmNota" action="<?php echo base_url();?>alumno/detNota" method="POST" enctype="multipart/form-data">
 		<table class="table">
 			<thead class="thead-light">
 				<tr>
@@ -50,6 +50,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+
 	var doPostBack = function(grp, alm){
 		$("#alm").val(alm);
 		$("#grp").val(grp);
@@ -75,7 +76,6 @@
 					},
 					success: function(response) {
 						$('#notas').empty().append('');
-						
 						if (response.status) {
 							var fila = '', promedio = 0;
 							$.each( response.data, function( key, value ) {
@@ -91,7 +91,8 @@
 							
 						} else if(response.status == false){
 							$("#tblNota").show();
-							$('#notas').hide();
+							//$('#notas').hide();
+							$('#notas').empty().append('');$('#notas').append('<tr><td>No hay notas</td></tr>');
 							//document.getElementById("mensaje").innerHTML = "<div class='alert alert-danger'><strong>¡Error!</strong> Nada</div>";
 						}else{
 							document.getElementById("mensaje").innerHTML = "<div class='alert alert-danger'><strong>¡Error!</strong> </div>";

@@ -1,151 +1,192 @@
-CREATE DATABASE sibylColegio;
+CREATE DATABASE IF NOT EXISTS sibylColegio;
 USE sibylColegio;
 
-CREATE TABLE Colegio(
-clgId INTEGER PRIMARY KEY,
-clgNombre VARCHAR(75) NOT NULL,
-clgDireccion VARCHAR(250),
-clgTelefono VARCHAR(15),
-clgFax VARCHAR(15),
-clgEmail VARCHAR(75)
+CREATE TABLE IF NOT EXISTS Colegio(
+	clgId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	clgNombre VARCHAR(75) NOT NULL,
+	clgDireccion VARCHAR(250),
+	clgTelefono VARCHAR(15),
+	clgFax VARCHAR(15),
+	clgEmail VARCHAR(75)
 );
 
-CREATE TABLE TipoEmpleado(
-tempId INTEGER AUTO_INCREMENT PRIMARY KEY,
-tempCodigo VARCHAR(8), CONSTRAINT UQ_tempCodigo UNIQUE (tempCodigo),
-tempNombre VARCHAR(50)
+CREATE TABLE IF NOT EXISTS Departamento(
+	dptId INTEGER AUTO_INCREMENT PRIMARY KEY,
+    dptCodigo VARCHAR(10), CONSTRAINT UQ_dptCodigo UNIQUE (dptCodigo),
+    dptNombre VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Empleado(
-empId INTEGER AUTO_INCREMENT PRIMARY KEY,
-empCodigo VARCHAR(8), CONSTRAINT UQ_empCodigo UNIQUE (empCodigo),
-empNombre VARCHAR(50) NOT NULL,
-empApellidoP VARCHAR(25) NOT NULL,
-empApellidoM VARCHAR(25),
-empSexo CHAR(1),
-empDUI VARCHAR(10),
-empNIT VARCHAR(20),
-empISSS VARCHAR(20),
-empNUP VARCHAR(20),
-empDireccion VARCHAR(400),
-empEmail VARCHAR(100),
-tempId INTEGER, CONSTRAINT FK_TipoEmpleado_Empleado FOREIGN KEY(tempId) REFERENCES TipoEmpleado(tempId)
+CREATE TABLE IF NOT EXISTS Municipio(
+	munId INTEGER AUTO_INCREMENT PRIMARY KEY,
+    munCodigo VARCHAR(10), CONSTRAINT UQ_munCodigo UNIQUE (munCodigo),
+    munNombre VARCHAR(150) NOT NULL,
+    munCodPostal VARCHAR(10),
+    dptId INTEGER, CONSTRAINT FK_Departamento_Municipio FOREIGN KEY(dptId) REFERENCES Departamento(dptId)
 );
 
-CREATE TABLE Nivel(
-nvlId INTEGER AUTO_INCREMENT PRIMARY KEY,
-nvlAbrev VARCHAR(10),
-nvlNivel VARCHAR(25),
-nvlIdPadre INTEGER, CONSTRAINT FK_Nivel_Nivel FOREIGN KEY(nvlIdPadre) REFERENCES Nivel(nvlId)
+-- Empleado, pero no necesariamente posee cuenta en el sistema
+CREATE TABLE IF NOT EXISTS TipoEmpleado(
+	tempId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	tempCodigo VARCHAR(8), CONSTRAINT UQ_tempCodigo UNIQUE (tempCodigo),
+	tempNombre VARCHAR(50)
 );
 
-CREATE TABLE Turno(
-turId INTEGER AUTO_INCREMENT PRIMARY KEY,
-turNombre VARCHAR(25),
-turActivo BIT DEFAULT 0
+CREATE TABLE IF NOT EXISTS Empleado(
+	empId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	empCodigo VARCHAR(8), CONSTRAINT UQ_empCodigo UNIQUE (empCodigo),
+	empNombre VARCHAR(50) NOT NULL,
+	empApellidoP VARCHAR(25) NOT NULL,
+	empApellidoM VARCHAR(25),
+	empSexo CHAR(1),
+	empDUI VARCHAR(10),
+	empNIT VARCHAR(20),
+	empISSS VARCHAR(20),
+	empNUP VARCHAR(20),
+	empDireccion VARCHAR(400),
+	empTelCasa VARCHAR(15),
+	empCelular VARCHAR(15),
+	empEmail VARCHAR(100),
+	tempId INTEGER, CONSTRAINT FK_TipoEmpleado_Empleado FOREIGN KEY(tempId) REFERENCES TipoEmpleado(tempId),
+	empFechaIngreso DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	empFechaSalida DATE,
+	empActivo BIT DEFAULT 1 NOT NULL,
+	empFechaNac DATE,
+	empProfesion VARCHAR(250)
+);
+
+
+-- Kinder a Bachillerato
+CREATE TABLE IF NOT EXISTS Nivel(
+	nvlId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	nvlAbrev VARCHAR(10),
+	nvlNivel VARCHAR(25),
+	nvlIdPadre INTEGER, CONSTRAINT FK_Nivel_Nivel FOREIGN KEY(nvlIdPadre) REFERENCES Nivel(nvlId)
+);
+
+CREATE TABLE IF NOT EXISTS Turno(
+	turId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	turNombre VARCHAR(25),
+	turActivo BIT DEFAULT 0
 );
 
 
 CREATE TABLE Materia(
-matId INTEGER AUTO_INCREMENT PRIMARY KEY,
-matCodigo VARCHAR(15),
-matNombre VARCHAR(50)
+	matId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	matCodigo VARCHAR(15),
+	matNombre VARCHAR(50)
 );
 
+-- Grado, turno y docente guía
 CREATE TABLE Grado(
-grdId INTEGER AUTO_INCREMENT PRIMARY KEY,
-grdNombre VARCHAR(50),
-turId INTEGER, CONSTRAINT FK_Turno_Grado FOREIGN KEY(turId) REFERENCES Turno(turId),
-empId INTEGER, CONSTRAINT FK_Empleado_Grado FOREIGN KEY(empId) REFERENCES Empleado(empId),
-nvlId INTEGER, CONSTRAINT FK_Nivel_Grado FOREIGN KEY(nvlId) REFERENCES Nivel(nvlId)
+	grdId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	grdNombre VARCHAR(50),
+	turId INTEGER, CONSTRAINT FK_Turno_Grado FOREIGN KEY(turId) REFERENCES Turno(turId),
+	empId INTEGER, CONSTRAINT FK_Empleado_Grado FOREIGN KEY(empId) REFERENCES Empleado(empId),
+	nvlId INTEGER, CONSTRAINT FK_Nivel_Grado FOREIGN KEY(nvlId) REFERENCES Nivel(nvlId)
 );
 
-CREATE TABLE Alumno(
-almId INTEGER AUTO_INCREMENT PRIMARY KEY,
-almCodigo VARCHAR(8), CONSTRAINT UQ_almCodigo UNIQUE (almCodigo),
-almNie VARCHAR(8), CONSTRAINT UQ_almNie UNIQUE (almNie),
-almNombre VARCHAR(50) NOT NULL,
-almApellidoP VARCHAR(25) NOT NULL,
-almApellidoM VARCHAR(25),
-almFechaNac DATE NOT NULL,
-almLugarNac VARCHAR(100),
-almSexo CHAR(1) NOT NULL,
-almDireccion VARCHAR(400),
-almMadre VARCHAR(100),
-almPadre VARCHAR(100),
-almTelCasa VARCHAR(15),
-almTelCel VARCHAR(15),
-almCorreo VARCHAR(50),
-almResponsable VARCHAR(50),
-almTelResponsable VARCHAR(15),
-almFoto VARCHAR(100)
-);
-
-
-CREATE TABLE Grupo( #Para DocenteMateria
-grpId INTEGER AUTO_INCREMENT PRIMARY KEY,
-empId INTEGER, CONSTRAINT FK_Empleado_Grupo FOREIGN KEY(empId) REFERENCES Empleado(empId),
-matId INTEGER, CONSTRAINT FK_Materia_Grupo FOREIGN KEY(matId) REFERENCES Materia(matId),
-grdId INTEGER, CONSTRAINT FK_Grado_Grupo FOREIGN KEY(grdId) REFERENCES Grado(grdId)
+CREATE TABLE IF NOT EXISTS Alumno(
+	almId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	almCodigo VARCHAR(8), CONSTRAINT UQ_almCodigo UNIQUE (almCodigo),
+	almNie VARCHAR(8), CONSTRAINT UQ_almNie UNIQUE (almNie),
+	almNombre VARCHAR(50) NOT NULL,
+	almApellidoP VARCHAR(25) NOT NULL,
+	almApellidoM VARCHAR(25),
+	almFechaNac DATE NOT NULL,
+	almLugarNac VARCHAR(100),
+	almSexo CHAR(1) NOT NULL,
+	almDireccion VARCHAR(400),
+	dptId INTEGER, CONSTRAINT FK_Departamento_Alumno FOREIGN KEY(dptId) REFERENCES Departamento(dptId),
+	munId INTEGER, CONSTRAINT FK_Municipio_Alumno FOREIGN KEY(munId) REFERENCES Municipio(munId),
+	almMadre VARCHAR(100),
+	almMadreDui VARCHAR(10),
+	almPadre VARCHAR(100),
+	almPadreDui VARCHAR(10),
+	almTelCasa VARCHAR(15),
+	almTelCel VARCHAR(15),
+	almCorreo VARCHAR(50),
+	almResponsable VARCHAR(50),
+	almTelResponsable VARCHAR(15),
+	almFoto VARCHAR(100)
 );
 
 
+CREATE TABLE IF NOT EXISTS Grupo( #Para DocenteMateria
+	grpId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	empId INTEGER, CONSTRAINT FK_Empleado_Grupo FOREIGN KEY(empId) REFERENCES Empleado(empId),
+	matId INTEGER, CONSTRAINT FK_Materia_Grupo FOREIGN KEY(matId) REFERENCES Materia(matId),
+	grdId INTEGER, CONSTRAINT FK_Grado_Grupo FOREIGN KEY(grdId) REFERENCES Grado(grdId)
+);
+
+-- Alumnos en ese grupo
 CREATE TABLE detGrupo(
-dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
-grpId INTEGER, CONSTRAINT FK_Grupo_DetalleGRupo FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
-almId INTEGER, CONSTRAINT FK_Alumno_DetalleGrupo FOREIGN KEY(almId) REFERENCES Alumno(almId)
+	dgrpId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	grpId INTEGER, CONSTRAINT FK_Grupo_DetalleGRupo FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
+	almId INTEGER, CONSTRAINT FK_Alumno_DetalleGrupo FOREIGN KEY(almId) REFERENCES Alumno(almId)
 );
 
-CREATE TABLE Evaluacion(
-evaId INTEGER AUTO_INCREMENT PRIMARY KEY,
-evaNombre VARCHAR(50),
-evaPorcentaje FLOAT, CONSTRAINT CHK_evaPorcentaje CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
-grpId INTEGER, CONSTRAINT FK_Grupo_Evaluacion FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
+CREATE TABLE IF NOT EXISTS Periodo(
+	perId INT AUTO_INCREMENT PRIMARY KEY,
+    perNombre INT,
+    perFechaInicio DATE,
+    perFechaFin DATE
 );
 
-CREATE TABLE Nota(
-notId INTEGER AUTO_INCREMENT PRIMARY KEY,
-notNota FLOAT, CONSTRAINT CHK_notNota CHECK (notNota >= 0.0 AND notNota <= 10.0),
-notPorcentaje FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
-notTot FLOAT AS (notNota * notPorcentaje),
-evaId INTEGER, CONSTRAINT FK_Evaluacion_Notas FOREIGN KEY(evaId) REFERENCES Evaluacion(evaId),
-almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
-grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId)
+CREATE TABLE IF NOT EXISTS TipoEvaluacion(
+	tevaId INTEGER AUTO_INCREMENT PRIMARY KEY,
+    tevaNombre VARCHAR(150)
 );
 
-CREATE TABLE HNotas(
-hnotId INTEGER AUTO_INCREMENT PRIMARY KEY,
-nvlNombre VARCHAR(25),
-matNombre VARCHAR(50)
-
-
+CREATE TABLE IF NOT EXISTS Evaluacion(
+	evaId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	evaNombre VARCHAR(50),
+	evaPorcentaje FLOAT, CONSTRAINT CHK_evaPorcentaje CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
+	grpId INTEGER, CONSTRAINT FK_Grupo_Evaluacion FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
+    perId INT, CONSTRAINT FK_Periodo_Evaluacion FOREIGN KEY(perId) REFERENCES Periodo(perId),
+    anio INT
 );
 
-drop table Nota;
-drop table Evaluacion;
-drop table detGrupo;
-drop table Grupo;
-DROP TABLE Grado;
+CREATE TABLE IF NOT EXISTS Nota(
+	notId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	notNota FLOAT, CONSTRAINT CHK_notNota CHECK (notNota >= 0.0 AND notNota <= 10.0),
+	notPorcentaje FLOAT, CONSTRAINT CHK_notPorcentaje1 CHECK (notPorcentaje1 >= 0.0 AND notPorcentaje1 <= 1.0),
+	notTot FLOAT AS (notNota * notPorcentaje),
+	evaId INTEGER, CONSTRAINT FK_Evaluacion_Notas FOREIGN KEY(evaId) REFERENCES Evaluacion(evaId),
+	almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId),
+	grpId INTEGER, CONSTRAINT FK_Grupo_Notas FOREIGN KEY(grpId) REFERENCES Grupo(grpId),
+    notPost BIT DEFAULT 0 -- Nota publicada y no puede ser modificada, sin una autoridad
+);
 
-CREATE TABLE Rol(
+
+CREATE TABLE IF NOT EXISTS HistorialNota(
+	hnotId INTEGER AUTO_INCREMENT PRIMARY KEY,
+	nvlNombre VARCHAR(25),
+	matNombre VARCHAR(50),
+	notNota FLOAT, CONSTRAINT CHK_notNota CHECK (notNota >= 0.0 AND notNota <= 10.0),
+    hnotPeriodo INT,
+    hnotAnio INT,
+	almId INTEGER, CONSTRAINT FK_Alumno_Notas FOREIGN KEY(almId) REFERENCES Alumno(almId)
+);
+
+CREATE TABLE IF NOT EXISTS Rol(
 rolId INTEGER AUTO_INCREMENT PRIMARY KEY,
 rolNombre VARCHAR(50),
 rolRedirect VARCHAR(15)
 );
 
-CREATE TABLE Acceso(
+CREATE TABLE IF NOT EXISTS Acceso(
 accId INTEGER AUTO_INCREMENT PRIMARY KEY,
 accVista VARCHAR(25),
 accDescripcion VARCHAR(50)
 );
 
-CREATE TABLE RolAcceso(
+CREATE TABLE IF NOT EXISTS RolAcceso(
 raccId INTEGER AUTO_INCREMENT PRIMARY KEY,
 rolId INTEGER, CONSTRAINT FK_Rol_RolAcceso FOREIGN KEY(rolId) REFERENCES Rol(rolId),
 accId INTEGER, CONSTRAINT FK_Acceso_RolAcceso FOREIGN KEY(accId) REFERENCES Acceso(accId)
 );
 
-CREATE TABLE Usuario(
+CREATE TABLE IF NOT EXISTS Usuario(
 usrId INTEGER AUTO_INCREMENT PRIMARY KEY,
 usrUsuario VARCHAR(8), CONSTRAINT UQ_usrUsuario UNIQUE (usrUsuario),
 usrNombre VARCHAR(50),
@@ -156,6 +197,18 @@ almId INTEGER DEFAULT NULL
 );
 
 -- ----------------------------------------------Llenando tablas iniciales -- ----------------------------------------------
+
+INSERT INTO Departamento(dptCodigo,dptNombre) VALUES('Ahuachapán'),('Cabañas'),('Chalatenango'),('Cuscatlán'),('La Libertad'),('La Paz'),
+('La Unión'),('Morazán'),('San Miguel'),('San Salvador'),('San Vicente'),('Santa Ana'),('Sonsonate'),('Usulután')
+
+INSERT INTO Municipio(munCodigo,munNombre,munCodPostal) VALUES
+('01-01','Ahuachapán'),('01-02','Apaneca'),('01-03','Atiquizaya'),('01-04','Concepción de Ataco'),('01-05','El Refugio'),('01-06','Guaymango'),
+('01-07','Jujutla'),('01-08','San Francisco Menéndez'),('01-09','San Lorenzo'),('01-10','San Pedro Puxtla'),('01-11','Tacuba'),('01-12','Turín'),
+('02-01','Cinquera'),('02-02','Dolores'),('02-03','Guacotecti'),('02-04','Ilobasco'),('02-05','Jutiapa'),('02-06','San Isidro'),
+('02-07','Sensuntepeque'),('02-08','Tejutepeque'),('02-09','Victoria')
+
+
+
 
 INSERT INTO Turno(turNombre,turActivo) VALUES('Matutino',1),('Vespertino',1),('Nocturno',1);
 
@@ -270,7 +323,7 @@ BEGIN
     SET codigo = CONCAT(SUBSTRING(p_empApellidoP,1,1), SUBSTRING(p_empApellidoM,1,1), SUBSTRING(YEAR(NOW()),3,2));
 	SELECT CAST(SUBSTRING(MAX(empCodigo),5,4) AS SIGNED) INTO i FROM Empleado WHERE SUBSTRING(empCodigo,3,2) = SUBSTRING(YEAR(NOW()),3,2);
     
-    IF (i > 0) THEN 
+    IF (i >= 1) THEN 
 		SET i = i + 1;
      ELSE
 		SET i = 1;
@@ -368,9 +421,6 @@ BEGIN
     SELECT codigo;
 END $$
 DELIMITER ;
-
-CALL spAddAlumno('Fabiola Cecilia','Rivera','Martínez','2011-06-07','Soyapango','F','Urb. Abalam Pje. Cuscatlan Pol E #5E','Alicia Beatriz Rvera Martínez','','2299-1780','7968-4744','beamartinez@gmail.com','Marta Alcia Martínez','7954-9740',4);
-
 
 -- ------------------------------------------ Triggers ------------------------------------------ --
 DROP TRIGGER IF EXISTS trNotaAfterInsert;

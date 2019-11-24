@@ -56,48 +56,5 @@
                 $this->db->close();
             }
         }
-        
-
-        public function agregarEva($data)
-        {
-            try{
-                $this->db->select("ROUND(SUM(evaPorcentaje),2) AS suma");
-                $this->db->from('Evaluacion');
-                $this->db->where('grpId', $data['grpId']);
-                $query = $this->db->get()->row_array();
-                $suma = $data['evaPorcentaje'] + $query['suma'];
-                if ($suma > 1.00) {
-                    return 'La sumatoria de porcentaje es igual o superior al 100%';
-                } else {
-                    $this->db->insert('Evaluacion', $data);
-                    return true;                    
-                }
-            } catch(Exception $e){
-                return "ERROR. No se pudo ingresar el registro";
-            } finally{
-                $this->db->close();
-            }
-        }
-
-        function addNota($grupo,$evaluacion){
-            try{
-                $this->db->select("G.grpId, D.dgrpId, A.almCodigo, A.almId, CONCAT(a.almNombre,' ', a.almApellidoP,' ',a.almApellidoM) AS Nombre, E.evaId, e.evaNombre,
-                    CASE WHEN n.notId IS NULL THEN 0 ELSE n.notId END AS notId,
-                    CASE WHEN n.notNota IS NULL THEN 0 ELSE n.notNota END AS nota", FALSE);
-                $this->db->from('Grupo G');
-                $this->db->join('detGrupo D', 'G.grdId = D.grpId');
-                $this->db->join('Alumno A', 'D.almId = A.almId');
-                $this->db->join('Evaluacion E', 'G.grpId = E.grpId');
-                $this->db->join('Nota N', 'N.evaId = E.evaId AND N.almId = A.almId AND N.grpId = G.grpId', 'left');
-                $this->db->where('G.grpId', $grupo);
-                $this->db->where('E.evaId', $evaluacion);
-                $query = $this->db->get()->result_array();
-                return $query;
-            } catch(Exception $e){
-                return "ERROR. No se pudo ingresar el registro";
-            } finally{
-                $this->db->close();
-            }
-        }
     }
 ?>
