@@ -4,16 +4,19 @@
         public function __construct()
         {
             parent::__construct();
+            $this->load->library('Complements');
             $this->load->model('Grado_model');
         }
         public function index($mensaje = NULL, $nivel = NULL){
-            $this->load->library('complements');
-            $data['results'] = $this->Grado_model->mostrar();
-            $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
-            $data['empleado'] = $this->complements->cargaCombo('empId',"CONCAT(empNombre,' ',empApellidoP,' ',empApellidoM) AS nombre",'Empleado','tempId = 2');
-            $data['turno'] = $this->complements->cargaCombo('turId','turNombre','Turno');            
-            $data['title'] = 'Grados';
-            $data['content_view'] = 'admin/grado/index';
+            if ($this->complements->veriAcceso('verGrado')) {
+                $data['results'] = $this->Grado_model->mostrar();
+                $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
+                $data['empleado'] = $this->complements->cargaCombo('empId',"CONCAT(empNombre,' ',empApellidoP,' ',empApellidoM) AS nombre",'Empleado','tempId = 2');
+                $data['turno'] = $this->complements->cargaCombo('turId','turNombre','Turno');            
+                $data['title'] = 'Grados';
+                $data['content_view'] = 'admin/grado/index';
+            } else
+                $data['content_view'] = 'template/denied';
             $this->template->admin_dash($data);
         }
 
@@ -40,9 +43,7 @@
             }
 
             redirect('admin/grado/');
-        }
-
-        
+        }        
 
         public function listado($grupo){
             $data['results'] = $this->Grupo_model->listado($grupo);

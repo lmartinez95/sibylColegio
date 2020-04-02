@@ -18,6 +18,10 @@
             $data['usuario'] = $this->session->userdata('usuario');
             $this->load->view('tempAlumno',$data);
         }
+
+        function denied(){
+            $this->load->view('denied');
+        }
     }
     
 ?>

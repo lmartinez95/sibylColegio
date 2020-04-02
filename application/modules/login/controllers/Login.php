@@ -29,7 +29,7 @@
                     $validator['redirect'] = base_url() . $query['rolRedirect'];
                     $permisos = array();
                     foreach ($results as $result) {
-                        array_push($permisos, $result['accVista']);
+                        array_push($permisos, $result['accCodigo']);
                     }
                     $data = array(
                         "codigo" => $carne,

@@ -7,9 +7,12 @@
             $this->load->model('TipoEmpleado_model');
         }
         public function index(){
-            $data['title'] = 'Tipos de empleados';
-            $data['content_view'] = 'admin/tipoEmpleado/index';
-            $data['results'] = $this->TipoEmpleado_model->mostrar();
+            $data['title'] = 'Tipo de empleados';
+            if ($this->complements->veriAcceso('verTipoEmpleado')) {
+                $data['content_view'] = 'admin/tipoEmpleado/index';
+                $data['results'] = $this->TipoEmpleado_model->mostrar();
+            } else
+                $data['content_view'] = 'template/denied';
             $this->template->admin_dash($data);
         }
 

@@ -38,28 +38,54 @@
                                     <label for="txtNombre">Nombres:</label>
                                     <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombres" autocomplete="off" require>
                                 </div>
-                                <div class="form-group">
-                                    <label for="txtApellidoP">Apellido Paterno:</label>
-                                    <input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require >
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="txtApellidoP">Apellido Paterno:</label>
+                                        <input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="txtApellidoM">Apellido Materno:</label>
+                                        <input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require >
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="txtApellidoM">Apellido Materno:</label>
-                                    <input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require >
+                                
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="dtpFechaNac">Fecha de Nacimiento:</label>
+                                        <input type="date" class="form-control" name="dtpFechaNac" id="dtpFechaNac" require >
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="txtLugarNac">Lugar de Nacimiento:</label>
+                                        <input type="text" class="form-control" name="txtLugarNac" id="txtLugarNac" placeholder="Lugar de nacimiento" autocomplete="off" require >
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="cboSexo">Sexo:</label>
+                                        <select class="form-control" name="cboSexo" id="cboSexo" require>
+                                            <option value="M" selected>Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="dtpFechaNac">Fecha de Nacimiento:</label>
-                                    <input type="date" class="form-control" name="dtpFechaNac" id="dtpFechaNac" require >
-                                </div>
-                                <div class="form-group">
-                                    <label for="txtLugarNac">Lugar de Nacimiento:</label>
-                                    <input type="text" class="form-control" name="txtLugarNac" id="txtLugarNac" placeholder="Lugar de nacimiento" autocomplete="off" require >
-                                </div>
-                                <div class="form-group">
-                                    <label for="cboSexo">Sexo:</label>
-                                    <select class="form-control" name="cboSexo" id="cboSexo" require>
-                                        <option value="M" selected>Masculino</option>
-                                        <option value="F">Femenino</option>
-                                    </select>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="txtNie">NIE:</label>
+                                        <input type="text" class="form-control" name="txtNie" id="txtNie" placeholder="00000000" autocomplete="off" require >
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="cboDptId">Departamento:</label>
+                                        <select class="form-control" name="cboDptId" id="cboDptId">
+                                        <option value="">DEPARTAMENTO</option>
+                                        <?php foreach ($departamento as $item) { ?>
+                                            <option value="<?php echo $item["dptId"]; ?>"><?php echo $item["dptNombre"]; ?></option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="cboMunId">Municipio:</label>
+                                        <select class="form-control" name="cboMunId" id="cboMunId">
+                                            <option value="0">MUNICIPIO</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="txtDireccion">Dirección:</label>
@@ -79,33 +105,49 @@
                         </div>
                         <div id="collapseNTwo" class="collapse" aria-labelledby="headingNTwo" data-parent="#accordionNuevo">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label for="txtMadre">Nombre de la Madre:</label>
-                                    <input type="text" class="form-control" name="txtMadre" id="txtMadre" placeholder="Nombre de la madre" autocomplete="off" require />
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="txtMadre">Nombre de la Madre:</label>
+                                        <input type="text" class="form-control" name="txtMadre" id="txtMadre" placeholder="Nombre de la madre" autocomplete="off" require />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="txtMadreDui">DUI Madre:</label>
+                                        <input type="text" class="form-control" name="txtMadreDui" id="txtMadreDui" placeholder="00000000-0" autocomplete="off" require />
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="txtPadre">Nombre del Padre:</label>
-                                    <input type="text" class="form-control" name="txtPadre" id="txtPadre" placeholder="Nombre del padre" autocomplete="off" require />
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="txtPadre">Nombre del Padre:</label>
+                                        <input type="text" class="form-control" name="txtPadre" id="txtPadre" placeholder="Nombre del padre" autocomplete="off" require />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="txtDuiPadre">DUI Padre:</label>
+                                        <input type="text" class="form-control" name="txtDuiPadre" id="txtDuiPadre" placeholder="00000000-0" autocomplete="off" require />
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="txtTelCasa">Teléfono de casa:</label>
-                                    <input type="text" class="form-control" name="txtTelCasa" id="txtTelCasa" placeholder="0000-0000" autocomplete="off" require />
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="txtTelCasa">Teléfono de casa:</label>
+                                        <input type="text" class="form-control" name="txtTelCasa" id="txtTelCasa" placeholder="0000-0000" autocomplete="off" require />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="txtTelCel">Teléfono celular:</label>
+                                        <input type="text" class="form-control" name="txtTelCel" id="txtTelCel" placeholder="0000-0000" autocomplete="off" require />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="txtEmail">Correo:</label>
+                                        <input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="email@algo.com" autocomplete="off" require />
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="txtTelCel">Teléfono celular:</label>
-                                    <input type="text" class="form-control" name="txtTelCel" id="txtTelCel" placeholder="0000-0000" autocomplete="off" require />
-                                </div>
-                                <div class="form-group">
-                                    <label for="txtEmail">Correo:</label>
-                                    <input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="email@algo.com" autocomplete="off" require />
-                                </div>
-                                <div class="form-group">
-                                    <label for="txtResponsable">Nombre del Responsable:</label>
-                                    <input type="text" class="form-control" name="txtResponsable" id="txtResponsable" placeholder="Nombre del responsable" autocomplete="off" require />
-                                </div>
-                                <div class="form-group">
-                                    <label for="txtTelResponsable">Teléfono del Responsable:</label>
-                                    <input type="text" class="form-control" name="txtTelResponsable" id="txtTelResponsable" placeholder="0000-0000" autocomplete="off" require />
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="txtResponsable">Nombre del Responsable:</label>
+                                        <input type="text" class="form-control" name="txtResponsable" id="txtResponsable" placeholder="Nombre del responsable" autocomplete="off" require />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="txtTelResponsable">Teléfono del Responsable:</label>
+                                        <input type="text" class="form-control" name="txtTelResponsable" id="txtTelResponsable" placeholder="0000-0000" autocomplete="off" require />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +251,7 @@
                     });
                 } //success
             }); //ajax
-        });
+        }); //function
     });
 </script>
-
+<script src="<?php echo base_url(); ?>assets/js/functions.js"></script>

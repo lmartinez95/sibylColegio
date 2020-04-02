@@ -10,7 +10,7 @@
 		</form>
 	</div>
 	<div>
-	<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
+	<a class="btn btn-primary pull-right" href="<?php echo base_url(); ?>admin/empleado/nuevo"><i class="fas fa-plus"></i> Nuevo</a>
 	</div>
 </div>
 <br />
@@ -98,81 +98,3 @@
 		}*/
 	?>
 </ul>
-<!-- Modal de agregar -->
-<div class="modal fade" id="agregar">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title">Agregar registro</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				<?php
-					echo form_open('admin/empleado/agregar'); ?>
-						<div class="form-group">
-							<label for="txtNombre">Nombres:</label>
-							<input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombres" autocomplete="off" require autofocus>
-						</div>
-						<div class="form-group">
-							<label for="txtApellidoP">Apellido Paterno:</label>
-							<input type="text" class="form-control" name="txtApellidoP" id="txtApellidoP" placeholder="Apellido Paterno" autocomplete="off" require>
-						</div>
-						<div class="form-group">
-							<label for="txtApellidoM">Apellido Materno:</label>
-							<input type="text" class="form-control" name="txtApellidoM" id="txtApellidoM" placeholder="Apellido Materno" autocomplete="off" require>
-						</div>
-						<div class="form-group">
-							<label for="cboSexo">Sexo:</label>
-							<select class="form-control" name="cboSexo" id="cboSexo" require>
-								<option value="M" selected>Masculino</option>
-								<option value="F">Femenino</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="txtDUI">DUI:</label>
-							<input type="text" class="form-control" name="txtDUI" id="txtDUI" pattern="^[0-9]{8}-[0-9]{1}$" require title="Formato: 00000000-0" placeholder="00000000-0" autocomplete="off" />
-						</div>
-						<div class="form-group">
-							<label for="txtNIT">NIT:</label>
-							<input type="text" class="form-control" name="txtNIT" id="txtNIT" pattern="^\d{4}-\d{6}-\d{3}-\d{1}$" require title="Formato: 0000-000000-000-0" placeholder="0000-000000-000-0" autocomplete="off" />
-						</div>
-						<div class="form-group">
-							<label for="txtISSS">ISSS:</label>
-							<input type="text" class="form-control" name="txtISSS" id="txtISSS" pattern="^\d{9}$" require title="Formato: 000000000" placeholder="000000000" autocomplete="off" />
-						</div>
-						<div class="form-group">
-							<label for="txtNUP">NUP:</label>
-							<input type="text" class="form-control" name="txtNUP" id="txtNUP" pattern="^\d{12}$" require title="Formato: 000000000000" placeholder="000000000000" autocomplete="off"/>
-						</div>
-						<div class="form-group">
-							<label for="cboTempId">Tipo de empleado:</label>
-							<select class="form-control" name="cboTempId" id="cboTempId">
-							<?php foreach ($combo as $item) { ?>
-								<option value="<?php echo $item["tempId"]; ?>"><?php echo $item["tempNombre"]; ?></option>
-							<?php } ?>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="txtDireccion">Dirección:</label>
-							<input type="text" class="form-control" name="txtDireccion" id="txtDireccion" placeholder="Dirección" autocomplete="off" require />
-						</div>
-						<div class="form-group">
-							<label for="txtEmail">Correo:</label>
-							<input type="email" class="form-control" name="txtEmail" id="txtEmail" placeholder="email@algo.com" autocomplete="off" require />
-						</div>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-success" value="agregar"><i class="fas fa-plus"></i> Agregar</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-				
-			</div>
-			<?php echo form_close(); ?>
-		</div>
-	</div>
-</div>

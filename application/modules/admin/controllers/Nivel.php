@@ -4,14 +4,17 @@
         public function __construct()
         {
             parent::__construct();
+            $this->load->library('Complements');
             $this->load->model('Nivel_model');
         }
         public function index(){
-            $this->load->library('complements');
             $data['title'] = 'Niveles';
-            $data['content_view'] = 'admin/nivel/index';
-            $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
-            $data['results'] = $this->Nivel_model->mostrar();
+            if ($this->complements->veriAcceso('verAlumno')) {
+                $data['content_view'] = 'admin/nivel/index';
+                $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
+                $data['results'] = $this->Nivel_model->mostrar();
+            } else
+                $data['content_view'] = 'template/denied';
             $this->template->admin_dash($data);
         }
 

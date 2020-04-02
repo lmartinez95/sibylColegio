@@ -23,7 +23,7 @@
                 $this->db->where('empDui', $data['empDUI']);
                 $result = $this->db->get()->row_array();
                 if ($result['cant'] == 0) {
-                    $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?)', $data)->row_array();
+                    $query = $this->db->query('CALL spAddEmpleado(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', $data)->row_array();
                     return array('status' => TRUE, 'value' => $query['codigo']);
                 } else {
                     return array('status' => FALSE, 'value' => $query['El empleado ya existe']);
