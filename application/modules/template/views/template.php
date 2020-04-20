@@ -10,11 +10,41 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script rel="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js" integrity=""></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery-ui.min.css">
+    <script rel="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.min.js" integrity=""></script>
+    <style>
+      .progress{
+        opacity: 0.7;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 666;
+        text-align: center;
+      }
+      .progress img {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .progress span {
+          position: absolute;
+          margin: auto;
+          top: 55%;
+          left: -2px;
+          right: 2px;
+          bottom: 0;
+      }
+    </style>
   </head>
   <body class="h-100 bg-light">
     
     <!--Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
         <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="<?php echo base_url(); ?>assets/images/logo.png" alt="Shards Dashboard">
         Sibyl System
@@ -68,7 +98,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <?php echo $usuario; ?>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -81,15 +111,18 @@
     
     <!-- Content -->
     <div class="container">
+    <br /><br /><br /><br />
           <span class="text-uppercase page-subtitle">Dashboard</span>
           <h3 class="page-title"><?php echo $title; ?></h3>
         
       <?php $this->load->view($content_view); ?>
     </div>
+    <br /><br />
     <!-- End Content -->
+    <hr>
     <footer class="footer text-center">
       <div class="container">
-        <ul class="nav mx-auto">
+        <ul class="nav justify-content-center">
           <li class="nav-item">
             <a class="nav-link text-decoration-none" href="#">Home</a>
           </li>
@@ -107,15 +140,21 @@
           </li>
         </ul>
         <div class="footer-copyright text-center py-3">Copyright © 2018
-          <a href="#" rel="nofollow">DesignRevision</a>
+          <a href="#" rel="nofollow">Sephira Genomics</a>
         </span>
       </div>
     </footer>
+    <div id="loading" style="display: none;">
+      <div class="progress">
+          <img id="Image1" src="<?php echo base_url(); ?>assets/images/growing-ring.gif" />
+        <h4> <span id="LbProceso">Cerrando Sesión</span></h4>
+      </div>
+    </div>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js" integrity=""></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" integrity=""></script>
     <script src="<?php echo base_url(); ?>assets/js/Chart.min.js"></script>
     
     <script src="<?php echo base_url(); ?>assets/js/shards-dashboards.1.0.1.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/functions.js"></script>
   </body>
 </html>

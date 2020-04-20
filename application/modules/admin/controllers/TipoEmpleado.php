@@ -4,6 +4,7 @@
         public function __construct()
         {
             parent::__construct();
+            $this->load->library('Complements');
             $this->load->model('TipoEmpleado_model');
         }
         public function index(){

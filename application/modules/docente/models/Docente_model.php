@@ -21,16 +21,27 @@
             return $query->result_array();
         }
 
-        function listado($grupo){
-            $this->db->select("a.almId,a.almCodigo,CONCAT(a.almApellidoP,' ',a.almApellidoM,' ', a.almNombre) as Nombre");
-            $this->db->from('Alumno a');
-            $this->db->join('detGrupo dg', 'dg.almId = a.almId');
-            $this->db->where('dg.grpId', $grupo);  
-            $this->db->order_by('Nombre');         
+        function listado($grupo, $empId){
+            $this->db->select("COUNT(empId) AS cant");
+            $this->db->from('Grupo');
+            $this->db->where('empId', $empId);
+            $this->db->where('grpId', $grupo);
+            $sql = $this->db->get()->row_array();
+            $cantidad = $sql['cant'];
+            if ($cantidad == 1) {
+                $this->db->select("a.almId,a.almCodigo,CONCAT(a.almApellidoP,' ',a.almApellidoM,' ', a.almNombre) as Nombre");
+                $this->db->from('Alumno a');
+                $this->db->join('detGrupo dg', 'dg.almId = a.almId');
+                $this->db->where('dg.grpId', $grupo);  
+                $this->db->order_by('Nombre');         
 
-            $query = $this->db->get();
-            $this->db->close();
-            return $query->result_array();
+                $query = $this->db->get();
+                $this->db->close();
+                return $query->result_array();
+            } else {
+                $this->db->close();
+                return $cantidad;
+            }
         }
 
         function evaluacion($grupo){
@@ -43,6 +54,18 @@
             return $query->result_array();
         }
 
+        //Función para autocompletar stock de evaluaciones
+        public function autoEvaluacion($busqueda)
+        {
+            $this->db->select("tevaNombre AS label");
+            $this->db->from('TipoEvaluacion');
+            $this->db->like('tevaNombre', $busqueda);
+            
+            $query = $this->db->get();
+            $this->db->close();
+            return $query->result_array();
+        }
+        
         public function agregarEva($data)
         {
             try{

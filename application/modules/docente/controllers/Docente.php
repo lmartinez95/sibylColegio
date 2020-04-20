@@ -5,21 +5,29 @@
         {
             parent::__construct();
             $this->load->model('Docente_model');
-            $this->load->library('complements');
+            $this->load->library('Complements');
         }
         public function index(){
             $data['title'] = 'Docente';
-            $data['content_view'] = 'docente/index';
-            $data['results'] = $this->Docente_model->mostrar($this->session->userdata('empId'));
-            $this->template->docente_dash($data);
+            if ($this->complements->veriAcceso('dashAlumno')) {
+                $data['content_view'] = 'docente/index';
+                $data['results'] = $this->Docente_model->mostrar($this->session->userdata('empId'));
+            } else
+                $data['content_view'] = 'template/denied';
+            $this->template->admin_dash($data);
         }
 
         function listado($grupo = NULL){
             if (!empty($grupo)) {
                 $data['title'] = 'Listado';
-                $data['content_view'] = 'docente/listado';
-                $data['results'] = $this->Docente_model->listado($grupo);
-                $this->template->docente_dash($data);
+                if ($this->complements->veriAcceso('dashAlumno')) {
+                    $data['content_view'] = 'docente/listado';
+                    $data['results'] = $this->Docente_model->listado($grupo, $this->session->userdata('empId'));
+                    if ($data['results'] == 0)
+                        $data['content_view'] = 'template/denied';        
+                } else
+                    $data['content_view'] = 'template/denied';
+                $this->template->admin_dash($data);
             } else {
                 redirect(base_url() . 'docente');
             }
@@ -31,7 +39,7 @@
                 $data['content_view'] = 'docente/evaluacion';
                 $data['grupo'] = $grupo;
                 $data['results'] = $this->Docente_model->evaluacion($grupo);
-                $this->template->docente_dash($data);
+                $this->template->admin_dash($data);
             } else {
                 redirect(base_url() . 'docente');
             }
@@ -60,6 +68,13 @@
             redirect('docente/evaluacion/'.$grupo);
         }
 
+        function autoEvaluacion()
+        {
+            $evaluaciones = $this->Docente_model->autoEvaluacion($this->input->get('term'));
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($evaluaciones, JSON_FORCE_OBJECT);
+        }
+
         function addNota($grupo,$evaluacion){
             if (!empty($grupo)) {
                 $data['title'] = 'Agregar nota';
@@ -67,7 +82,7 @@
                 $data['grupo'] = $grupo;
                 $data['evaluacion'] = $evaluacion;
                 $data['results'] = $this->Docente_model->addNota($grupo,$evaluacion);
-                $this->template->docente_dash($data);
+                $this->template->admin_dash($data);
             } else {
                 redirect(base_url() . 'docente');
             }

@@ -76,7 +76,7 @@ CREATE TABLE Materia(
 	matNombre VARCHAR(50)
 );
 
--- Grado, turno y docente guía
+-- Nivel, turno y docente guía
 CREATE TABLE Grado(
 	grdId INTEGER AUTO_INCREMENT PRIMARY KEY,
 	grdNombre VARCHAR(50),
@@ -256,6 +256,8 @@ INSERT INTO Municipio(munCodigo,munNombre,munCodPostal,dptId) VALUES
 
 INSERT INTO Turno(turNombre,turActivo) VALUES('Matutino',1),('Vespertino',1),('Nocturno',1);
 
+INSERT INTO TipoEvaluacion(tevaNombre) VALUES('Exámen corto'),('Actividad integradora'), ('Parcial');
+
 INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','admin'),('Alumno','alumno'),('Docente','docente');
 INSERT INTO Acceso(accCodigo,accVista) VALUES('dashAdmin','Panel de administración'),('dashDocente','Panel docente'),('dashAlumno','Panel alumno'),
 ('verTipoEmpleado','Tipo empleados'),('verEmpleado','Empleados'),('verMateria','Materias'),('verNivel','Niveles'),('verGrado','Grados'),
@@ -313,6 +315,15 @@ WHERE grpId = 1;
 SELECT ROUND(SUM(evaPorcentaje),2) AS suma FROM Evaluacion
 WHERE grpId = 1;
 
+-- Listado de alumnos por grupo
+SELECT COUNT(empId) AS cantidad
+FROM Grupo g
+WHERE empId = 2 AND grpId = 4;
+
+SELECT a.almId,a.almCodigo,CONCAT(a.almApellidoP,' ',a.almApellidoM,' ', a.almNombre) as Nombre
+FROM Alumno a
+INNER JOIN detGrupo dg ON dg.almId = a.almId
+WHERE dg.grpId = 2;
 
 -- insert into Nota (notNota, notPorcentaje, evaId, almId, grpId)
 select 3, 0.25, 1, 3, 1;
@@ -472,6 +483,38 @@ BEGIN
     SELECT codigo;
 END $$
 DELIMITER ;
+
+-- Matricula antiguo ingreso
+DROP PROCEDURE IF EXISTS spAddAlumno;
+
+DELIMITER $$
+CREATE PROCEDURE spAddAlumno (IN p_almCodigo VARCHAR(8))
+BEGIN
+	DECLARE codigo VARCHAR(8);
+	DECLARE i INTEGER;
+    DECLARE almId INTEGER;
+    DECLARE b BIT DEFAULT 0;
+    DECLARE curGrupo CURSOR FOR SELECT grpId FROM Grupo WHERE grdId = p_grdId;
+    
+    -- Condición de salida
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET b = 1;
+  
+    
+    -- Insertando los datos personales
+    INSERT INTO Alumno(almCodigo,almNie,almNombre,almApellidoP,almApellidoM,almFechaNac,almLugarNac,almSexo,almDireccion,almMadre,almPadre,almTelCasa,almTelCel,almCorreo,almResponsable,
+			almTelResponsable,almMadreDui,almPadreDui,dptId,munId)
+		VALUES(codigo,p_almNie,p_almNombre,p_almApellidoP,p_almApellidoM,p_almFechaNac,p_almLugarNac,p_almSexo,p_almDireccion,p_almMadre,p_almPadre,p_almTelCasa,p_almTelCel,p_almCorreo,
+			p_almResponsable,p_almTelResponsable,p_almMadreDui,p_almPadreDui,p_dptId,p_munId);
+	
+    SET almId = LAST_INSERT_ID();
+    
+    -- Retornando el código generado
+    
+    SELECT codigo;
+END $$
+DELIMITER ;
+
+
 
 -- ------------------------------------------ Triggers ------------------------------------------ --
 DROP TRIGGER IF EXISTS trNotaAfterInsert;
