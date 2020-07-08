@@ -207,62 +207,68 @@ INSERT INTO Municipio(munCodigo,munNombre,munCodPostal,dptId) VALUES
 ('01-07','Jujutla','CP 2109',1),('01-08','San Francisco Menéndez','CP 2113',1),('01-09','San Lorenzo','CP 2115',1),('01-10','San Pedro Puxtla','CP 2116',1),('01-11','Tacuba','CP 2117',1),('01-12','Turín','CP 2118',1),
 ('02-01','Cinquera','CP 1202',2),('02-02','Dolores','CP 1209',2),('02-03','Guacotecti','CP 1203',2),('02-04','Ilobasco','CP 1204',2),('02-05','Jutiapa','CP 1206',2),('02-06','San Isidro','CP 1207',2),
 ('02-07','Sensuntepeque','CP 1201',2),('02-08','Tejutepeque','CP 1209',2),('02-09','Victoria','CP 1210',2),
-('03-01','Agua Caliente','',3),('03-02','Arcatao','',3),('03-03','Azacualpa','',3),('03-04','Chalatenango','CP 1301',3),('03-05','Comalapa','',3),('03-06','Citalá','',3),
-('03-07','Concepción Quezaltepeque','',3),('03-08','Dulce Nombre de María','',3),('03-09','El Carrizal','',3),('03-10','El Paraíso','',3),('03-11','La Laguna','',3),
-('03-12','La Palma','',3),('03-13','La Reina','',3),('03-14','Las Vueltas','',3),('03-15','Nueva Concepción','',3),('03-16','Nueva Trinidad','',3),('03-17','Nombre de Jesús','',3),
-('03-18','Ojos de Agua','',3),('03-19','Potonico','',3),('03-20','San Antonio de la Cruz','',3),('03-21','San Antonio Los Ranchos','',3),('03-22','San Fernando','',3),
-('03-23','San Francisco Lempa','',3),('03-24','San Francisco Morazán','',3),('03-25','San Ignacio','',3),('03-26','San Isidro Labrador','CP 1330',3),('03-27','San José Cancasque','',3),
-('03-28','San José Las Flores','',3),('03-29','San Luis del Carmen','',3),('03-30','San Miguel de Mercedes','',3),('03-31','San Rafael','',3),('03-32','Santa Rita','',3),
-('03-33','Tejutla','',3),
-('04-01','Candelaria','',4),('04-02','Cojutepeque','CP 1401',4),('04-03','El Carmen','',4),('04-04','El Rosario','',4),('04-05','Monte San Juan','',4),('04-06','Oratorio de Concepción','',4),
-('04-07','San Bartolomé Perulapía','',4),('04-08','San Cristóbal','',4),('04-09','San José Guayabal','',4),('04-10','San Pedro Perulapán','',4),('04-11','San Rafael Cedros','',4),
-('04-12','San Ramón','',4),('04-13','Santa Cruz Analquito','',4),('04-14','Santa Cruz Michapa','',4),('04-15','Suchitoto','CP 1415',4),('04-16','Tenancingo','',4),
-('05-01','Antiguo Cuscatlán','CP 1502',5),('05-02','Chiltiupán','',5),('05-03','Ciudad Arce','',5),('05-04','Colón','CP 1512',5),('05-05','Comasagua','',5),('05-06','Huizúcar','',5),
-('05-07','Jayaque','',5),('05-08','Jicalapa','',5),('05-09','La Libertad','CP 1511',5),('05-10','Santa Tecla','CP 1501',5),('05-11','Nuevo Cuscatlán','CP 1513',5),('05-12','San Juan Opico','',5),
-('05-13','Quezaltepeque','',5),('05-14','Sacacoyo','',5),('05-15','San José Villanueva','',5),('05-16','San Matías','',5),('05-17','San Pablo Tacachico','',5),
-('05-18','Talnique','',5),('05-19','Tamanique','CP 1522',5),('05-20','Teotepeque','',5),('05-21','Tepecoyo','',5),('05-22','Zaragoza','',5),
-('06-01','Cuyultitán','',6),('06-02','El Rosario','',6),('06-03','Jerusalén','',6),('06-04','Mercedes La Ceiba','',6),('06-05','Olocuilta','',6),('06-06','Paraíso de Osorio','',6),
-('06-07','San Antonio Masahuat','',6),('06-08','San Emigdio','',6),('06-09','San Francisco Chinameca','',6),('06-10','San Juan Nonualco','',6),('06-11','San Juan Talpa','',6),
-('06-12','San Juan Tepezontes','',6),('06-13','San Luis Talpa','CP 1616',6),('06-14','San Luis La Herradura','',6),('06-15','San Miguel Tepezontes','',6),('06-16','San Pedro Masahuat','',6),
-('06-17','San Pedro Nonualco','',6),('06-18','San Rafael Obrajuelo','',6),('06-19','Santa María Ostuma','',6),('06-20','Santiago Nonualco','',6),('06-21','Tapalhuaca','',6),
+('03-01','Agua Caliente','CP 1302',3),('03-02','Arcatao','CP 1303',3),('03-03','Azacualpa','CP 1304',3),('03-04','Chalatenango','CP 1301',3),('03-05','Citalá','CP 1306',3),('03-06','Comalapa','CP 1307',3),
+('03-07','Concepción Quezaltepeque','CP 1308',3),('03-08','Dulce Nombre de María','CP 1309',3),('03-09','El Carrizal','CP 1311',3),('03-10','El Paraíso','CP 1312',3),('03-11','La Laguna','CP 1313',3),
+('03-12','La Palma','CP 1314',3),('03-13','La Reina','CP 1315',3),('03-14','Las Vueltas','CP 1317',3),('03-15','Nombre de Jesús','CP 1319',3),('03-16','Nueva Concepción','CP 1320',3),('03-17','Nueva Trinidad','CP 1320',3),
+('03-18','Ojos de Agua','CP 1321',3),('03-19','Potonico','CP 1322',3),('03-20','San Antonio de la Cruz','CP 1324',3),('03-21','San Antonio Los Ranchos','CP 1325',3),('03-22','San Fernando','CP 1326',3),
+('03-23','San Francisco Lempa','CP 1327',3),('03-24','San Francisco Morazán','CP 1328',3),('03-25','San Ignacio','CP 1329',3),('03-26','San Isidro Labrador','CP 1330',3),('03-27','San José Cancasque','CP 1305',3),
+('03-28','San José Las Flores','CP 1316',3),('03-29','San Luis del Carmen','CP 1331',3),('03-30','San Miguel de Mercedes','CP 1332',3),('03-31','San Rafael','CP 1333',3),('03-32','Santa Rita','CP 1334',3),
+('03-33','Tejutla','CP 1335',3),
+('04-01','Candelaria','CP 1402',4),('04-02','Cojutepeque','CP 1401',4),('04-03','El Carmen','CP 1403',4),('04-04','El Rosario','CP 1404',4),('04-05','Monte San Juan','CP 1405',4),('04-06','Oratorio de Concepción','CP 1406',4),
+('04-07','San Bartolomé Perulapía','CP 1407',4),('04-08','San Cristóbal','CP 1408',4),('04-09','San José Guayabal','CP 1409',4),('04-10','San Pedro Perulapán','CP 1410',4),('04-11','San Rafael Cedros','CP 1411',4),
+('04-12','San Ramón','CP 1412',4),('04-13','Santa Cruz Analquito','CP 1413',4),('04-14','Santa Cruz Michapa','CP 1414',4),('04-15','Suchitoto','CP 1415',4),('04-16','Tenancingo','CP 1416',4),
+('05-01','Antiguo Cuscatlán','CP 1502',5),('05-02','Chiltiupán','CP 1507',5),('05-03','Ciudad Arce','CP 1504',5),('05-04','Colón','CP 1512',5),('05-05','Comasagua','CP 1506',5),('05-06','Huizúcar','CP 1508',5),
+('05-07','Jayaque','CP 1509',5),('05-08','Jicalapa','CP 1510',5),('05-09','La Libertad','CP 1511',5),('05-10','Nuevo Cuscatlán','CP 1513',5),('05-11','Quezaltepeque','CP 1515',5),('05-12','Sacacoyo','CP 1516',5),
+('05-13','San José Villanueva','CP 1517',5),('05-14','San Juan Opico','CP 1514',5),('05-15','San Matías','CP 1518',5),('05-16','San Pablo Tacachico','CP 1519',5),('05-17','Santa Tecla','CP 1501',5),('05-18','Talnique','CP 1521',5),
+('05-19','Tamanique','CP 1522',5),('05-20','Teotepeque','CP 1523',5),('05-21','Tepecoyo','CP 1524',5),('05-22','Zaragoza','CP 1525',5),
+('06-01','Cuyultitán','CP 1603',6),('06-02','El Rosario','CP 1604',6),('06-03','Jerusalén','CP 1605',6),('06-04','Mercedes La Ceiba','CP 1607',6),('06-05','Olocuilta','CP 1608',6),('06-06','Paraíso de Osorio','CP 1609',6),
+('06-07','San Antonio Masahuat','CP 1610',6),('06-08','San Emigdio','CP 1611',6),('06-09','San Francisco Chinameca','CP 1612',6),('06-10','San Juan Nonualco','CP 1613',6),('06-11','San Juan Talpa','CP 1614',6),
+('06-12','San Juan Tepezontes','CP 1615',6),('06-13','San Luis La Herradura','CP 1616',6),('06-14','San Luis Talpa','CP 1616',6),('06-15','San Miguel Tepezontes','CP 1617',6),('06-16','San Pedro Masahuat','CP 1618',6),
+('06-17','San Pedro Nonualco','CP 1619',6),('06-18','San Rafael Obrajuelo','CP 1620',6),('06-19','Santa María Ostuma','CP 1621',6),('06-20','Santiago Nonualco','CP 1622',6),('06-21','Tapalhuaca','CP 1623',6),
 ('06-22','Zacatecoluca','CP 1601',6),
-('07-01','Anamorós','',7),('07-02','Bolívar','',7),('07-03','Concepción de Oriente','',7),('07-04','Conchagua','',7),('07-05','El Carmen','',7),('07-06','El Sauce','',7),
-('07-07','Intipucá','',7),('07-08','La Unión','CP 3101',7),('07-09','Lislique','',7),('07-10','Meanguera del Golfo','',7),('07-11','Nueva Esparta','',7),('07-12','Pasaquina','',7),
-('07-13','Polorós','',7),('07-14','San Alejo','',7),('07-15','San José','',7),('07-16','Santa Rosa de Lima','CP 3121',7),('07-17','Yayantique','',7),('07-18','Yucuaiquín','',7),
-('08-01','Arambala','',8),('08-02','Cacaopera','CP 3216',8),('08-03','Chilanga','',8),('08-04','Corinto','',8),('08-05','Delicias de Concepción','',8),('08-06','El Divisadero','',8),
-('08-07','El Rosario','',8),('08-08','Gualococti','',8),('08-09','Guatajiagua','',8),('08-10','Joateca','',8),('08-11','Jocoaitique','CP 3212',8),('08-12','Jocoro','',8),('08-13','Lolotiquillo','',8),
-('08-14','Meanguera','',8),('08-15','Osicala','',8),('08-16','Perquín','',8),('08-17','San Carlos','',8),('08-18','San Fernando','',8),('08-19','San Francisco Gotera','CP 3201',8),('08-20','San Isidro','CP 3220',8),
-('08-21','San Simón','',8),('08-22','Sensembra','',8),('08-23','Sociedad','',8),('08-24','Torola','',8),('08-25','Yamabal','',8),('08-26','Yoloaiquín','',8),
-('09-01','Carolina','',9),('09-02','Chapeltique','',9),('09-03','Chinameca','',9),('09-04','Chirilagua','',9),('09-05','Ciudad Barrios','',9),('09-06','Comacarán','',9),
-('09-07','El Tránsito','',9),('09-08','Lolotique','',9),('09-09','Moncagua','',9),('09-10','Nueva Guadalupe','',9),('09-11','Nuevo Edén de San Juan','',9),('09-12','Quelepa','',9),
-('09-13','San Antonio del Mosco','',9),('09-14','San Gerardo','',9),('09-15','San Jorge','',9),('09-16','San Luis de la Reina','',9),('09-17','San Miguel','CP 3301',9),
-('09-18','San Rafael Oriente','',9),('09-19','Sesori','',9),('09-20','Uluazapa','',9),
-('10-01','Aguilares','CP 1122',10),('10-02','Apopa','CP 1123',10),('10-03','Ayutuxtepeque','CP 1121',10),('10-04','Cuscatancingo','CP 1119',10),('10-05','Ciudad Delgado','CP 1118',10),('10-06','El Paisnal','1124',10),
+('07-01','Anamorós','CP 3104',7),('07-02','Bolívar','CP 3105',7),('07-03','Concepción de Oriente','CP 3106',7),('07-04','Conchagua','CP 3107',7),('07-05','El Carmen','CP 3108',7),('07-06','El Sauce','CP 3109',7),
+('07-07','Intipucá','CP 3111',7),('07-08','La Unión','CP 3101',7),('07-09','Lislique','CP 3112',7),('07-10','Meanguera del Golfo','CP 3113',7),('07-11','Nueva Esparta','CP 3114',7),('07-12','Pasaquina','CP 3116',7),
+('07-13','Polorós','CP 3117',7),('07-14','San Alejo','CP 3119',7),('07-15','San José de La Fuente','CP 3120',7),('07-16','Santa Rosa de Lima','CP 3121',7),('07-17','Yayantique','CP 3122',7),('07-18','Yucuaiquín','CP 3123',7),
+('08-01','Arambala','CP 3202',8),('08-02','Cacaopera','CP 3203',8),('08-03','Chilanga','CP 3205',8),('08-04','Corinto','CP 3204',8),('08-05','Delicias de Concepción','CP 3206',8),('08-06','El Divisadero','CP 3207',8),
+('08-07','El Rosario','CP 3207',8),('08-08','Gualococti','CP 3209',8),('08-09','Guatajiagua','CP 3210',8),('08-10','Joateca','CP 3211',8),('08-11','Jocoaitique','CP 3212',8),('08-12','Jocoro','CP 3213',8),('08-13','Lolotiquillo','CP 3214',8),
+('08-14','Meanguera','CP 3215',8),('08-15','Osicala','CP 3216',8),('08-16','Perquín','CP 3217',8),('08-17','San Carlos','CP 3218',8),('08-18','San Fernando','CP 3219',8),('08-19','San Francisco Gotera','CP 3201',8),('08-20','San Isidro','CP 3220',8),
+('08-21','San Simón','CP 3221',8),('08-22','Sensembra','CP 3222',8),('08-23','Sociedad','CP 3223',8),('08-24','Torola','CP 3224',8),('08-25','Yamabal','CP 3225',8),('08-26','Yoloaiquín','CP 3226',8),
+('09-01','Carolina','CP 3302',9),('09-02','Chapeltique','CP 3305',9),('09-03','Chinameca','CP 3306',9),('09-04','Chirilagua','CP 3307',9),('09-05','Ciudad Barrios','CP 3303',9),('09-06','Comacarán','CP 3304',9),
+('09-07','El Tránsito','CP 3309',9),('09-08','Lolotique','CP 3311',9),('09-09','Moncagua','CP 3312',9),('09-10','Nueva Guadalupe','CP 3313',9),('09-11','Nuevo Edén de San Juan','CP 3314',9),('09-12','Quelepa','CP 3315',9),
+('09-13','San Antonio del Mosco','CP 3316',9),('09-14','San Gerardo','CP 3318',9),('09-15','San Jorge','CP 3319',9),('09-16','San Luis de la Reina','CP 3320',9),('09-17','San Miguel','CP 3301',9),
+('09-18','San Rafael Oriente','CP 3322',9),('09-19','Sesori','CP 3323',9),('09-20','Uluazapa','CP 3324',9),
+('10-01','Aguilares','CP 1122',10),('10-02','Apopa','CP 1123',10),('10-03','Ayutuxtepeque','CP 1121',10),('10-04','Ciudad Delgado','CP 1118',10),('10-05','Cuscatancingo','CP 1119',10),('10-06','El Paisnal','1124',10),
 ('10-07','Guazapa','CP 1125',10),('10-08','Ilopango','CP 1117',10),('10-09','Mejicanos','CP 1120',10),('10-10','Nejapa','CP 1126',10),('10-11','Panchimalco','CP 1127',10),('10-12','Rosario de Mora','CP 1128',10),('10-13','San Marcos','CP 1115',10),
 ('10-14','San Martín','CP 1129',10),('10-15','San Salvador','CP 1101',10),('10-16','Santiago Texacuangos','CP 1130',10),('10-17','Santo Tomás','CP 1131',10),('10-18','Soyapango','CP 1116',10),('10-19','Tonacatepeque','CP 1132',10),
-('11-01','Apastepeque','',11),('11-02','Guadalupe','',11),('11-03','San Cayetano Istepeque','',11),('11-04','San Esteban Catarina','',11),('11-05','San Ildefonso','',11),
-('11-06','San Lorenzo','',11),('11-07','San Sebastián','',11),('11-08','San Vicente','CP 1701',11),('11-09','Santa Clara','CP 1709',11),('11-10','Santo Domingo','',11),('11-11','Tecoluca','',11),
-('11-12','Tepetitán','',11),('11-13','Verapaz','',11),
-('12-01','Candelaria de la Frontera','',12),('12-02','Chalchuapa','CP 2205',12),('12-03','Coatepeque','',12),('12-04','El Congo','',12),('12-05','El Porvenir','',12),('12-06','Masahuat','',12),
-('12-07','Metapán','',12),('12-08','San Antonio Pajonal','',12),('12-09','San Sebastián Salitrillo','CP 2215',12),('12-10','Santa Ana','CP 2201',12),('12-11','Santa Rosa Guachipilín','',12),
-('12-12','Santiago de la Frontera','',12),('12-13','Texistepeque','',12),
-('13-01','Acajutla','',13),('13-02','Armenia','',13),('13-03','Caluco','',13),('13-04','Cuisnahuat','',13),('13-05','Izalco','',13),('13-06','Juayúa','CP 2307',13),('13-07','Nahuizalco','',13),
-('13-08','Nahulingo','',13),('13-09','Salcoatitán','',13),('13-10','San Antonio del Monte','',13),('13-11','San Julián','',13),('13-12','Santa Catarina Masahuat','',13),
-('13-13','Santa Isabel Ishuatán','',13),('13-14','Santo Domingo Guzmán','',13),('13-15','Sonsonate','CP 2301',13),('13-16','Sonzacate','CP 2320',13),
-('14-01','Alegría','',14),('14-02','Berlín','CP 3403',14),('14-03','California','',14),('14-04','Concepción Batres','',14),('14-05','El Triunfo','',14),('14-06','Ereguayquín','',14),
-('14-07','Estanzuelas','CP 3408',14),('14-08','Jiquilisco','',14),('14-09','Jucuapa','',14),('14-10','Jucuarán','',14),('14-11','Mercedes Umaña','',14),('14-12','Nueva Granada','',14),
-('14-13','Ozatlán','',14),('14-14','Puerto El Triunfo','',14),('14-15','San Agustín','',14),('14-16','San Buenaventura','',14),('14-17','San Dionisio','',14),('14-18','San Francisco Javier','',14),
-('14-19','Santa Elena','CP 3422',14),('14-20','Santa María','',14),('14-21','Santiago de María','CP 3424',14),('14-22','Tecapán','',14),('14-23','Usulután','CP 3401',14);
+('11-01','Apastepeque','CP 1702',11),('11-02','Guadalupe','CP 1703',11),('11-03','San Cayetano Istepeque','CP 1704',11),('11-04','San Esteban Catarina','CP 1705',11),('11-05','San Ildefonso','CP 1706',11),
+('11-06','San Lorenzo','CP 1707',11),('11-07','San Sebastián','CP 1708',11),('11-08','San Vicente','CP 1701',11),('11-09','Santa Clara','CP 1709',11),('11-10','Santo Domingo','CP 1710',11),('11-11','Tecoluca','CP 1711',11),
+('11-12','Tepetitán','CP 1712',11),('11-13','Verapaz','CP 1713',11),
+('12-01','Candelaria de la Frontera','CP 2203',12),('12-02','Chalchuapa','CP 2205',12),('12-03','Coatepeque','CP 2204',12),('12-04','El Congo','CP 2207',12),('12-05','El Porvenir','CP 2208',12),('12-06','Masahuat','CP 2210',12),
+('12-07','Metapán','CP 2211',12),('12-08','San Antonio Pajonal','CP 2212',12),('12-09','San Sebastián Salitrillo','CP 2215',12),('12-10','Santa Ana','CP 2201',12),('12-11','Santa Rosa Guachipilín','CP 2216',12),
+('12-12','Santiago de la Frontera','CP 2217',12),('12-13','Texistepeque','CP 2218',12),
+('13-01','Acajutla','CP 2302',13),('13-02','Armenia','CP 2303',13),('13-03','Caluco','CP 2304',13),('13-04','Cuisnahuat','CP 2305',13),('13-05','Izalco','CP 2306',13),('13-06','Juayúa','CP 2307',13),('13-07','Nahuizalco','CP 2311',13),
+('13-08','Nahulingo','CP 2312',13),('13-09','Salcoatitán','CP 2313',13),('13-10','San Antonio del Monte','CP 2314',13),('13-11','San Julián','CP 2316',13),('13-12','Santa Catarina Masahuat','CP 2317',13),
+('13-13','Santa Isabel Ishuatán','CP 2317',13),('13-14','Santo Domingo Guzmán','CP 2319',13),('13-15','Sonsonate','CP 2301',13),('13-16','Sonzacate','CP 2320',13),
+('14-01','Alegría','CP 3404',14),('14-02','Berlín','CP 3403',14),('14-03','California','CP 3404',14),('14-04','Concepción Batres','CP 3405',14),('14-05','El Triunfo','CP 3406',14),('14-06','Ereguayquín','CP 3407',14),
+('14-07','Estanzuelas','CP 3408',14),('14-08','Jiquilisco','CP 3409',14),('14-09','Jucuapa','CP 3410',14),('14-10','Jucuarán','CP 3411',14),('14-11','Mercedes Umaña','CP 3412',14),('14-12','Nueva Granada','CP 3413',14),
+('14-13','Ozatlán','CP 3415',14),('14-14','Puerto El Triunfo','CP 3417',14),('14-15','San Agustín','CP 3418',14),('14-16','San Buenaventura','CP 3419',14),('14-17','San Dionisio','CP 3420',14),('14-18','San Francisco Javier','CP 3421',14),
+('14-19','Santa Elena','CP 3422',14),('14-20','Santa María','CP 3423',14),('14-21','Santiago de María','CP 3424',14),('14-22','Tecapán','CP 3426',14),('14-23','Usulután','CP 3401',14);
 
 INSERT INTO Turno(turNombre,turActivo) VALUES('Matutino',1),('Vespertino',1),('Nocturno',1);
 
-INSERT INTO TipoEvaluacion(tevaNombre) VALUES('Exámen corto'),('Actividad integradora'), ('Parcial');
+INSERT INTO TipoEvaluacion(tevaNombre) VALUES('Examen corto'),('Actividad integradora'),('Trabajo grupal'),('Caso de estudio'),('Parcial');
 
 INSERT INTO Rol(rolNombre,rolRedirect) VALUES('Administrador','admin'),('Alumno','alumno'),('Docente','docente');
-INSERT INTO Acceso(accCodigo,accVista) VALUES('dashAdmin','Panel de administración'),('dashDocente','Panel docente'),('dashAlumno','Panel alumno'),
-('verTipoEmpleado','Tipo empleados'),('verEmpleado','Empleados'),('verMateria','Materias'),('verNivel','Niveles'),('verGrado','Grados'),
-('verGrupo','Grupos'),('verAlumno','Alumnos'),('matricula','Matricula'),('nuevoEmpleado','Agregar empleado');
-INSERT INTO RolAcceso(rolId,accId) VALUES(1,1),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(2,2),(3,3);
+INSERT INTO Acceso(accCodigo,accVista)
+VALUES('dashAdmin','Panel de administración'),('dashAlumno','Panel alumno'),('dashDocente','Panel docente'),
+('menuPersonal','Menu personal'),('verTipoEmpleado','Tipo empleados'),('verEmpleado','Empleados'),('nuevoEmpleado','Agregar empleado'),
+('menuPedagogico','Menu Pedagogico'),('verMateria','Materias'),('verNivel','Niveles'),('verGrado','Grados'),('verGrupo','Grupos'),
+('menuAlumnos','Menu alumnos'),('verAlumno','Alumnos'),('matricula','Matricula'),
+('notas','Notas'),('expediente','Expediente');
+
+INSERT INTO RolAcceso(rolId,accId) VALUES(1,1),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),
+(2,2),(2,16),(2,17),(3,3);
+
 INSERT INTO Usuario VALUES(null,'admin','Administrador','240BE518FABD2724DDB6F04EEB1DA5967448D7E831C08C8FA822809F74C720A9',NULL,1,null);
 -- admin, admin123
 
@@ -275,11 +281,11 @@ WHERE u.usrUsuario = 'admin' AND u.usrPassword = '240BE518FABD2724DDB6F04EEB1DA5
 -- Accesos
 SELECT * FROM RolAcceso;
 
-SELECT a.accCodigo FROM RolAcceso ra
+SELECT DISTINCT a.accCodigo FROM RolAcceso ra
 INNER JOIN Rol r ON ra.rolId = r.rolId
 INNER JOIN Acceso a ON ra.accId = a.accId
 INNER JOIN Usuario u ON u.rolId = r.rolId
-WHERE ra.rolId = 1;
+WHERE ra.rolId = 3;
 
 -- Grupos (Dashboard de docentes)
 
@@ -474,10 +480,9 @@ BEGIN
 	END LOOP getGrupos;
     CLOSE curGrupo;
     
-    -- Agregandolo a la plataforma para que pueda ver sus notas
-    
+    -- Agregandolo a la plataforma para que pueda ver sus notas    
     INSERT INTO Usuario(usrUsuario,usrNombre,usrPassword,rolId,almId) VALUES(codigo,CONCAT(p_almNombre,' ',p_almApellidoP,' ',p_almApellidoM),SHA2(codigo,256),(SELECT rolId FROM Rol WHERE rolNombre = 'Alumno'),almId);
-    
+        
     -- Retornando el código generado
     
     SELECT codigo;
@@ -488,7 +493,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS spAddAlumno;
 
 DELIMITER $$
-CREATE PROCEDURE spAddAlumno (IN p_almCodigo VARCHAR(8))
+CREATE PROCEDURE spAddAlumnoAntiguo (IN p_almCodigo VARCHAR(8))
 BEGIN
 	DECLARE codigo VARCHAR(8);
 	DECLARE i INTEGER;

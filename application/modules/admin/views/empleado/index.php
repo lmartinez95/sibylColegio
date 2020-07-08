@@ -43,15 +43,14 @@
 					<td><?php echo $result["empDUI"]; ?></td>
 					<td><?php echo $result["tempNombre"]; ?></td>
 					<td><a class="btn btn-outline-success" href=<?php echo base_url()."index.php/empleado/update/" . $result["empId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["empId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-id="<?php echo $result["empId"]; ?>" data-target="#Eliminar" id="btnEliminar" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 				</tr>
 			<?php } ?>
 		</tbody>
 	</table>
 </div>
-<?php foreach ($results as $result) { ?>
-	<!-- The Modal -->
-<div class="modal fade" id="Eliminar<?php echo $result["empId"]; ?>">
+<!-- The Modal -->
+<div class="modal fade" id="Eliminar">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
@@ -63,19 +62,19 @@
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				¿Desea eliminar el empleado <?php echo $result["Nombre"]; ?> permanentemente?
+				¿Desea eliminar el empleado <strong id="data"></strong> permanentemente?
 			</div>
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<a class="btn btn-danger" href=<?php echo base_url()."index.php/empleado/eliminar/" . $result["empId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
+				<a class="btn btn-danger" id="btnConfirm" data="<?php echo base_url()."index.php/empleado/eliminar/"; ?>" href="#" ><i class="fas fa-ban"></i> Eliminar</a>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 			</div>
 
 		</div>
 	</div>
 </div>
-<?php } ?>
+<!-- Fin Modal -->
 <ul class="pagination justify-content-center">
 	<?php
 		/*if ($npag > 0) {

@@ -43,12 +43,6 @@
 		<tbody id="notas"></tbody>
 	</table>
 </div>
-<div id="loading" class="align-middle" style="display: none;position: fixed; z-index:100; top:45%;">
-	<div class="align-middle progress">
-		<img id="Image1" src="<?php echo base_url(); ?>assets/images/roller.gif" />
-		<h4> <span id="LbProceso">Cargando Notas</span></h4>
-	</div>
-</div>
 <script type="text/javascript">
 
 	var doPostBack = function(grp, alm){
@@ -66,8 +60,6 @@
 					beforeSend: function(){
 						var dimension = document.getElementById("frmNota");
 						$('#frmNota').find('input, textarea, button, select').attr('disabled',true);
-						$( "#loading" ).width( dimension.clientWidth );
-						$( "#loading" ).height( dimension.clientHeight );
 						$("#loading").show();
 					},
 					complete: function(response){

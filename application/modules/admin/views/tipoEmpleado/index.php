@@ -21,7 +21,7 @@
 		</p>
 	</div>
 <?php } ?>
-<div class="table-responsive">
+<div class="col-lg-6 justify-content-center table-responsive">
 	<table class="table">
 		<thead class="thead-light">
 			<tr>
@@ -37,39 +37,37 @@
 						<td><?php echo $result["tempCodigo"]; ?></td>
 						<td><?php echo $result["tempNombre"]; ?></td>
 						<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/tipoEmpleado/update/" . $result["tempId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-						<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["tempId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+						<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-id="<?php echo $result["tempId"]; ?>" data-target="#Eliminar" id="btnEliminar" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 					</tr>
 			<?php } ?>
 		</tbody>
 	</table>
 </div>
-<?php
-	foreach ($results as $result) {	?>
-	<!-- The Modal -->
-	<div class="modal fade" id="Eliminar<?php echo $result["tempId"]; ?>">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+<!-- The Modal -->
+<div class="modal fade" id="Eliminar">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Eliminar registro</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Eliminar registro</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					¿Desea eliminar esta el tipo <?php echo $result["tempNombre"]; ?> permanentemente?
-				</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				¿Desea eliminar esta el tipo <strong id="data"></strong> permanentemente?
+			</div>
 
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<a class="btn btn-danger" href=<?php echo base_url()."admin/tipoEmpleado/eliminar/" . $result["tempId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
-				</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<a class="btn btn-danger" id="btnConfirm" data="<?php echo base_url("admin/tipoEmpleado/eliminar/"); ?>" href="#" ><i class="fas fa-ban"></i> Eliminar</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
 			</div>
 		</div>
 	</div>
-	<?php } ?>
+</div>
+<!-- Fin Modal -->
 <ul class="pagination justify-content-center">
 	<?php
 		/*if ($npag > 0) {

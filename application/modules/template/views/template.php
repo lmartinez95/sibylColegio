@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js h-100" lang="en">
+<html class="no-js h-100" lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon.ico" type="image/x-icon">
     <title><?php echo $title; ?> - Sibyl System</title>
-    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="description" content="Administrar notas de los alumnos">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
@@ -45,7 +45,7 @@
     
     <!--Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href=<?php echo base_url($this->session->userdata('redirect'));?> >
         <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="<?php echo base_url(); ?>assets/images/logo.png" alt="Shards Dashboard">
         Sibyl System
       </a>
@@ -58,42 +58,61 @@
           <!--<li class="nav-item active">
             <a class="nav-link" href="#">Personal <span class="sr-only">(current)</span></a>
           </li>-->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Personal
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="<?php echo base_url(); ?>admin/tipoEmpleado"><i class="fas fa-circle"></i>&emsp;Tipo de empleados</a>
-              <a class="dropdown-item" href="<?php echo base_url(); ?>admin/empleado"><i class="fas fa-id-card"></i>&emsp;Empleados</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Pedagógico
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="<?php echo base_url(); ?>admin/materia"><i class="fas fa-file"></i>&emsp;Materias</a>
-              <a class="dropdown-item" href="<?php echo base_url(); ?>admin/nivel"><i class="fas fa-layer-group"></i>&emsp;Niveles</a>
-              <a class="dropdown-item" href="<?php echo base_url(); ?>admin/grado"><i class="fas fa-chalkboard-teacher"></i>&emsp;Grados</a>
+          <?php for ($i=0; $i < count($permisos); $i++){ 
+            if ($permisos[$i] == "menuPersonal") { ?>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Personal
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <?php if ($permisos[$i] == "verTipoEmpleado") { ?>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/tipoEmpleado"><i class="fas fa-circle"></i>&emsp;Tipo de empleados</a>
+                <?php }if ($permisos[$i] == "verEmpleado") { ?>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/empleado"><i class="fas fa-id-card"></i>&emsp;Empleados</a>
+                <?php } ?>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+            <?php } if ($permisos[$i] == "menuPedagogico") { ?>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Pedagógico
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <?php if ($permisos[$i] == "verMateria") { ?>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/materia"><i class="fas fa-file"></i>&emsp;Materias</a>
+                <?php }if ($permisos[$i] == "verNivel") { ?>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/nivel"><i class="fas fa-layer-group"></i>&emsp;Niveles</a>
+                <?php }if ($permisos[$i] == "verGrado") { ?>
+                  <a class="dropdown-item" href="<?php echo base_url(); ?>admin/grado"><i class="fas fa-chalkboard-teacher"></i>&emsp;Grados</a>
+                <?php }if ($permisos[$i] == "verGrupo") { ?>
                   <a class="dropdown-item" href="<?php echo base_url(); ?>admin/grupo"><i class="fas fa-users"></i>&emsp;Grupos</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Alumnos
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno/matricula"><i class="fas fa-user-plus"></i>&emsp;Matrícula</a>
-            <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno"><i class="fas fa-user-graduate"></i>&emsp;Alumnos</a>
-          </li>
+                <?php } ?>
+              </li>
+            <?php } if ($permisos[$i] == "menuAlumnos") { ?>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Alumnos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <?php if ($permisos[$i] == "matricula") { ?>
+                <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno/matricula"><i class="fas fa-user-plus"></i>&emsp;Matrícula</a>
+                <?php }if ($permisos[$i] == "verAlumno") { ?>
+                <a class="dropdown-item" href="<?php echo base_url(); ?>admin/alumno"><i class="fas fa-user-graduate"></i>&emsp;Alumnos</a>
+                <?php } ?>
+              </li>
+            <?php } ?>
           <!-- Menú para rol de alumnos -->
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>alumno/nota">Notas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>alumno/nota">Expediente</a>
-          </li>
+          <?php if ($permisos[$i] == "notas") { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo base_url(); ?>alumno/nota">Notas</a>
+            </li>
+          <?php }if ($permisos[$i] == "expediente") { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo base_url(); ?>alumno/expediente">Expediente</a>
+            </li>
+          <?php } } ?>
           <!-- Fin menú para rol de alumnos -->
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -111,7 +130,7 @@
     
     <!-- Content -->
     <div class="container">
-    <br /><br /><br /><br />
+    <br /><br /><br /><br /><?php //var_dump($permisos); ?>
           <span class="text-uppercase page-subtitle">Dashboard</span>
           <h3 class="page-title"><?php echo $title; ?></h3>
         
@@ -147,7 +166,7 @@
     <div id="loading" style="display: none;">
       <div class="progress">
           <img id="Image1" src="<?php echo base_url(); ?>assets/images/growing-ring.gif" />
-        <h4> <span id="LbProceso">Cerrando Sesión</span></h4>
+        <h4> <span id="lblProceso">Cargando</span></h4>
       </div>
     </div>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js" integrity=""></script>

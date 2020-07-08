@@ -82,7 +82,8 @@
   </style>
 </head>
 <body class="text-center">
-    <form class="form-signin" id='frmLogin' action='login/validar' method='POST'>
+    <!-- <form class="form-signin" id='frmLogin' action='login/validar' method='POST'> -->
+    <?php echo form_open('login/validar', ['class' => 'form-signin', 'id' => 'frmLogin'])?>
       <img class="mb-4" src="<?php echo base_url(); ?>assets/images/logo.png" alt="" width="72" height="72">
       <!--<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>-->
       <label for="carne" class="sr-only">Usuario</label>
@@ -116,16 +117,15 @@
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" integrity=""></script>
     <script type="text/javascript">
       $(document).ready(function() {
-        var dimension = document.getElementById('frmLogin');
         $("#frmLogin").submit(function(event){
           event.preventDefault();
           $.ajax({
             url:$(this).attr("action"),
             type:$(this).attr("method"),
             data:$(this).serialize(),
-            dataType: 'json',
+            dataType: 'JSON',
             beforeSend: function(){
-              document.getElementById("message").innerHTML = "";
+              $("#message").html = "";
               $('#frmLogin').find('input, textarea, button, select').attr('disabled',true);
               $("#loading").show();
             },
@@ -133,15 +133,15 @@
               $("#loading").hide();
               $('#frmLogin').find('input, textarea, button, select').attr('disabled',false);
             },
-            success: function(response) {
-              if (response.status) {
-                document.location.href = response.redirect;
-              } else if(response.status == false){
-                document.getElementById("message").innerHTML = "<div class='alert alert-danger'><strong>¡Error!</strong> Datos inválidos</div>";
-              }else{
-                document.getElementById("message").innerHTML = "<div class='alert alert-warning'><strong>¡Error!</strong>Ingrese los datos requeridos</div>";
-              }
-            } //success
+            success: function(response){
+              if (response.status == true) {
+                  document.location.href = response.redirect;
+                } else if(response.status == false){
+                  $("#message").html = "<div class='alert alert-danger'><strong>¡Error!</strong> Datos inválidos</div>";
+                }else{
+                  $("#message").html = "<div class='alert alert-warning'><strong>¡Error!</strong>Ingrese los datos requeridos</div>";
+                }
+            }
           }); //ajax
         });
       });

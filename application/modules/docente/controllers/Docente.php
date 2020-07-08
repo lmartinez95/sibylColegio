@@ -5,11 +5,10 @@
         {
             parent::__construct();
             $this->load->model('Docente_model');
-            $this->load->library('Complements');
         }
         public function index(){
             $data['title'] = 'Docente';
-            if ($this->complements->veriAcceso('dashAlumno')) {
+            if ($this->complements->veriAcceso('dashDocente')) {
                 $data['content_view'] = 'docente/index';
                 $data['results'] = $this->Docente_model->mostrar($this->session->userdata('empId'));
             } else
@@ -20,7 +19,7 @@
         function listado($grupo = NULL){
             if (!empty($grupo)) {
                 $data['title'] = 'Listado';
-                if ($this->complements->veriAcceso('dashAlumno')) {
+                if ($this->complements->veriAcceso('dashDocente')) {
                     $data['content_view'] = 'docente/listado';
                     $data['results'] = $this->Docente_model->listado($grupo, $this->session->userdata('empId'));
                     if ($data['results'] == 0)

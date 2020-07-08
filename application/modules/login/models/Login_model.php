@@ -24,6 +24,7 @@
         }
 
         public function getPermisos($rolId){
+            $this->db->distinct(true);
             $this->db->select('a.accCodigo');
             $this->db->from('RolAcceso ra');
             $this->db->join('Rol r', 'ra.rolId = r.rolId');

@@ -37,39 +37,38 @@
 					<td><?php echo $result["matCodigo"]; ?></td>
 					<td><?php echo $result["matNombre"]; ?></td>
 					<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/materia/update/" . $result["matId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["matId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-id="<?php echo $result["matId"]; ?>" data-target="#Eliminar" id="btnEliminar" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 				</tr>
 			<?php } ?>
 		</tbody>
 	</table>
 </div>
-<?php foreach ($results as $result) { ?>
-	<!-- The Modal -->
-	<div class="modal fade" id="Eliminar<?php echo $result["matId"]; ?>">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+<!-- The Modal -->
+<div class="modal fade" id="Eliminar">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Eliminar registro</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					¿Desea eliminar la materia <?php echo $result["matNombre"]; ?> permanentemente?
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<a class="btn btn-danger" href=<?php echo base_url()."admin/materia/eliminar/" . $result["matId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-				</div>
-
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Eliminar registro</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				¿Desea eliminar la materia <strong id="data"></strong> permanentemente?
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<a class="btn btn-danger" id="btnConfirm" data="<?php echo base_url()."admin/materia/eliminar/"; ?>" href="#" ><i class="fas fa-ban"></i> Eliminar</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+			</div>
+
 		</div>
 	</div>
-<?php } ?>
+</div>
+<!-- Fin Modal -->
 <ul class="pagination justify-content-center">
 	<?php
 		/*if ($npag > 0) {

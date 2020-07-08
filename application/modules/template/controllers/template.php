@@ -7,6 +7,7 @@
 
         function admin_dash($data = NULL){
             $data['usuario'] = $this->session->userdata('usuario');
+            $data['permisos'] = $this->session->userdata('permisos');
             $this->load->view('template',$data);
         }
 

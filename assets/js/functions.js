@@ -6,6 +6,8 @@ $(document).ready(function() {
         $.ajax({
             url: base_url.concat('login/logout'),
             beforeSend: function(){
+                $("#lblProceso").html = "Cerrando Sesión";
+                document.getElementById("lblProceso").innerHTML = "Cerrando Sesión";
                 $("#loading").show();
               },
             success: function(response){
@@ -21,10 +23,13 @@ $(document).ready(function() {
         var cboDptId = $(this).val();
         if(cboDptId){
             $.ajax({
-                type:     'POST',
+                type:     'GET',
                 url:      base_url.concat("admin/admin/cargaMunicipio"),
-                data:     'dptId=' + cboDptId,
-                dataType: 'json',
+                data:     {dptId: cboDptId},
+                dataType: 'JSON',
+                beforeSend: function(){
+                    $("#loading").show();
+                },
                 success:function(response){
                     var o;
                     $('#cboMunId').empty().append('');
@@ -34,6 +39,7 @@ $(document).ready(function() {
                         $(o).html(value.munNombre);
                         $('#cboMunId').append(o);
                     }); //for each
+                    $("#loading").hide();
                 } //success
             }); //ajax
         } else{
@@ -46,4 +52,15 @@ $(document).ready(function() {
     $("#txtEvaluacion").autocomplete({
         source: base_url.concat("docente/autoEvaluacion")
     });
+
+    //Función para confirmación de eliminar
+    (function(){
+        $("tr td #btnEliminar").click(function(ev) {
+            var nombre = $(this).parents('tr').find('td:eq(1)').text();
+            var id = $(this).attr('data-id');
+            var url = $("#btnConfirm").attr('data') + id;
+            $("#data").text(nombre);
+            $("#btnConfirm").attr('href', url);
+        })
+    })();
 });
