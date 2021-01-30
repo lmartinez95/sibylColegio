@@ -58,7 +58,7 @@
                 ->set_output(json_encode($validator, JSON_PRETTY_PRINT))
                 ->_display(); */
                 header('Content-type: application/json; charset=utf-8');
-                echo json_encode($permisos, JSON_FORCE_OBJECT);
+                echo json_encode($validator, JSON_FORCE_OBJECT);
         }
 
         function logout(){

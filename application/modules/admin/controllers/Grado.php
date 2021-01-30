@@ -7,7 +7,7 @@
             $this->load->library('Complements');
             $this->load->model('Grado_model');
         }
-        public function index($mensaje = NULL, $nivel = NULL){
+        public function index(){
             if ($this->complements->veriAcceso('verGrado')) {
                 $data['results'] = $this->Grado_model->mostrar();
                 $data['nivel'] = $this->complements->cargaCombo('nvlId','nvlNivel','Nivel');
@@ -22,8 +22,14 @@
 
         public function agregar()
         {
-            if ($this->input->post('btnAgregar') !== NULL) {
-                if(!empty($this->input->post('cboEmpId')) && !empty($this->input->post('cboNvlId')) && !empty('cboTurId')){
+            if ($this->input->method() === 'POST') {
+                if ($this->form_validation->run() == FALSE)
+                {
+                    $this->session->set_flashdata('warning','Debe ingresar todos los datos');
+                    redirect('admin/grado/');
+                }
+                else
+                {
                     $data = array(
                         'grdNombre' => $this->input->post('txtgrdNombre'),
                         'turId' => $this->input->post('cboTurId'),
@@ -31,19 +37,26 @@
                         'nvlId' => $this->input->post('cboNvlId'));
                     $b = $this->Grado_model->agregar($data);
                     if ($b === TRUE) {
-                        $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Grupo creado exitosamente</div>');
+                        $this->session->set_flashdata('success','Grupo creado exitosamente');
                     } else {
-                        $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b . '</div>');
+                        $this->session->set_flashdata('danger',$b);
                     }
-                }else{
-                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Debe ingresar todos los datos solicitados</div>');
                 }
-            } else {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> Debe ingresar todos los datos solicitados</div>');
             }
 
             redirect('admin/grado/');
-        }        
+        }
+        
+        public function editar($id = NULL)
+        {
+            if (condition) {
+                # code...
+            } else {
+                # code...
+            }
+            redirect('admin/grado/');
+            
+        }
 
         public function listado($grupo){
             $data['results'] = $this->Grupo_model->listado($grupo);

@@ -60,7 +60,7 @@ $(document).ready(function() {
             var id = $(this).attr('data-id');
             var url = $("#btnConfirm").attr('data') + id;
             $("#data").text(nombre);
-            $("#btnConfirm").attr('href', url);
+            $("#frmEliminar").attr('action', url);
         })
     })();
 });

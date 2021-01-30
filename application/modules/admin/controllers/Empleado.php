@@ -30,27 +30,29 @@
 
         public function agregar()
         {
-            $data = array(
-                'empNombre' => $this->input->post('txtNombre'),
-                'empApellidoP' => $this->input->post('txtApellidoP'),
-                'empApellidoM' => $this->input->post('txtApellidoM'),
-                'empSexo' => $this->input->post('cboSexo'),
-                'empDUI' => $this->input->post('txtDUI'),
-                'empNIT' => $this->input->post('txtNIT'),
-                'empISSS' => $this->input->post('txtISSS'),
-                'empNUP' => $this->input->post('txtNUP'),
-                'empDireccion' => $this->input->post('txtDireccion'),
-                'empEmail' => $this->input->post('txtEmail'),
-                'tempId' => $this->input->post('cboTempId'),
-                'empTelCasa' => $this->input->post('txtTelCasa'),
-                'empCelular' => $this->input->post('txtTelCel'),
-                'empFechaNac' => $this->input->post('dtpFechaNac'),
-                'empProfesion' => $this->input->post('txtPtofesion') );
-            $b = $this->Empleado_model->agregar($data);
-            if ($b['status'] == TRUE) {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');
-            } else {
-                $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b['value'] . '</div>');
+            if ($this->input->method() === 'post') {
+                $data = array(
+                    'empNombre' => $this->input->post('txtNombre'),
+                    'empApellidoP' => $this->input->post('txtApellidoP'),
+                    'empApellidoM' => $this->input->post('txtApellidoM'),
+                    'empSexo' => $this->input->post('cboSexo'),
+                    'empDUI' => $this->input->post('txtDUI'),
+                    'empNIT' => $this->input->post('txtNIT'),
+                    'empISSS' => $this->input->post('txtISSS'),
+                    'empNUP' => $this->input->post('txtNUP'),
+                    'empDireccion' => $this->input->post('txtDireccion'),
+                    'empEmail' => $this->input->post('txtEmail'),
+                    'tempId' => $this->input->post('cboTempId'),
+                    'empTelCasa' => $this->input->post('txtTelCasa'),
+                    'empCelular' => $this->input->post('txtTelCel'),
+                    'empFechaNac' => $this->input->post('dtpFechaNac'),
+                    'empProfesion' => $this->input->post('txtPtofesion') );
+                $b = $this->Empleado_model->agregar($data);
+                if ($b['status'] == TRUE) {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-success"><strong>¡Correcto!</strong> Registro agregado exitosamente. El código es <strong>'. $b['value'] . '</strong></div>');
+                } else {
+                    $this->session->set_flashdata('mensaje','<div class="alert alert-danger"><strong>¡Error!</strong> ' . $b['value'] . '</div>');
+                }
             }
             redirect('admin/empleado/');
         }

@@ -13,14 +13,6 @@
 	<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
 	</div>
 </div>
-<br />
-<?php if ($this->session->flashdata('mensaje')) { ?>
-	<div>
-		<p class="message" id="message">
-			<?php echo $this->session->flashdata('mensaje'); ?>
-		</p>
-	</div>
-<?php } ?>
 <div class="table-responsive">
 	<table class="table">
 		<thead>
@@ -40,39 +32,37 @@
 					<td><?php echo $result["turNombre"]; ?></td>
 					<td><a class="btn btn-outline-primary" href=<?php echo base_url()."admin/grado/addAlumno/" . $result["grdId"]; ?> data-toggle="tooltip" data-placement="top" title="Agregar alumno"><i class="fas fa-plus"></i></a> </td>
 					<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/grado/update/" . $result["grdId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["grdId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+					<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-id="<?php echo $result["grdId"]; ?>" data-target="#Eliminar" id="btnEliminar" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 				</tr>
 			<?php } ?>
 		</tbody>
 	</table>
 </div>
-<?php foreach ($results as $result) { ?>
-	<!-- The Modal -->
-	<div class="modal fade" id="Eliminar<?php echo $result["grdId"]; ?>">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+<!-- Modal para eliminar -->
+<div class="modal fade" id="Eliminar">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Eliminar registro</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Eliminar registro</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					¿Desea eliminar el grupo permanentemente?
-				</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				¿Desea eliminar esta el tipo <strong id="data"></strong> permanentemente?
+			</div>
 
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<a class="btn btn-danger" href=<?php echo base_url()."admin/grado/eliminar/" . $result["grpId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-				</div>
-
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<a class="btn btn-danger" id="btnConfirm" data="<?php echo base_url("admin/grado/eliminar/"); ?>" href="#"><i class="fas fa-ban"></i> Eliminar</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
 			</div>
 		</div>
 	</div>
-<?php } ?>
+</div>
+<!-- Fin Modal -->
 <ul class="pagination justify-content-center">
 	<?php
 		/*if ($npag > 0) {

@@ -10,17 +10,10 @@
 		</form>
 	</div>
 	<div>
-		<a class="btn btn-primary pull-right" href="#" data-toggle="modal" data-placement="top" data-target="#agregar"><i class="fas fa-plus"></i> Nuevo</a>
+		<a class="btn btn-primary pull-right" href=<?php echo base_url("admin/nivel/create"); ?> ><i class="fas fa-plus"></i> Nuevo</a>
 	</div>
 </div>
 <br />
-<?php if ($this->session->flashdata('mensaje')) { ?>
-	<div>
-		<p class="message" id="message">
-			<?php echo $this->session->flashdata('mensaje'); ?>
-		</p>
-	</div>
-<?php } ?>
 <div class="table-responsive">
 	<table class="table">
 		<thead>
@@ -38,8 +31,8 @@
 					<tr>
 						<td><?php echo $result["nvlAbrev"]; ?></td>
 						<td><?php echo $result["nvlNivel"]; ?></td>
-						<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/nivel/update/" . $result["nvlId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
-						<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-target="<?php echo "#Eliminar" . $result["nvlId"]; ?>" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
+						<td><a class="btn btn-outline-success" href=<?php echo base_url()."admin/nivel/edit/" . $result["nvlId"]; ?> data-toggle="tooltip" data-placement="top" title="Modificar"><i class="far fa-edit"></i></a> </td>
+						<td><a class="btn btn-outline-danger" href="#" data-toggle="modal" data-tooltip="tooltip" data-placement="top" data-id="<?php echo $result["nvlId"]; ?>" data-target="#Eliminar" id="btnEliminar" title="Eliminar"><i class="far fa-trash-alt"></i></a> </td>
 					</tr>
 					<?php
 				}
@@ -47,34 +40,33 @@
 		</tbody>
 	</table>
 </div>
-<?php
-	foreach ($results as $result) {	?>
-	<!-- Modal para confirmación de eliminación-->
-	<div class="modal fade" id="Eliminar<?php echo $result["nvlId"]; ?>">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+<!-- Modal para eliminar -->
+<div class="modal fade" id="Eliminar">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Eliminar registro</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Eliminar registro</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					¿Desea eliminar esta el nivel <?php echo $result["nvlNivel"]; ?> permanentemente?
-				</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				¿Desea eliminar esta el nivel <strong id="data"></strong> permanentemente?
+			</div>
 
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<a class="btn btn-danger" href=<?php echo base_url()."admin/nivel/eliminar/" . $result["nvlId"]; ?> ><i class="fas fa-ban"></i> Eliminar</a>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-				</div>
-
+			<!-- Modal footer -->
+			<div class="modal-footer">
+			<?php echo form_open('', ["id" => "frmEliminar"]); ?>
+					<button type="submit" class="btn btn-danger" id="btnConfirm" data="<?php echo base_url("admin/nivel/eliminar/"); ?>" ><i class="fas fa-ban"></i> Eliminar</button>
+				</form>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
 			</div>
 		</div>
 	</div>
-	<?php } ?>
+</div>
+<!-- Fin Modal -->
 <ul class="pagination justify-content-center">
 	<?php
 		/*if ($npag > 0) {
@@ -97,47 +89,3 @@
 		}*/
 	?>
 </ul>
-<!-- Modal de agregar -->
-<div class="modal fade" id="agregar">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title">Agregar registro</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				<?php echo validation_errors();
-					echo form_open('admin/nivel/agregar'); ?>
-						<div class="form-group">
-							<label for="nvlAbrev">Abreviatura:</label>
-							<input type="text" class="form-control" name="nvlAbrev" id="nvlAbrev" placeholder="Abreviatura" autocomplete="off" require autofocus>
-						</div>
-						<div class="form-group">
-							<label for="nvlNivel">Nivel:</label>
-							<input type="text" class="form-control" name="nvlNivel" id="nvlNivel" placeholder="Nivel" autocomplete="off" require>
-						</div>
-						<div class="form-group">
-							<label for="cboNvlIdPadre">Nivel:</label>
-							<select class="form-control" name="cboNvlIdPadre" id="cboNvlIdPadre">
-								<option value="">Ninguno</option>
-							<?php foreach ($nivel as $item) { ?>
-								<option value="<?php echo $item["nvlId"]; ?>"><?php echo $item["nvlNivel"]; ?></option>
-							<?php } ?>
-							</select>
-						</div>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-success" value="agregar" name="btnAgregar"><i class="fas fa-plus"></i> Agregar</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
-				<?php echo form_close(); ?>
-			</div>
-
-		</div>
-	</div>
-</div>
